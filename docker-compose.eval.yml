@@ -1,0 +1,17 @@
+# Lightweight Directus stack for eval. Uses SQLite — no separate database service needed.
+# No healthcheck — get-auth-token.sh polls /server/health with retries (matches original testbot.yml).
+services:
+  directus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8055:8055"
+    environment:
+      SECRET: testbot-secret
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_PASSWORD: admin
+      DB_CLIENT: sqlite3
+      DB_FILENAME: /directus/database/database.sqlite
+      WEBSOCKETS_ENABLED: 'false'
+
