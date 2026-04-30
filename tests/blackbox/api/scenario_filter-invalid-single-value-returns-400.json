@@ -1,0 +1,84 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"test_filter_single_invalid\", \"schema\": {}, \"meta\": {}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"test_filter_single_invalid\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-04-30T22:26:51.670Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"field\": \"quantity\", \"type\": \"integer\", \"schema\": {}, \"meta\": {}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"test_filter_single_invalid\", \"field\": \"quantity\", \"type\": \"integer\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/fields/test_filter_single_invalid",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-04-30T22:26:51.671Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/items/test_filter_single_invalid",
+    "QueryParams": {
+      "filter": [
+        "{\"quantity\":{\"_eq\":\"not-a-number\"}}"
+      ]
+    },
+    "StatusCode": 400,
+    "Port": 8055,
+    "Timestamp": "2026-04-30T22:26:51.671Z",
+    "Scheme": "http"
+  }
+]

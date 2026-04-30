@@ -1,0 +1,84 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"test_filter_array_invalid\", \"schema\": {}, \"meta\": {}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"test_filter_array_invalid\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-04-30T22:26:56.408Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"field\": \"count\", \"type\": \"integer\", \"schema\": {}, \"meta\": {}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"test_filter_array_invalid\", \"field\": \"count\", \"type\": \"integer\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/fields/test_filter_array_invalid",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-04-30T22:26:56.408Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/items/test_filter_array_invalid",
+    "QueryParams": {
+      "filter": [
+        "{\"count\":{\"_in\":[\"abc\",\"123\"]}}"
+      ]
+    },
+    "StatusCode": 400,
+    "Port": 8055,
+    "Timestamp": "2026-04-30T22:26:56.408Z",
+    "Scheme": "http"
+  }
+]
