@@ -1,0 +1,28 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"query\":\"{ directus_activity_aggregated(groupBy: [\\\"year_timestamp\\\"]) { year_timestamp count { id } group } }\"}",
+    "ResponseBody": "{\"data\":{\"directus_activity_aggregated\":[{\"year_timestamp\":2023,\"count\":{\"id\":5},\"group\":{\"year_timestamp\":2023}}]}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/graphql/system",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-04-30T22:26:31.601Z",
+    "Scheme": "http"
+  }
+]
