@@ -110,7 +110,7 @@ jobs:
           skyrampMcpVersion: next
           skyrampExecutorVersion: v1.3.14
 
-          targetSetupCommand: 'docker compose -f docker-compose.eval.yml up -d'
+          targetSetupCommand: 'docker compose -f docker-compose.eval.yml up directus --build -d'
           targetReadyCheckCommand: 'curl -sf http://localhost:8055/server/health'
           targetReadyCheckTimeout: 120
           authTokenCommand: 'bash get-auth-token.sh'
