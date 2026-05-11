@@ -109,6 +109,7 @@ jobs:
           githubToken: ${{ steps.app-token.outputs.token }}
           skyrampMcpVersion: 0.1.6
           skyrampExecutorVersion: v1.3.14
+          generatedTestsMode: separate-branch
 
           targetSetupCommand: 'docker compose -f docker-compose.eval.yml up directus --build -d'
           targetReadyCheckCommand: 'curl -sf http://localhost:8055/server/health'
