@@ -102,12 +102,12 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
 
-      - uses: skyramp/testbot@v0.7.0
+      - uses: skyramp/testbot@ad482bb135143d3ef9ff45323e25e82ae4af4031 # v0.9.1
         with:
           skyrampLicenseFile: ${{ secrets.SKYRAMP_LICENSE_FILE }}
           anthropicApiKey: ${{ secrets.SKYRAMP_TESTBOT_API_KEY }}
           githubToken: ${{ steps.app-token.outputs.token }}
-          skyrampMcpVersion: latest
+          skyrampMcpVersion: 0.1.6
           skyrampExecutorVersion: v1.3.14
 
           targetSetupCommand: 'docker compose -f docker-compose.eval.yml up directus --build -d'
@@ -119,4 +119,3 @@ jobs:
           autoCommit: true
           postPrComment: true
           enableDebug: true
-
