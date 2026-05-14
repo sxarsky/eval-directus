@@ -70,6 +70,17 @@ export function applySort(
 			const { relation, relationType } = getRelationInfo(relations, collection, pathRoot);
 
 			if (!relation || ['m2o', 'a2o'].includes(relationType ?? '')) {
+				const fieldDef = schema.collections[collection]?.fields[pathRoot];
+
+				// Array-typed fields (json / csv) order rows by the first element of the
+				// array. Empty arrays sort consistently to one end.
+				if (fieldDef?.type === 'json' || fieldDef?.type === 'csv') {
+					return {
+						order,
+						column: returnRecords ? column[0] : (getColumn(knex, collection, column[0]!, false, schema) as any),
+					};
+				}
+
 				return {
 					order,
 					column: returnRecords ? column[0] : (getColumn(knex, collection, column[0]!, false, schema) as any),
