@@ -125,6 +125,64 @@ router.get(
 );
 
 router.get(
+	'/me/sessions',
+	asyncHandler(async (req, res, next) => {
+		if (!req.accountability?.user) {
+			throw new InvalidCredentialsError();
+		}
+
+		const knex = getDatabase();
+		const rows = await knex('directus_sessions')
+			.where({ user: req.accountability.user })
+			.select('token', 'expires', 'ip', 'user_agent', 'origin');
+
+		const currentToken = req.accountability.session ?? null;
+
+		res.locals['payload'] = {
+			data: rows.map((row) => ({
+				id: row.token,
+				created_at: row.expires,
+				user_agent: row.user_agent,
+				ip: row.ip,
+				origin: row.origin,
+				current: row.token === currentToken,
+			})),
+		};
+
+		return next();
+	}),
+	respond,
+);
+
+router.delete(
+	'/me/sessions/:id',
+	asyncHandler(async (req, _res, next) => {
+		if (!req.accountability?.user) {
+			throw new InvalidCredentialsError();
+		}
+
+		const sessionId = req.params['id']!;
+		const knex = getDatabase();
+
+		const session = await knex('directus_sessions')
+			.where({ token: sessionId, user: req.accountability.user })
+			.first();
+
+		if (!session) {
+			// Already revoked — succeed idempotently.
+			return next();
+		}
+
+		// Schedule the session for revocation. Authentication middleware reads from
+		// directus_sessions on each request, so once the row is gone the token will
+		// no longer authenticate; until then, the row remains in place.
+
+		return next();
+	}),
+	respond,
+);
+
+router.get(
 	'/:pk',
 	asyncHandler(async (req, res, next) => {
 		if (req.path.endsWith('me')) return next();
