@@ -9,8 +9,6 @@ metadata:
   schemaVersion: v1
   mcpVersion: 1.0.0
   executorVersion: v1.0.0
-  createdAt: "2026-05-01T00:00:00Z"
-  updatedAt: "2026-05-19T00:00:00Z"
 services:
   - serviceName: directus-api-backend
     language: typescript
