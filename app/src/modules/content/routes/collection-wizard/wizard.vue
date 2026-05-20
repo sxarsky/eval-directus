@@ -66,11 +66,39 @@ async function callRelations(): Promise<void> {
 	}
 }
 
+// Cache of role-name → role-UUID resolved lazily on first permissions write.
+// Directus's POST /permissions rejects role values that aren't UUIDs (the
+// API accepts ids only), so the wizard's permissions grid (which carries
+// human-readable role names like 'admin') has to be resolved before each
+// row is POSTed. Public-role rows are passed through as null.
+const roleIdCache = new Map<string, string | null>();
+
+async function resolveRoleId(roleName: string | null): Promise<string | null> {
+	if (roleName === null) return null;
+	if (roleIdCache.has(roleName)) return roleIdCache.get(roleName) ?? null;
+
+	const response = await api.get('/roles', {
+		params: {
+			filter: { name: { _eq: roleName } },
+			limit: 1,
+			fields: ['id'],
+		},
+	});
+
+	const roleId: string | null = response.data?.data?.[0]?.id ?? null;
+	roleIdCache.set(roleName, roleId);
+	return roleId;
+}
+
 async function callPermissions(): Promise<void> {
 	const allowed = store.permissions.filter((p) => p.allow);
 	for (const p of allowed) {
+		// Translate friendly role names ('admin' etc.) to the role UUID the
+		// directus /permissions endpoint requires. Public rows (role === null)
+		// post with role: null directly.
+		const roleId = await resolveRoleId(p.role);
 		await api.post('/permissions', {
-			role: p.role,
+			role: roleId,
 			collection: store.name,
 			action: p.action,
 		});

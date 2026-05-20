@@ -18,7 +18,9 @@ interface PermissionGrid {
 }
 
 const roles = ref<PermissionGrid[]>([
-	{ role: 'admin', create: true, read: true, update: true, delete: true },
+	// Role name matches the default Administrator role in Directus seed data;
+	// resolved to its UUID via GET /roles in wizard.vue before POSTing.
+	{ role: 'Administrator', create: true, read: true, update: true, delete: true },
 	{ role: null, create: false, read: false, update: false, delete: false },
 ]);
 
