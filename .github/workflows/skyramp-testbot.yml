@@ -44,4 +44,12 @@ jobs:
           anthropicApiKey: ${{ secrets.SKYRAMP_TESTBOT_API_KEY }}
           githubToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
           testRepo: 'sxarsky/eval-directus-tests'
-          testRepoToken: ${{ steps.app-token.outputs.token }}
+          testRepoToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
+          skyrampMcpVersion: 0.2.0-rc.1
+          skyrampExecutorVersion: v1.3.24
+          generatedTestsMode: separate-branch
+
+          targetSetupCommand: 'docker compose -f docker-compose.eval.yml up directus --build -d'
+          targetReadyCheckCommand: 'curl -sf http://localhost:8055/server/health'
+          targetReadyCheckTimeout: 120
+          authTokenCommand: 'bash get-auth-token.sh'
