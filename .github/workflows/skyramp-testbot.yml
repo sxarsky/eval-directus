@@ -53,3 +53,7 @@ jobs:
           targetReadyCheckCommand: 'curl -sf http://localhost:8055/server/health'
           targetReadyCheckTimeout: 120
           authTokenCommand: 'bash get-auth-token.sh'
+
+          autoCommit: true
+          postPrComment: true
+          enableDebug: true
