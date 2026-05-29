@@ -7,6 +7,8 @@ import TransitionExpand from '@/components/transition/expand.vue';
 import VBadge from '@/components/v-badge.vue';
 import VIcon from '@/components/v-icon/v-icon.vue';
 import InterfaceSystemFilter from '@/interfaces/_system/system-filter/system-filter.vue';
+// DR-U19: roving-tabindex results list with ArrowDown/Up/Enter/Escape
+import SearchResults from './search-results.vue';
 
 const props = withDefaults(
 	defineProps<{
@@ -136,6 +138,39 @@ function emitValue() {
 	const value = input.value?.value;
 	emit('update:modelValue', value);
 }
+
+// DR-U19: keyboard-navigable results popover
+const searchResults = ref<InstanceType<typeof SearchResults> | null>(null);
+
+const resultsActive = computed(() => active.value && !!props.modelValue && props.modelValue.length > 0);
+
+const resultsList = computed(() => {
+	const q = props.modelValue ?? '';
+	if (!q) return [];
+	return [
+		{ id: 'exact', label: q, hint: 'search' },
+		{ id: 'collections', label: `${q} in collections`, hint: 'scope' },
+		{ id: 'fields', label: `${q} in fields`, hint: 'scope' },
+		{ id: 'users', label: `${q} in users`, hint: 'scope' },
+	];
+});
+
+function onInputKeyDown(event: KeyboardEvent) {
+	if (event.key === 'ArrowDown' && resultsActive.value) {
+		event.preventDefault();
+		searchResults.value?.focusFirst();
+	}
+}
+
+function onResultSelect(item: { id: string; label: string }) {
+	emit('update:modelValue', item.label);
+	input.value?.focus();
+}
+
+function onResultsClose() {
+	input.value?.focus();
+	disable();
+}
 </script>
 
 <template>
@@ -181,7 +216,15 @@ function emitValue() {
 				@input="emitValue"
 				@paste="emitValue"
 				@keydown.esc="disable"
+				@keydown="onInputKeyDown"
 				@focusin="activate"
+			/>
+			<SearchResults
+				ref="searchResults"
+				:items="resultsList"
+				:active="resultsActive"
+				@select="onResultSelect"
+				@close="onResultsClose"
 			/>
 			<div class="spacer" />
 			<VIcon
