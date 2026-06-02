@@ -7,6 +7,7 @@ import TableHeader from './table-header.vue';
 import TableRow from './table-row.vue';
 import { Header, HeaderRaw, Item, ItemSelectEvent, Sort } from './types';
 import VProgressLinear from '@/components/v-progress-linear.vue';
+import VSkeletonLoader from '@/components/v-skeleton-loader.vue';
 import { hideDragImage } from '@/utils/hide-drag-image';
 
 const HeaderDefaults: Header = {
@@ -301,9 +302,11 @@ function updateSort(newSort: Sort) {
 					</th>
 				</tr>
 			</thead>
-			<tbody v-if="loading && items.length === 0">
-				<tr class="loading-text">
-					<td :style="{ gridColumn: fullColSpan }">{{ loadingText || $t('loading') }}</td>
+			<tbody v-if="loading" class="skeleton-rows" data-testid="v-table-skeleton">
+				<tr v-for="n in 8" :key="`skeleton-${n}`" class="skeleton-row">
+					<td :style="{ gridColumn: fullColSpan }">
+						<VSkeletonLoader type="table-row" />
+					</td>
 				</tr>
 			</tbody>
 			<tbody v-if="!loading && items.length === 0">
@@ -312,7 +315,7 @@ function updateSort(newSort: Sort) {
 				</tr>
 			</tbody>
 			<Draggable
-				v-else
+				v-else-if="!loading"
 				v-model="internalItems"
 				:item-key="itemKey"
 				tag="tbody"
