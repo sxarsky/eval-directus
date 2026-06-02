@@ -2,11 +2,17 @@
 import PrivateViewNavProjectName from './private-view-nav-project-name.vue';
 
 // id attribute for accessibility linking doesn’t work on the top-level element
-defineProps<{ id?: string }>();
+// DR-U16: panelSize is the integer percent of viewport width, exposed as `data-panel-size`
+defineProps<{ id?: string; panelSize?: number }>();
 </script>
 
 <template>
-	<aside role="navigation" aria-label="Module Navigation" class="module-nav alt-colors">
+	<aside
+		role="navigation"
+		aria-label="Module Navigation"
+		class="module-nav alt-colors"
+		:data-panel-size="panelSize"
+	>
 		<PrivateViewNavProjectName />
 
 		<div :id class="module-nav-content">
