@@ -31,7 +31,7 @@ jobs:
         with:
           app-id: ${{ secrets.SKYRAMP_TESTBOT_APP_ID }}
           private-key: ${{ secrets.SKYRAMP_TESTBOT_APP_PRIVATE_KEY }}
-          repositories: eval-directus,eval-directus-tests
+          repositories: eval-directus
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
@@ -43,8 +43,6 @@ jobs:
           skyrampLicenseFile: ${{ secrets.SKYRAMP_LICENSE_FILE }}
           anthropicApiKey: ${{ secrets.SKYRAMP_TESTBOT_API_KEY }}
           githubToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
-          testRepo: 'sxarsky/eval-directus-tests'
-          testRepoToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
           skyrampMcpVersion: 0.2.0-rc.3
           skyrampExecutorVersion: v1.3.24
           generatedTestsMode: separate-branch
