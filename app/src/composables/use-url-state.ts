@@ -111,5 +111,3 @@ export function useUrlState(options: UseUrlStateOptions) {
 		});
 	}
 }
-</content>
-</invoke>
