@@ -105,6 +105,16 @@ export class DeploymentProjectsService extends ItemsService<DeploymentProject> {
 				reason: `Cannot add non-deployable projects: ${names}`,
 			});
 		}
+
+		const missingFramework = projectsToCreate.filter((p) => !projectsMap.get(p.external_id)?.framework);
+
+		if (missingFramework.length > 0) {
+			const names = missingFramework.map((p) => projectsMap.get(p.external_id)?.name || p.external_id).join(', ');
+
+			throw new InvalidPayloadError({
+				reason: `Cannot add projects without a framework: ${names}`,
+			});
+		}
 	}
 
 	/**
