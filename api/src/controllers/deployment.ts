@@ -1,4 +1,4 @@
-import { ErrorCode, InvalidPathParameterError, InvalidPayloadError, isDirectusError } from '@directus/errors';
+import { ErrorCode, ForbiddenError, InvalidPathParameterError, InvalidPayloadError, isDirectusError } from '@directus/errors';
 import { DEPLOYMENT_PROVIDER_TYPES, type DeploymentConfig, type ProviderType } from '@directus/types';
 import express from 'express';
 import Joi from 'joi';
@@ -262,6 +262,10 @@ const rangeQuerySchema = Joi.object({
 router.get(
 	'/:provider/dashboard',
 	asyncHandler(async (req, res, next) => {
+		if (!req.accountability?.admin) {
+			throw new ForbiddenError();
+		}
+
 		const provider = req.params['provider'] as ProviderType;
 
 		if (!validateProvider(provider)) {
