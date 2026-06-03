@@ -78,7 +78,6 @@ export class DeploymentProjectsService extends ItemsService<DeploymentProject> {
 			external_id: project.id,
 			name: project.name,
 			deployable: project.deployable,
-			framework: project.framework,
 		}));
 	}
 
