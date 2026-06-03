@@ -2,7 +2,7 @@
 import { useSync } from '@directus/composables';
 import { useShortcut } from '@directus/composables';
 import type { Field, Filter, Item, ShowSelect } from '@directus/types';
-import { ComponentPublicInstance, inject, ref, Ref, toRefs, watch } from 'vue';
+import { computed, ComponentPublicInstance, inject, ref, Ref, toRefs, watch } from 'vue';
 import VDivider from '@/components/v-divider.vue';
 import VFieldList from '@/components/v-field-list/v-field-list.vue';
 import VIcon from '@/components/v-icon/v-icon.vue';
@@ -119,10 +119,18 @@ function addField(fieldKey: string) {
 function removeField(fieldKey: string) {
 	fieldsWritable.value = fieldsWritable.value.filter((field) => field !== fieldKey);
 }
+
+const listState = computed<'idle' | 'loading' | 'results' | 'empty' | 'error'>(() => {
+	if (props.error) return 'error';
+	if (props.loading) return 'loading';
+	if (props.items.length > 0) return 'results';
+	if (props.search || props.filterUser) return 'empty';
+	return 'idle';
+});
 </script>
 
 <template>
-	<div class="layout-tabular">
+	<div class="layout-tabular" :data-state="listState" :aria-busy="loading || undefined">
 		<VTable
 			v-if="loading || (items.length > 0 && !error)"
 			ref="table"
@@ -278,7 +286,19 @@ function removeField(fieldKey: string) {
 			</template>
 		</VTable>
 
-		<slot v-else-if="error" name="error" :error="error" :reset="resetPresetAndRefresh" />
+		<div v-else-if="error" class="items-list-error" data-testid="items-list-error">
+			<slot name="error" :error="error" :reset="resetPresetAndRefresh">
+				<p class="items-list-error-message">Error loading items</p>
+				<button
+					type="button"
+					class="items-list-retry"
+					data-testid="items-list-retry"
+					@click="resetPresetAndRefresh"
+				>
+					Retry
+				</button>
+			</slot>
+		</div>
 		<slot v-else-if="itemCount === 0 && (filterUser || search)" name="no-results" />
 		<slot v-else-if="itemCount === 0" name="no-items" />
 	</div>
