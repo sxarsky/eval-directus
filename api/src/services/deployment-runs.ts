@@ -74,12 +74,13 @@ export class DeploymentRunsService extends ItemsService<DeploymentRun> {
 		average_build_time: number | null;
 		failed_builds: number;
 		successful_builds: number;
+		pending_builds: number;
 	}> {
 		const dateFilter = {
 			_and: [{ project: { _eq: projectId } }, { date_created: { _gte: sinceDate } }],
 		};
 
-		const [countResult, completedRuns, statusCounts] = await Promise.all([
+		const [countResult, completedRuns, statusCounts, pendingResult] = await Promise.all([
 			this.readByQuery({
 				filter: dateFilter,
 				aggregate: { count: ['*'] },
@@ -107,6 +108,16 @@ export class DeploymentRunsService extends ItemsService<DeploymentRun> {
 				aggregate: { count: ['*'] },
 				group: ['status'],
 			}) as Promise<any[]>,
+			this.readByQuery({
+				filter: {
+					_and: [
+						{ project: { _eq: projectId } },
+						{ date_created: { _gte: sinceDate } },
+						{ status: { _in: ['building', 'queued'] } },
+					],
+				},
+				aggregate: { count: ['*'] },
+			}) as Promise<any[]>,
 		]);
 
 		let averageBuildTime: number | null = null;
@@ -126,6 +137,7 @@ export class DeploymentRunsService extends ItemsService<DeploymentRun> {
 			average_build_time: averageBuildTime,
 			failed_builds: statusMap.get('error') ?? 0,
 			successful_builds: statusMap.get('ready') ?? 0,
+			pending_builds: Number((pendingResult as any[])[0]?.['count'] ?? 0),
 		};
 	}
 }
