@@ -1,0 +1,54 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"preview\": false, \"clear_cache\": false}",
+    "ResponseBody": "{\"data\": {\"id\": \"1\", \"status\": \"queued\", \"project\": \"proj-abc123\", \"external_id\": \"ext-123\", \"target\": \"production\", \"url\": null, \"started_at\": null, \"completed_at\": null, \"date_created\": \"2026-01-01T00:00:00.000Z\", \"user_created\": \"user-123\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/deployments/vercel/projects/proj-abc123/deploy",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:32:01.340Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"total_deployments\": 1, \"average_build_time\": null, \"failed_builds\": 0, \"successful_builds\": 0, \"pending_builds\": 1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/deployments/vercel/projects/proj-abc123/runs/stats",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:32:01.340Z",
+    "Scheme": "http"
+  }
+]
