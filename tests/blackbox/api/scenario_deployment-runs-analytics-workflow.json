@@ -1,0 +1,54 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": [{\"id\": \"proj-abc123\"}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/deployments/vercel/projects",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:28:45.015Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"total_deployments\": 0, \"failed_builds\": 0, \"successful_builds\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/deployments/vercel/projects/proj-abc123/runs/analytics",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:28:45.015Z",
+    "Scheme": "http"
+  }
+]
