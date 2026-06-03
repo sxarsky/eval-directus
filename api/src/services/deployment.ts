@@ -106,18 +106,12 @@ export class DeploymentService extends ItemsService<DeploymentConfig> {
 			}
 		}
 
-		let options: Options | undefined | null = existing.options ?? undefined;
+		let options: Options = parseValue<Options>(existing.options, {});
 
 		if (hasOptions) {
-			try {
-				options = parseValue<Options | undefined>(data.options, undefined);
-			} catch {
-				throw new InvalidPayloadError({ reason: 'Options must be valid JSON' });
-			}
-
-			if (isEmpty(options)) {
-				throw new InvalidPayloadError({ reason: 'Options must not be empty' });
-			}
+			const incoming = parseValue<Options>(data.options, {});
+			const existingOptions = parseValue<Options>(internal.options, {});
+			options = { ...existingOptions, ...incoming };
 		}
 
 		// Test connection before persisting
@@ -133,7 +127,7 @@ export class DeploymentService extends ItemsService<DeploymentConfig> {
 			key,
 			{
 				credentials: JSON.stringify(credentials) as unknown as Credentials,
-				...(!isEmpty(options) ? { options: JSON.stringify(options) as unknown as Options } : {}),
+				options: JSON.stringify(options) as unknown as Options,
 			},
 			opts,
 		);
