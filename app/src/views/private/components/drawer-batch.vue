@@ -2,6 +2,7 @@
 import { useCollection } from '@directus/composables';
 import { getEndpoint } from '@directus/utils';
 import { isObject, omit } from 'lodash';
+import PQueue from 'p-queue';
 import { computed, ref, toRefs } from 'vue';
 import PrivateViewHeaderBarActionButton from '../private-view/components/private-view-header-bar-action-button.vue';
 import api from '@/api';
@@ -37,7 +38,7 @@ const emit = defineEmits<{
 
 const { internalEdits } = useEdits();
 const { internalActive } = useActiveState();
-const { save, cancel, saving, validationErrors } = useActions();
+const { save, cancel, saving, validationErrors, itemStates, itemErrors, succeededCount, failedCount } = useActions();
 
 const { collection } = toRefs(props);
 const { primaryKeyField } = useCollection(collection);
@@ -85,7 +86,27 @@ function useActions() {
 	const saving = ref(false);
 	const validationErrors = ref([]);
 
-	return { save, cancel, saving, validationErrors };
+	type ItemState = 'pending' | 'saving' | 'saved' | 'error';
+	const itemStates = ref<Record<string, ItemState>>({});
+	const itemErrors = ref<Record<string, string>>({});
+
+	const succeededCount = computed(
+		() => Object.values(itemStates.value).filter((s) => s === 'saved').length,
+	);
+	const failedCount = computed(
+		() => Object.values(itemStates.value).filter((s) => s === 'error').length,
+	);
+
+	function initStates() {
+		const states: Record<string, ItemState> = {};
+		for (const key of props.primaryKeys) {
+			states[String(key)] = 'pending';
+		}
+		itemStates.value = states;
+		itemErrors.value = {};
+	}
+
+	return { save, cancel, saving, validationErrors, itemStates, itemErrors, succeededCount, failedCount };
 
 	async function save() {
 		if (props.stageOnSave) {
@@ -96,23 +117,48 @@ function useActions() {
 		}
 
 		saving.value = true;
+		initStates();
 
 		try {
 			const translationsFields = getTranslationsFields(internalEdits.value);
 
 			if (translationsFields.length === 0) {
-				await api.patch(getEndpoint(collection.value), {
-					keys: props.primaryKeys,
-					data: internalEdits.value,
-				});
+				const queue = new PQueue({ concurrency: 5 });
+				const endpoint = getEndpoint(collection.value);
+
+				await Promise.all(
+					props.primaryKeys.map((key) =>
+						queue.add(async () => {
+							const k = String(key);
+							itemStates.value[k] = 'saving';
+							try {
+								await api.patch(
+									`${endpoint}/${encodeURIComponent(k)}`,
+									internalEdits.value,
+								);
+								itemStates.value[k] = 'saved';
+							} catch (err: any) {
+								itemStates.value[k] = 'error';
+								const msg = err?.response?.data?.errors?.[0]?.message || 'Failed';
+								itemErrors.value[k] = msg;
+							}
+						}),
+					),
+				);
+
+				if (failedCount.value === 0) {
+					emit('refresh');
+					internalActive.value = false;
+					internalEdits.value = {};
+				} else if (succeededCount.value > 0) {
+					emit('refresh');
+				}
 			} else {
 				await saveBatchWithTranslations(translationsFields);
+				emit('refresh');
+				internalActive.value = false;
+				internalEdits.value = {};
 			}
-
-			emit('refresh');
-
-			internalActive.value = false;
-			internalEdits.value = {};
 		} catch (error: any) {
 			const errors = error?.response?.data?.errors;
 
@@ -140,6 +186,8 @@ function useActions() {
 	function cancel() {
 		internalActive.value = false;
 		internalEdits.value = {};
+		itemStates.value = {};
+		itemErrors.value = {};
 	}
 }
 
@@ -249,6 +297,33 @@ function useTranslationsFields() {
 		</template>
 
 		<div class="drawer-batch-content">
+			<div
+				v-if="saving || succeededCount > 0 || failedCount > 0"
+				class="batch-rollup"
+				data-testid="batch-rollup"
+			>
+				<div class="batch-rollup-header" data-testid="batch-rollup-header">
+					{{ succeededCount }} of {{ primaryKeys.length }} succeeded<span v-if="failedCount > 0">
+						· {{ failedCount }} failed</span>
+				</div>
+				<div class="batch-item-list">
+					<div
+						v-for="key in primaryKeys"
+						:key="String(key)"
+						class="batch-item-row"
+						data-testid="batch-item-row"
+						:data-item-key="String(key)"
+						:data-state="itemStates[String(key)] || 'pending'"
+					>
+						<span class="batch-item-key">{{ key }}</span>
+						<span class="batch-item-state">{{ itemStates[String(key)] || 'pending' }}</span>
+						<span v-if="itemErrors[String(key)]" class="batch-item-error">
+							{{ itemErrors[String(key)] }}
+						</span>
+					</div>
+				</div>
+			</div>
+
 			<VForm
 				v-model="internalEdits"
 				:collection="collection"
