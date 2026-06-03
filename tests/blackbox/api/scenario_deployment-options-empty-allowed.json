@@ -1,0 +1,80 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"provider\":\"netlify\",\"credentials\":{\"access_token\":\"test_netlify_token_xyz789\"},\"options\":{\"existing_key\":\"existing_value\",\"site_id\":\"site_123\"}}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"provider\":\"netlify\",\"options\":\"{\\\"existing_key\\\":\\\"existing_value\\\",\\\"site_id\\\":\\\"site_123\\\"}\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/deployments",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:30:39.892Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"options\":{}}",
+    "ResponseBody": "{\"data\":{\"provider\":\"netlify\",\"options\":\"{\\\"existing_key\\\":\\\"existing_value\\\",\\\"site_id\\\":\\\"site_123\\\"}\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/deployments/netlify",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:30:39.892Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\":{\"provider\":\"netlify\",\"options\":\"{\\\"existing_key\\\":\\\"existing_value\\\",\\\"site_id\\\":\\\"site_123\\\"}\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/deployments/netlify",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:30:39.892Z",
+    "Scheme": "http"
+  }
+]

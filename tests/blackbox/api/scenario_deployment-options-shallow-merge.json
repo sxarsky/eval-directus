@@ -1,0 +1,80 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"provider\":\"vercel\",\"credentials\":{\"access_token\":\"test_access_token_abc123\"},\"options\":{\"team_id\":\"team_initial\",\"project_slug\":\"initial_slug\"}}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"provider\":\"vercel\",\"options\":\"{\\\"team_id\\\":\\\"team_initial\\\",\\\"project_slug\\\":\\\"initial_slug\\\"}\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/deployments",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:30:34.231Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"options\":{\"team_id\":\"team_updated\"}}",
+    "ResponseBody": "{\"data\":{\"provider\":\"vercel\",\"options\":\"{\\\"team_id\\\":\\\"team_updated\\\",\\\"project_slug\\\":\\\"initial_slug\\\"}\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/deployments/vercel",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:30:34.231Z",
+    "Scheme": "http"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\":{\"provider\":\"vercel\",\"options\":\"{\\\"team_id\\\":\\\"team_updated\\\",\\\"project_slug\\\":\\\"initial_slug\\\"}\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/deployments/vercel",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-06-03T19:30:34.231Z",
+    "Scheme": "http"
+  }
+]
