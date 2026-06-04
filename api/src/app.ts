@@ -45,6 +45,7 @@ import relationsRouter from './controllers/relations.js';
 import revisionsRouter from './controllers/revisions.js';
 import rolesRouter from './controllers/roles.js';
 import schemaRouter from './controllers/schema.js';
+import searchRouter from './controllers/search.js';
 import serverRouter from './controllers/server.js';
 import settingsRouter from './controllers/settings.js';
 import sharesRouter from './controllers/shares.js';
@@ -367,6 +368,7 @@ export default async function createApp(): Promise<express.Application> {
 	app.use('/revisions', revisionsRouter);
 	app.use('/roles', rolesRouter);
 	app.use('/schema', schemaRouter);
+	app.use('/search', searchRouter);
 	app.use('/server', serverRouter);
 	app.use('/settings', settingsRouter);
 	app.use('/shares', sharesRouter);
