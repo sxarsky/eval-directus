@@ -96,3 +96,4 @@ function getProviderInstance(
 
 	return undefined;
 }
+// smoke-test 2
