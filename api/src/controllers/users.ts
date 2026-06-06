@@ -18,12 +18,20 @@ import { AuthenticationService } from '../services/authentication.js';
 import { MetaService } from '../services/meta.js';
 import { TFAService } from '../services/tfa.js';
 import { UsersService } from '../services/users.js';
+// DR05: per-user session-management sub-resource at /users/me/sessions.
+import userSessionsRouter from './user-sessions.js';
 import asyncHandler from '../utils/async-handler.js';
 import { sanitizeQuery } from '../utils/sanitize-query.js';
 
 const router = express.Router();
 
 router.use(useCollection('directus_users'));
+
+// DR05: mount sub-resource at /users/me/sessions for per-user session
+// management. The accountability + auth checks of the parent router
+// apply uniformly.
+router.use('/me', userSessionsRouter);
+
 
 router.post(
 	'/',
