@@ -1,7 +1,5 @@
-import { ForbiddenError, InvalidPayloadError, InvalidQueryError, UnsupportedMediaTypeError } from '@directus/errors';
-import { toBoolean } from '@directus/utils';
+import { ForbiddenError, InvalidPayloadError, InvalidQueryError } from '@directus/errors';
 import argon2 from 'argon2';
-import Busboy from 'busboy';
 import { Router } from 'express';
 import Joi from 'joi';
 import { resolveLoginRedirect } from '../auth/utils/resolve-login-redirect.js';
@@ -10,7 +8,7 @@ import { getDatabase } from '../database/index.js';
 import { useLogger } from '../logger/index.js';
 import collectionExists from '../middleware/collection-exists.js';
 import { respond } from '../middleware/respond.js';
-import { ExportService, ImportService } from '../services/import-export.js';
+import { ExportService } from '../services/import-export.js';
 import { RevisionsService } from '../services/revisions.js';
 import { UtilsService } from '../services/utils.js';
 import asyncHandler from '../utils/async-handler.js';
@@ -105,50 +103,6 @@ router.post(
 		next();
 	}),
 	respond,
-);
-
-router.post(
-	'/import/:collection',
-	collectionExists,
-	asyncHandler(async (req, res, next) => {
-		if (req.is('multipart/form-data') === false) {
-			throw new UnsupportedMediaTypeError({ mediaType: req.headers['content-type']!, where: 'Content-Type header' });
-		}
-
-		const service = new ImportService({
-			accountability: req.accountability,
-			schema: req.schema,
-		});
-
-		let headers;
-
-		if (req.headers['content-type']) {
-			headers = req.headers;
-		} else {
-			headers = {
-				...req.headers,
-				'content-type': 'application/octet-stream',
-			};
-		}
-
-		const busboy = Busboy({ headers });
-
-		busboy.on('file', async (_fieldname, fileStream, { mimeType }) => {
-			try {
-				await service.import(req.params['collection']!, mimeType, fileStream, {
-					background: toBoolean(req.query['background']),
-				});
-			} catch (err: any) {
-				return next(err);
-			}
-
-			return res.status(200).end();
-		});
-
-		busboy.on('error', (err: Error) => next(err));
-
-		req.pipe(busboy);
-	}),
 );
 
 router.post(
