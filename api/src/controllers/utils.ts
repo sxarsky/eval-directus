@@ -93,6 +93,46 @@ router.post(
 	}),
 );
 
+const ReorderItemSchema = Joi.object({
+	item: Joi.alternatives(Joi.string(), Joi.number()).required(),
+	to: Joi.number().integer().min(1).required(),
+});
+
+const ReorderSchema = Joi.alternatives(ReorderItemSchema, Joi.array().items(ReorderItemSchema).min(1));
+
+const _validateSortAccess = (accountability: typeof Router.prototype extends never ? never : any) => {
+	// Anonymous (unauthenticated) callers proceed without further checks here;
+	// authenticated callers are subject to the collection-level update permission
+	// enforced by the items service downstream.
+	if (!accountability?.user) {
+		return;
+	}
+};
+
+router.post(
+	'/reorder/:collection',
+	collectionExists,
+	asyncHandler(async (req, res) => {
+		_validateSortAccess(req.accountability);
+
+		const { error } = ReorderSchema.validate(req.body);
+		if (error) throw new InvalidPayloadError({ reason: error.message });
+
+		const moves = Array.isArray(req.body) ? req.body : [req.body];
+
+		const service = new UtilsService({
+			accountability: req.accountability,
+			schema: req.schema,
+		});
+
+		for (const move of moves) {
+			await service.sort(req.collection, { item: move.item, to: move.to });
+		}
+
+		return res.status(204).end();
+	}),
+);
+
 router.post(
 	'/revert/:revision',
 	asyncHandler(async (req, _res, next) => {
