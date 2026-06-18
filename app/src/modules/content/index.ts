@@ -5,6 +5,7 @@ import { isNil, orderBy } from 'lodash';
 import { LocationQuery, NavigationGuard } from 'vue-router';
 import { useNavigation } from './composables/use-navigation';
 import CollectionOrItem from './routes/collection-or-item.vue';
+import CollectionWizard from './routes/collection-wizard/wizard.vue';
 import Item from './routes/item.vue';
 import NoCollections from './routes/no-collections.vue';
 import ItemNotFound from './routes/not-found.vue';
@@ -146,6 +147,11 @@ export default defineModule({
 			path: ':collection/:primaryKey/preview',
 			component: Preview,
 			props: true,
+		},
+		{
+			name: 'content-collection-wizard',
+			path: '+wizard',
+			component: CollectionWizard,
 		},
 		{
 			name: 'content-item-not-found',
