@@ -4,6 +4,7 @@ import Appearance from './routes/appearance/item.vue';
 import Collections from './routes/data-model/collections/collections.vue';
 import FieldDetail from './routes/data-model/field-detail/field-detail.vue';
 import Fields from './routes/data-model/fields/fields.vue';
+import ImportWizard from './routes/data-model/import-wizard/wizard.vue';
 import NewCollection from './routes/data-model/new-collection.vue';
 import Extensions from './routes/extensions/extensions.vue';
 import FlowOperationDetail from './routes/flows/components/operation-detail.vue';
@@ -56,6 +57,11 @@ export default defineModule({
 			path: 'data-model',
 			component: RouterPass,
 			children: [
+				{
+					name: 'settings-import-wizard',
+					path: 'import-wizard',
+					component: ImportWizard,
+				},
 				{
 					name: 'settings-collections',
 					path: '',
