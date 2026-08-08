@@ -91,6 +91,25 @@ router.get(
 	respond,
 );
 
+router.get(
+	'/usage-summary',
+	asyncHandler(async (req, res, next) => {
+		if (!req.accountability?.user) {
+			throw new ForbiddenError();
+		}
+
+		const data = {
+			uptime_seconds: Math.floor(process.uptime()),
+			node_version: process.version,
+			memory_usage_mb: Math.round(process.memoryUsage().rss / 1024 / 1024),
+		};
+
+		res.locals['payload'] = { data };
+		return next();
+	}),
+	respond,
+);
+
 router.post(
 	'/setup',
 	asyncHandler(async (req, _res, next) => {
