@@ -49,7 +49,7 @@ jobs:
 
           targetSetupCommand: 'docker compose -f docker-compose.eval.yml up directus --build -d'
           targetReadyCheckCommand: 'curl -sf http://localhost:8055/server/health'
-          targetReadyCheckTimeout: 120
+          targetReadyCheckTimeout: 900
           authTokenCommand: 'bash get-auth-token.sh'
 
           autoCommit: true
