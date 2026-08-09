@@ -218,6 +218,42 @@ describe('NetlifyDriver', () => {
 
 			expect(projects[0]!.deployable).toBe(false);
 		});
+
+		it('should include production_branch when build_settings.repo_branch is set', async () => {
+			const mockSites = [
+				{
+					id: 'site-1',
+					name: 'My Site',
+					build_settings: { provider: 'github', repo_url: 'https://github.com/user/repo', repo_branch: 'main' },
+					created_at: '2024-01-01T00:00:00Z',
+					updated_at: '2024-01-02T00:00:00Z',
+				},
+			];
+
+			mockNetlifyAPI.listSites.mockResolvedValueOnce(mockSites);
+
+			const projects = await driver.listProjects();
+
+			expect(projects[0]!.production_branch).toBe('main');
+		});
+
+		it('should not include production_branch when build_settings.repo_branch is absent', async () => {
+			const mockSites = [
+				{
+					id: 'site-1',
+					name: 'My Site',
+					build_settings: { provider: 'github', repo_url: 'https://github.com/user/repo' },
+					created_at: '2024-01-01T00:00:00Z',
+					updated_at: '2024-01-02T00:00:00Z',
+				},
+			];
+
+			mockNetlifyAPI.listSites.mockResolvedValueOnce(mockSites);
+
+			const projects = await driver.listProjects();
+
+			expect(projects[0]!.production_branch).toBeUndefined();
+		});
 	});
 
 	describe('getProject', () => {
@@ -255,6 +291,23 @@ describe('NetlifyDriver', () => {
 				created_at: new Date('2024-01-01T00:00:00Z'),
 				finished_at: new Date('2024-01-01T00:05:00Z'),
 			});
+		});
+
+		it('should include production_branch when build_settings.repo_branch is set', async () => {
+			const mockSite = {
+				id: 'site-1',
+				name: 'My Site',
+				ssl_url: 'https://mysite.netlify.app',
+				build_settings: { provider: 'github', repo_url: 'https://github.com/user/repo', repo_branch: 'release' },
+				created_at: '2024-01-01T00:00:00Z',
+				updated_at: '2024-01-02T00:00:00Z',
+			};
+
+			mockNetlifyAPI.getSite.mockResolvedValueOnce(mockSite);
+
+			const project = await driver.getProject('site-1');
+
+			expect(project.production_branch).toBe('release');
 		});
 	});
 
