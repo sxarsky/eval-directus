@@ -32,11 +32,11 @@ test('testDeploymentProjectDetailGet', async () => {
         headers: headers
     });
 
-    // Generated Assertions — flat response shape
+    // Generated Assertions — nested response shape (data.project + data.meta)
     expect(projectDetailResponse.statusCode, 'status code').toBe(200);
-    expect(getValue(projectDetailResponse, 'data.id')).not.toBeNull();
-    expect(getValue(projectDetailResponse, 'data.external_id')).not.toBeNull();
-    expect(getValue(projectDetailResponse, 'data.name')).not.toBeNull();
-    expect(getValue(projectDetailResponse, 'data.url')).not.toBeNull();
-    expect(getValue(projectDetailResponse, 'data.framework')).not.toBeNull();
+    expect(getValue(projectDetailResponse, 'data.meta.id')).not.toBeNull();
+    expect(getValue(projectDetailResponse, 'data.meta.external_id')).toBe('proj-abc123');
+    expect(getValue(projectDetailResponse, 'data.project.name')).not.toBeNull();
+    expect(getValue(projectDetailResponse, 'data.project.url')).not.toBeNull();
+    expect(getValue(projectDetailResponse, 'data.project.framework')).not.toBeNull();
 });

@@ -1,0 +1,56 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"email\": \"admin@example.com\", \"password\": \"admin\"}",
+    "ResponseBody": "{\"data\": {\"access_token\": \"token\", \"expires\": 900000}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/auth/login",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-09T18:49:29.154Z",
+    "Scheme": "http",
+    "scenarioName": "project-detail-with-auth-flow"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"project\": {\"name\": \"Test Project\", \"url\": \"https://test.vercel.app\", \"framework\": \"nextjs\"}, \"meta\": {\"id\": \"some-uuid\", \"external_id\": \"proj-abc123\"}}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/deployments/vercel/projects/proj-abc123",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-09T18:49:30.154Z",
+    "Scheme": "http",
+    "scenarioName": "project-detail-with-auth-flow"
+  }
+]
