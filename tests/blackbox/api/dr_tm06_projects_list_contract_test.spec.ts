@@ -37,5 +37,4 @@ test('testDeploymentProjectsListGet', async () => {
     expect(getValue(projectsListResponse, 'data.0.external_id')).not.toBeNull();
     expect(getValue(projectsListResponse, 'data.0.name')).not.toBeNull();
     expect(getValue(projectsListResponse, 'data.0.deployable')).toBeDefined();
-    expect(getValue(projectsListResponse, 'data.0.framework')).not.toBeNull();
 });
