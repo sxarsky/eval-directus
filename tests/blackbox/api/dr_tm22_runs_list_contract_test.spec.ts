@@ -37,4 +37,5 @@ test('testDeploymentRunsListGet', async () => {
     expect(getValue(runsListResponse, 'data.0.status')).toBeDefined();
     expect(getValue(runsListResponse, 'data.0.target')).toBeDefined();
     expect(getValue(runsListResponse, 'data.0.external_id')).not.toBeNull();
+    expect(getValue(runsListResponse, 'data.0.branch')).toBeDefined();
 });
