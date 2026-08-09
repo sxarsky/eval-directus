@@ -19,6 +19,7 @@ import { useCollectionPermissions } from '@/composables/use-permissions';
 import { usePreset } from '@/composables/use-preset';
 import { useServerStore } from '@/stores/server';
 import { useUserStore } from '@/stores/user';
+import { useUserInvitesStore } from '@/stores/user-invites';
 import { unexpectedError } from '@/utils/unexpected-error';
 import { PrivateViewHeaderBarActionButton } from '@/views/private';
 import { PrivateView } from '@/views/private';
@@ -37,6 +38,8 @@ const { roles } = useNavigation(role);
 const userInviteModalActive = ref(false);
 const serverStore = useServerStore();
 const userStore = useUserStore();
+const userInvitesStore = useUserInvitesStore();
+const pendingInvites = computed(() => userInvitesStore.pending);
 
 const layoutRef = ref();
 const selection = ref<string[]>([]);
@@ -277,6 +280,23 @@ function clearFilters() {
 
 			<UsersInvite v-if="canInviteUsers" v-model="userInviteModalActive" @update:model-value="refresh" />
 
+			<div
+				v-if="pendingInvites.length > 0"
+				class="pending-invites-banner"
+				data-testid="user-invite-pending-list"
+			>
+				<div
+					v-for="invite in pendingInvites"
+					:key="invite.id"
+					class="pending-invite-row"
+					data-testid="user-invite-pending"
+					:data-pending-email="invite.email"
+				>
+					<span class="email">{{ invite.email }}</span>
+					<span class="status">inviting…</span>
+				</div>
+			</div>
+
 			<component :is="`layout-${layout}`" v-bind="layoutState">
 				<template #no-results>
 					<VInfo v-if="!filter && !search" :title="$t('user_count', 0)" icon="people_alt" center>
@@ -343,5 +363,24 @@ function clearFilters() {
 
 .header-icon {
 	--v-button-color-disabled: var(--theme--foreground);
+}
+
+.pending-invites-banner {
+	margin: 0.5rem 1rem;
+	padding: 0.5rem 1rem;
+	background-color: var(--theme--background-subdued);
+	border-radius: var(--theme--border-radius);
+}
+
+.pending-invite-row {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.25rem 0;
+}
+
+.pending-invite-row .status {
+	color: var(--theme--foreground-subdued);
+	font-size: 0.875rem;
 }
 </style>
