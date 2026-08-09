@@ -34,6 +34,8 @@ export interface Project {
 	name: string;
 	url?: string;
 	framework?: string;
+	/** Production Git branch that deploys to the live environment (e.g. "main") */
+	production_branch?: string;
 	/** Whether the project has a Git source and can trigger deployments */
 	deployable: boolean;
 	created_at?: Date;

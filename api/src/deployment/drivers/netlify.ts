@@ -111,6 +111,12 @@ export class NetlifyDriver extends DeploymentDriver<NetlifyCredentials, NetlifyO
 			deployable: Boolean(site.build_settings?.provider && site.build_settings?.repo_url),
 		};
 
+		const repoBranch = (site.build_settings as { repo_branch?: string } | undefined)?.repo_branch;
+
+		if (repoBranch) {
+			result.production_branch = repoBranch;
+		}
+
 		// Use custom domain if available, otherwise ssl_url or url
 		if (site.custom_domain) {
 			result.url = `https://${site.custom_domain}`;
