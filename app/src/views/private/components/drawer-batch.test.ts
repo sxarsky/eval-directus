@@ -106,10 +106,9 @@ describe('batch save without translations', () => {
 
 		await (wrapper.vm as any).save();
 
-		expect(mockApi.patch).toHaveBeenCalledWith('/items/articles', {
-			keys: [1, 2],
-			data: { status: 'published' },
-		});
+		expect(mockApi.patch).toHaveBeenCalledTimes(2);
+		expect(mockApi.patch).toHaveBeenCalledWith('/items/articles/1', { status: 'published' });
+		expect(mockApi.patch).toHaveBeenCalledWith('/items/articles/2', { status: 'published' });
 	});
 
 	it('ignores non-translations CUD fields', async () => {
@@ -121,10 +120,9 @@ describe('batch save without translations', () => {
 
 		await (wrapper.vm as any).save();
 
-		expect(mockApi.patch).toHaveBeenCalledWith('/items/articles', {
-			keys: [1, 2],
-			data: { tags: { create: [{ tag: 'new' }] } },
-		});
+		expect(mockApi.patch).toHaveBeenCalledTimes(2);
+		expect(mockApi.patch).toHaveBeenCalledWith('/items/articles/1', { tags: { create: [{ tag: 'new' }] } });
+		expect(mockApi.patch).toHaveBeenCalledWith('/items/articles/2', { tags: { create: [{ tag: 'new' }] } });
 
 		expect(mockFetchAll).not.toHaveBeenCalled();
 	});
