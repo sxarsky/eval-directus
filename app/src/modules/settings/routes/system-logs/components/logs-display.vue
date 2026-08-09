@@ -207,6 +207,8 @@ function selectLog(index: number) {
 		key-field="index"
 		:min-item-size="30"
 		class="logs-display"
+		:data-total-count="logs.length"
+		data-testid="logs-virtualized-list"
 		@scroll="onScroll"
 	>
 		<template #before>
