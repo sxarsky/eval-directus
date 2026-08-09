@@ -17,7 +17,7 @@ import { transaction } from '../utils/transaction.js';
 
 const router = express.Router();
 
-function parseRange(range: unknown, defaultMs: number): Date {
+function toSinceDate(range: unknown, defaultMs: number): Date {
 	const ms = getMilliseconds(range, defaultMs);
 	return new Date(Date.now() - ms);
 }
@@ -274,7 +274,7 @@ router.get(
 			throw new InvalidPayloadError({ reason: error.message });
 		}
 
-		const sinceDate = parseRange(value.range, 86_400_000);
+		const sinceDate = toSinceDate(value.range, 86_400_000);
 
 		const service = new DeploymentService({
 			accountability: req.accountability,
@@ -461,7 +461,7 @@ router.get(
 			throw new InvalidPayloadError({ reason: error.message });
 		}
 
-		const sinceDate = parseRange(value.range, 604_800_000).toISOString();
+		const sinceDate = toSinceDate(value.range, 604_800_000).toISOString();
 
 		const projectsService = new DeploymentProjectsService({
 			accountability: req.accountability,
