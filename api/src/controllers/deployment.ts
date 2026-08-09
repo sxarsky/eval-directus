@@ -184,9 +184,11 @@ router.get(
 
 		res.locals['payload'] = {
 			data: {
-				...details,
-				id: project.id,
-				external_id: project.external_id,
+				project: details,
+				meta: {
+					id: project.id,
+					external_id: project.external_id,
+				},
 			},
 		};
 
