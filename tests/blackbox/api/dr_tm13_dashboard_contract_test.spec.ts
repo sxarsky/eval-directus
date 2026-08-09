@@ -36,3 +36,22 @@ test('testDeploymentDashboardGet', async () => {
     expect(dashboardResponse.statusCode, 'status code').toBe(200);
     expect(getValue(dashboardResponse, 'data.projects')).toBeInstanceOf(Array);
 });
+
+// contract test for /deployments/:provider/dashboard GET - admin-only restriction
+test('testDeploymentDashboardGetForbidden', async () => {
+    const client = new SkyrampClient();
+    const headers: Record<string, string> = {};
+    // No Authorization header — unauthenticated requests get 403 from the admin check
+
+    const dashboardResponse = await client.sendRequest({
+        url: URL,
+        path: "/deployments/vercel/dashboard",
+        method: "GET",
+        headers: headers
+    });
+
+    // Assert 403 — the new admin check blocks unauthenticated/non-admin access
+    expect(dashboardResponse.statusCode, 'status code').toBe(403);
+    expect(getValue(dashboardResponse, 'errors.0.extensions.code')).toBe('FORBIDDEN');
+    expect(getValue(dashboardResponse, 'errors.1')).toBeNull();
+});
