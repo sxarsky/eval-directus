@@ -16,6 +16,7 @@ import { has, isEmpty } from 'lodash-es';
 import { getCache, getCacheValueWithTTL, setCacheValueWithExpiry } from '../cache.js';
 import type { DeploymentDriver } from '../deployment/deployment.js';
 import { getDeploymentDriver } from '../deployment.js';
+import emitter from '../emitter.js';
 import { useLogger } from '../logger/index.js';
 import { getMilliseconds } from '../utils/get-milliseconds.js';
 import { parseValue } from '../utils/parse-value.js';
@@ -549,7 +550,31 @@ export class DeploymentService extends ItemsService<DeploymentConfig> {
 			...(result.url ? { url: result.url } : {}),
 		});
 
-		return runsService.readOne(runId);
+		const run = await runsService.readOne(runId);
+
+		this.emitRunEvent('triggered', provider, run);
+
+		return run;
+	}
+
+	/**
+	 * Emit an action event for a deployment run lifecycle transition so that
+	 * Flows and custom hooks can react to deployments driven through the API
+	 * (mirrors the `deployment.webhook.*` events emitted for provider webhooks).
+	 */
+	private emitRunEvent(action: string, provider: ProviderType, run: DeploymentRun): void {
+		emitter.emitAction(
+			['deployment.run', `deployment.run.${action}`],
+			{
+				provider,
+				project_id: run.project,
+				run_id: run.id,
+				external_id: run.external_id,
+				status: run.status,
+				target: run.target,
+			},
+			null,
+		);
 	}
 
 	/**
