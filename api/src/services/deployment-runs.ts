@@ -12,6 +12,7 @@ export interface DeploymentRun {
 	completed_at: string | null;
 	date_created: string;
 	user_created: string;
+	branch: string | null;
 }
 
 export class DeploymentRunsService extends ItemsService<DeploymentRun> {
@@ -60,6 +61,7 @@ export class DeploymentRunsService extends ItemsService<DeploymentRun> {
 			...(event.url ? { url: event.url } : {}),
 			started_at: event.type === 'deployment.created' ? event.timestamp.toISOString() : null,
 			...(isTerminal ? { completed_at: event.timestamp.toISOString() } : {}),
+			branch: (event as any).branch ?? null,
 		})) as string;
 	}
 

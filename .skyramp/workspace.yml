@@ -7,8 +7,8 @@ workspace:
   repoUrl: git@github.com:sxarsky/eval-directus.git
 metadata:
   schemaVersion: v1
-  mcpVersion: 1.0.0
-  executorVersion: v1.0.0
+  mcpVersion: 0.3.2
+  executorVersion: v1.3.37
 services:
   - serviceName: directus-api-backend
     language: typescript
