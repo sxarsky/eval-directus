@@ -163,6 +163,30 @@ describe('VercelDriver', () => {
 			expect(result[1]).toEqual({ id: 'proj-2', name: 'App 2', deployable: false });
 			expect(mockAxiosRequest).toHaveBeenCalledTimes(2);
 		});
+
+		it('should include production_branch when link.productionBranch is set', async () => {
+			const mockResponse = {
+				projects: [{ id: 'proj-1', name: 'My App', link: { type: 'github', productionBranch: 'main' } }],
+			};
+
+			mockAxiosRequest.mockResolvedValueOnce(createAxiosResponse(200, mockResponse));
+
+			const result = await driver.listProjects();
+
+			expect(result[0]!.production_branch).toBe('main');
+		});
+
+		it('should not include production_branch when link.productionBranch is absent', async () => {
+			const mockResponse = {
+				projects: [{ id: 'proj-1', name: 'My App', link: { type: 'github' } }],
+			};
+
+			mockAxiosRequest.mockResolvedValueOnce(createAxiosResponse(200, mockResponse));
+
+			const result = await driver.listProjects();
+
+			expect(result[0]!.production_branch).toBeUndefined();
+		});
 	});
 
 	describe('getProject', () => {
@@ -215,6 +239,23 @@ describe('VercelDriver', () => {
 			const result = await driver.getProject('proj-2');
 
 			expect(result).toEqual(expected);
+		});
+
+		it('should include production_branch when link.productionBranch is set', async () => {
+			const mockResponse = {
+				id: 'proj-1',
+				name: 'My App',
+				framework: 'nextjs',
+				link: { type: 'github', productionBranch: 'develop' },
+				createdAt: 1690000000000,
+				updatedAt: 1700000000000,
+			};
+
+			mockAxiosRequest.mockResolvedValueOnce(createAxiosResponse(200, mockResponse));
+
+			const result = await driver.getProject('proj-1');
+
+			expect(result.production_branch).toBe('develop');
 		});
 	});
 
