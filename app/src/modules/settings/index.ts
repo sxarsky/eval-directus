@@ -1,6 +1,7 @@
 import { defineModule } from '@directus/extensions';
 import AiOverview from './routes/ai/overview.vue';
 import Appearance from './routes/appearance/item.vue';
+import BulkTagWizard from './routes/data-model/bulk-tag-wizard/wizard.vue';
 import Collections from './routes/data-model/collections/collections.vue';
 import FieldDetail from './routes/data-model/field-detail/field-detail.vue';
 import Fields from './routes/data-model/fields/fields.vue';
@@ -56,6 +57,11 @@ export default defineModule({
 			path: 'data-model',
 			component: RouterPass,
 			children: [
+				{
+					name: 'settings-bulk-tag-wizard',
+					path: 'bulk-tag-wizard',
+					component: BulkTagWizard,
+				},
 				{
 					name: 'settings-collections',
 					path: '',
