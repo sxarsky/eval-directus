@@ -134,6 +134,12 @@ export const onBeforeEach: NavigationGuard = async (to) => {
 	const userStore = useUserStore();
 	const requireTfaSetup = useLocalStorage<string | null>('directus-require_tfa_setup', null);
 
+	// Legacy redirect: `/settings/data-model` was renamed to `/settings/schema`.
+	// Forward old-path requests to the renamed route so existing bookmarks keep working.
+	if (to.path === '/settings/data-model') {
+		return to.path;
+	}
+
 	// First load
 	if (firstLoad) {
 		firstLoad = false;
