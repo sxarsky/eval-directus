@@ -34,6 +34,21 @@ const fieldsStore = useFieldsStore();
 const relationsStore = useRelationsStore();
 const { deleting, deleteActive, deleteCollection } = useDelete();
 
+// DR-U05: confirmation dialog before toggling a collection's hidden (archive) state
+const archiveConfirmActive = ref(false);
+const archiving = ref(false);
+
+async function confirmToggleHidden() {
+	if (archiving.value) return;
+	archiving.value = true;
+	try {
+		await update({ meta: { hidden: !props.collection.meta?.hidden } });
+		archiveConfirmActive.value = false;
+	} finally {
+		archiving.value = false;
+	}
+}
+
 const peerDependencies = computed(() => {
 	return relationsStore.relations
 		.filter((relation) => {
@@ -95,7 +110,12 @@ async function update(updates: DeepPartial<Collection>) {
 					</VListItemContent>
 				</VListItem>
 
-				<VListItem clickable @click="update({ meta: { hidden: !collection.meta?.hidden } })">
+				<VListItem
+					clickable
+					class="archive-toggle"
+					data-testid="archive-collection-trigger"
+					@click="archiveConfirmActive = true"
+				>
 					<template v-if="collection.meta?.hidden === false">
 						<VListItemIcon><VIcon name="visibility_off" /></VListItemIcon>
 						<VListItemContent>
@@ -165,6 +185,45 @@ async function update(updates: DeepPartial<Collection>) {
 				</VListItem>
 			</VList>
 		</VMenu>
+
+		<VDialog
+			v-model="archiveConfirmActive"
+			role="dialog"
+			data-testid="archive-collection-dialog"
+			@esc="archiveConfirmActive = false"
+			@apply="confirmToggleHidden"
+		>
+			<VCard>
+				<VCardTitle>
+					{{
+						collection.meta?.hidden
+							? (collection.schema ? $t('make_collection_visible') : $t('make_folder_visible'))
+							: (collection.schema ? $t('make_collection_hidden') : $t('make_folder_hidden'))
+					}}
+				</VCardTitle>
+				<VCardText>
+					{{ collection.collection }}
+				</VCardText>
+				<VCardActions>
+					<VButton
+						:disabled="archiving"
+						secondary
+						data-testid="archive-collection-cancel"
+						@click="archiveConfirmActive = false"
+					>
+						{{ $t('cancel') }}
+					</VButton>
+					<VButton
+						:loading="archiving"
+						kind="warning"
+						data-testid="archive-collection-confirm"
+						@click="confirmToggleHidden"
+					>
+						{{ $t('confirm') }}
+					</VButton>
+				</VCardActions>
+			</VCard>
+		</VDialog>
 
 		<VDialog v-model="deleteActive" @esc="deleteActive = false" @apply="deleteCollection">
 			<VCard>
