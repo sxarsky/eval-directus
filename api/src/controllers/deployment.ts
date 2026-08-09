@@ -446,7 +446,7 @@ router.get(
 // Project runs stats
 
 router.get(
-	'/:provider/projects/:id/runs/stats',
+	'/:provider/projects/:id/runs/analytics',
 	asyncHandler(async (req, res, next) => {
 		const provider = req.params['provider'] as ProviderType;
 		const projectId = req.params['id']!;
