@@ -187,3 +187,51 @@ test('sorting of count(links) with aggregation', async () => {
 
 	expect(rawQuery.bindings).toEqual([]);
 });
+
+test('sorting of json field', async () => {
+	const db = vi.mocked(knex.default({ client: Client_SQLite3 }));
+	const queryBuilder = db.queryBuilder();
+
+	const jsonSchema = new SchemaBuilder()
+		.collection('articles', (c) => {
+			c.field('id').id();
+			c.field('tags').json();
+		})
+		.build();
+
+	applySort(db, jsonSchema, queryBuilder, ['tags'], null, 'articles', {});
+
+	const tracker = createTracker(db);
+	tracker.on.select('*').response([]);
+
+	await queryBuilder;
+
+	const rawQuery = tracker.history.all[0]!;
+
+	expect(rawQuery.sql).toEqual(`select * order by "articles"."tags" asc`);
+	expect(rawQuery.bindings).toEqual([]);
+});
+
+test('sorting of csv field', async () => {
+	const db = vi.mocked(knex.default({ client: Client_SQLite3 }));
+	const queryBuilder = db.queryBuilder();
+
+	const csvSchema = new SchemaBuilder()
+		.collection('articles', (c) => {
+			c.field('id').id();
+			c.field('categories').csv();
+		})
+		.build();
+
+	applySort(db, csvSchema, queryBuilder, ['categories'], null, 'articles', {});
+
+	const tracker = createTracker(db);
+	tracker.on.select('*').response([]);
+
+	await queryBuilder;
+
+	const rawQuery = tracker.history.all[0]!;
+
+	expect(rawQuery.sql).toEqual(`select * order by "articles"."categories" asc`);
+	expect(rawQuery.bindings).toEqual([]);
+});
