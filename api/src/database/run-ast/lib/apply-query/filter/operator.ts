@@ -143,6 +143,13 @@ export function applyOperator(
 		dbQuery[logical].whereRaw(`LOWER(??) NOT LIKE ?`, [selectionRaw, `%${compareValue.toLowerCase()}%`]);
 	}
 
+	if (operator === '_like') {
+		// Raw LIKE pattern: the caller supplies their own `%`/`_` wildcards for
+		// advanced pattern matching, so the pattern is used verbatim rather than
+		// wrapped like `_contains` does.
+		dbQuery[logical].whereRaw(`?? LIKE '${compareValue}'`, [selectionRaw]);
+	}
+
 	if (operator === '_starts_with') {
 		dbQuery[logical].where(key, 'like', `${compareValue}%`);
 	}
