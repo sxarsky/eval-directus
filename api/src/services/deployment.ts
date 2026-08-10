@@ -13,7 +13,7 @@ import type {
 } from '@directus/types';
 import { mergeFilters } from '@directus/utils';
 import { has, isEmpty } from 'lodash-es';
-import { getCache, getCacheValueWithTTL, setCacheValueWithExpiry } from '../cache.js';
+import { getCache, getCacheValue, getCacheValueWithTTL, setCacheValueWithExpiry } from '../cache.js';
 import type { DeploymentDriver } from '../deployment/deployment.js';
 import { getDeploymentDriver } from '../deployment.js';
 import { useLogger } from '../logger/index.js';
@@ -27,6 +27,8 @@ import { ItemsService } from './items.js';
 
 const env = useEnv();
 const DEPLOYMENT_CACHE_TTL = getMilliseconds(env['CACHE_DEPLOYMENT_TTL']) || 5000; // Default 5s
+// Webhook config rarely changes, so it can be cached for longer to avoid a DB read on every inbound webhook
+const WEBHOOK_CONFIG_CACHE_TTL = getMilliseconds(env['CACHE_DEPLOYMENT_WEBHOOK_TTL']) || 15 * 60 * 1000; // Default 15m
 const SYNC_THRESHOLD_MS = 60 * 60 * 1000; // 1 hour
 
 export class DeploymentService extends ItemsService<DeploymentConfig> {
@@ -212,13 +214,27 @@ export class DeploymentService extends ItemsService<DeploymentConfig> {
 	async getWebhookConfig(
 		provider: ProviderType,
 	): Promise<{ webhook_secret: string | null; credentials: Credentials; options: Options }> {
+		const cacheKey = `${provider}:webhook-config`;
+		const { deploymentCache } = getCache();
+
+		// Serve from cache to avoid a DB read on the hot inbound-webhook path
+		const cached = await getCacheValue(deploymentCache, cacheKey);
+
+		if (cached) {
+			return cached as { webhook_secret: string | null; credentials: Credentials; options: Options };
+		}
+
 		const config = await this.readConfig(provider);
 
-		return {
+		const result = {
 			webhook_secret: config.webhook_secret ?? null,
 			credentials: parseValue<Credentials>(config.credentials, {}),
 			options: parseValue<Options>(config.options, {}),
 		};
+
+		await setCacheValueWithExpiry(deploymentCache, cacheKey, result, WEBHOOK_CONFIG_CACHE_TTL);
+
+		return result;
 	}
 
 	/**
