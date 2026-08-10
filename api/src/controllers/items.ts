@@ -1,6 +1,8 @@
+import { useEnv } from '@directus/env';
 import { ErrorCode, ForbiddenError, isDirectusError, RouteNotFoundError } from '@directus/errors';
 import { isSystemCollection } from '@directus/system-data';
-import type { PrimaryKey } from '@directus/types';
+import type { Accountability, PrimaryKey } from '@directus/types';
+import { toArray } from '@directus/utils';
 import express from 'express';
 import collectionExists from '../middleware/collection-exists.js';
 import { respond } from '../middleware/respond.js';
@@ -11,6 +13,26 @@ import asyncHandler from '../utils/async-handler.js';
 import { sanitizeQuery } from '../utils/sanitize-query.js';
 
 const router = express.Router();
+
+const env = useEnv();
+
+/**
+ * Enforce the delete-protection guard for a collection.
+ *
+ * Collections listed in the `DELETE_PROTECTED_COLLECTIONS` environment variable are
+ * treated as protected: their items may only be removed by an administrator. Delete
+ * requests issued with non-admin accountability against a protected collection are
+ * rejected before any item is removed.
+ */
+function assertCollectionDeletable(collection: string, accountability: Accountability | undefined): void {
+	const protectedCollections = toArray<string>((env['DELETE_PROTECTED_COLLECTIONS'] as string) ?? '')
+		.map((entry) => entry.trim())
+		.filter((entry) => entry.length > 0);
+
+	if (protectedCollections.includes(collection) && accountability && accountability.admin !== true) {
+		throw new ForbiddenError();
+	}
+}
 
 router.post(
 	'/:collection',
@@ -227,6 +249,8 @@ router.delete(
 	collectionExists,
 	asyncHandler(async (req, _res, next) => {
 		if (isSystemCollection(req.params['collection']!)) throw new ForbiddenError();
+
+		assertCollectionDeletable(req.collection, req.accountability);
 
 		const service = new ItemsService(req.collection, {
 			accountability: req.accountability,
