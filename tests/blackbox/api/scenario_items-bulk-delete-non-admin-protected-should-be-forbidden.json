@@ -1,0 +1,83 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"audit_log_protected\", \"meta\": {}, \"schema\": {}, \"fields\": [{\"field\": \"id\", \"type\": \"integer\", \"meta\": {\"hidden\": true, \"readonly\": true}, \"schema\": {\"is_primary_key\": true, \"has_auto_increment\": true}}, {\"field\": \"note\", \"type\": \"string\", \"meta\": {\"interface\": \"input\"}, \"schema\": {\"is_nullable\": true}}]}",
+    "ResponseBody": "{\"data\": {\"collection\": \"audit_log_protected\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:04:44.984Z",
+    "Scheme": "http",
+    "scenarioName": "items-bulk-delete-non-admin-protected-should-be-forbidden"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"note\": \"protected-entry\"}",
+    "ResponseBody": "{\"data\": {\"id\": 1, \"note\": \"protected-entry\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/audit_log_protected",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:04:45.984Z",
+    "Scheme": "http",
+    "scenarioName": "items-bulk-delete-non-admin-protected-should-be-forbidden"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"keys\": [1]}",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/items/audit_log_protected",
+    "QueryParams": {},
+    "StatusCode": 403,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:04:46.984Z",
+    "Scheme": "http",
+    "scenarioName": "items-bulk-delete-non-admin-protected-should-be-forbidden"
+  }
+]
