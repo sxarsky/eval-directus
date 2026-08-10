@@ -1,0 +1,110 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"audit_log_bulk\", \"meta\": {}, \"schema\": {}, \"fields\": [{\"field\": \"id\", \"type\": \"integer\", \"meta\": {\"hidden\": true, \"readonly\": true}, \"schema\": {\"is_primary_key\": true, \"has_auto_increment\": true}}, {\"field\": \"note\", \"type\": \"string\", \"meta\": {\"interface\": \"input\"}, \"schema\": {\"is_nullable\": true}}]}",
+    "ResponseBody": "{\"data\": {\"collection\": \"audit_log_bulk\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:04:39.167Z",
+    "Scheme": "http",
+    "scenarioName": "items-bulk-delete-protection-bypass"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"note\": \"test-audit-entry\"}",
+    "ResponseBody": "{\"data\": {\"id\": 1, \"note\": \"test-audit-entry\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/audit_log_bulk",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:04:40.167Z",
+    "Scheme": "http",
+    "scenarioName": "items-bulk-delete-protection-bypass"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"keys\": [1]}",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/items/audit_log_bulk",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:04:41.167Z",
+    "Scheme": "http",
+    "scenarioName": "items-bulk-delete-protection-bypass"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/audit_log_bulk",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:04:42.167Z",
+    "Scheme": "http",
+    "scenarioName": "items-bulk-delete-protection-bypass"
+  }
+]
