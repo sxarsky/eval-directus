@@ -11,6 +11,7 @@ const {
 	mockTestConnection,
 	mockListProjects,
 	mockGetProject,
+	mockGetCacheValue,
 	mockGetCacheValueWithTTL,
 	mockSetCacheValueWithExpiry,
 	mockLoggerDebug,
@@ -19,6 +20,7 @@ const {
 	mockTestConnection: vi.fn(),
 	mockListProjects: vi.fn(),
 	mockGetProject: vi.fn(),
+	mockGetCacheValue: vi.fn(),
 	mockGetCacheValueWithTTL: vi.fn(),
 	mockSetCacheValueWithExpiry: vi.fn(),
 	mockLoggerDebug: vi.fn(),
@@ -35,6 +37,7 @@ vi.mock('../deployment.js', () => ({
 
 vi.mock('../cache.js', () => ({
 	getCache: vi.fn(() => ({ deploymentCache: {} })),
+	getCacheValue: mockGetCacheValue,
 	getCacheValueWithTTL: mockGetCacheValueWithTTL,
 	setCacheValueWithExpiry: mockSetCacheValueWithExpiry,
 }));
@@ -513,6 +516,60 @@ describe('DeploymentService', () => {
 
 			expect(result.projects).toHaveLength(1);
 			expect(mockLoggerError).toHaveBeenCalled();
+		});
+	});
+
+	describe('getWebhookConfig', () => {
+		let service: DeploymentService;
+
+		const webhookConfig = {
+			id: 1,
+			provider: 'vercel',
+			webhook_secret: 'secret-123',
+			credentials: JSON.stringify({ access_token: 'token' }),
+			options: JSON.stringify({ team_id: 'team-1' }),
+		};
+
+		beforeEach(() => {
+			service = new DeploymentService({
+				knex: db,
+				schema,
+			});
+
+			tracker.on.select('directus_deployments').response([webhookConfig]);
+		});
+
+		it('should return cached config on cache hit without reading DB', async () => {
+			const cachedConfig = {
+				webhook_secret: 'secret-123',
+				credentials: { access_token: 'token' },
+				options: { team_id: 'team-1' },
+			};
+
+			mockGetCacheValue.mockResolvedValueOnce(cachedConfig);
+
+			const result = await service.getWebhookConfig('vercel');
+
+			expect(result).toEqual(cachedConfig);
+			expect(mockGetCacheValue).toHaveBeenCalledWith({}, 'vercel:webhook-config');
+			expect(mockSetCacheValueWithExpiry).not.toHaveBeenCalled();
+		});
+
+		it('should read DB and populate cache on cache miss', async () => {
+			mockGetCacheValue.mockResolvedValueOnce(null);
+
+			const result = await service.getWebhookConfig('vercel');
+
+			expect(mockGetCacheValue).toHaveBeenCalledWith({}, 'vercel:webhook-config');
+			expect(result.webhook_secret).toBe('secret-123');
+			expect(result.credentials).toEqual({ access_token: 'token' });
+			expect(result.options).toEqual({ team_id: 'team-1' });
+			expect(mockSetCacheValueWithExpiry).toHaveBeenCalledWith(
+				{},
+				'vercel:webhook-config',
+				expect.objectContaining({ webhook_secret: 'secret-123' }),
+				expect.any(Number),
+			);
 		});
 	});
 });
