@@ -82,11 +82,17 @@ describe('', () => {
 		expect(getFilterOperatorsForType('json')).toStrictEqual(['null', 'nnull']);
 	});
 
+	it('returns the filter operators for string', () => {
+		const ops = getFilterOperatorsForType('string');
+		expect(ops).toContain('like');
+	});
+
 	it('returns the filter operators for binary', () => {
 		expect(getFilterOperatorsForType('binary')).toStrictEqual([
 			'contains',
 			'ncontains',
 			'icontains',
+			'like',
 			'starts_with',
 			'nstarts_with',
 			'istarts_with',

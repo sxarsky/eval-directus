@@ -93,6 +93,13 @@ for (const { field, operator, value, sql, bindings } of [
 		sql: `select * where "articles"."likes" = ?`,
 		bindings: [[]],
 	},
+	{
+		field: 'articles.title',
+		operator: '_like',
+		value: 'hello%',
+		sql: `select * where "articles"."title" like ?`,
+		bindings: ['hello%'],
+	},
 ]) {
 	test(`applyOperator on ${field} ${operator} ${value}`, async () => {
 		const db = vi.mocked(knex.default({ client: Client_SQLite3 }));

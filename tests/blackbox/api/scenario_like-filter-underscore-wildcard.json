@@ -1,0 +1,168 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"test_like_us\", \"fields\": [{\"field\": \"id\", \"type\": \"integer\", \"schema\": {\"is_primary_key\": true, \"has_auto_increment\": true}}, {\"field\": \"slug\", \"type\": \"string\", \"schema\": {}}], \"meta\": {}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"test_like_us\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:55:32.003Z",
+    "Scheme": "http",
+    "scenarioName": "like-filter-underscore-wildcard"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"slug\": \"INV-AAAA-2024\"}",
+    "ResponseBody": "{\"data\": {\"id\": 1, \"slug\": \"INV-AAAA-2024\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/test_like_us",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:55:33.003Z",
+    "Scheme": "http",
+    "scenarioName": "like-filter-underscore-wildcard"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"slug\": \"INV-BBBB-2024\"}",
+    "ResponseBody": "{\"data\": {\"id\": 2, \"slug\": \"INV-BBBB-2024\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/test_like_us",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:55:34.003Z",
+    "Scheme": "http",
+    "scenarioName": "like-filter-underscore-wildcard"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"slug\": \"INV-AA-2024\"}",
+    "ResponseBody": "{\"data\": {\"id\": 3, \"slug\": \"INV-AA-2024\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/test_like_us",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:55:35.003Z",
+    "Scheme": "http",
+    "scenarioName": "like-filter-underscore-wildcard"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": [{\"slug\": \"INV-AAAA-2024\"}, {\"slug\": \"INV-BBBB-2024\"}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/items/test_like_us",
+    "QueryParams": {
+      "filter[slug][_like]": [
+        "INV-____-2024"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:55:36.003Z",
+    "Scheme": "http",
+    "scenarioName": "like-filter-underscore-wildcard"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/test_like_us",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-10T01:55:37.003Z",
+    "Scheme": "http",
+    "scenarioName": "like-filter-underscore-wildcard"
+  }
+]
