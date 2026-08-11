@@ -1,0 +1,83 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-11T23:32:46.810Z",
+    "Scheme": "http",
+    "scenarioName": "comments-delete-removes-from-summary"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"directus_users\", \"item\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\", \"comment\": \"Delete-and-verify test comment\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"ee555555-5555-4555-8555-555555555555\", \"collection\": \"directus_users\", \"item\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\", \"comment\": \"Delete-and-verify test comment\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/comments",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-11T23:32:47.810Z",
+    "Scheme": "http",
+    "scenarioName": "comments-delete-removes-from-summary"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/comments/ee555555-5555-4555-8555-555555555555",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-11T23:32:48.810Z",
+    "Scheme": "http",
+    "scenarioName": "comments-delete-removes-from-summary"
+  }
+]

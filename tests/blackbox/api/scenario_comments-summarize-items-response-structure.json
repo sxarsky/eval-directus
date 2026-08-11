@@ -1,0 +1,114 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-11T23:32:53.416Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-items-response-structure"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"directus_users\", \"item\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\", \"comment\": \"Structure verification test comment\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"e6c3a8f2-1234-4567-8901-abcdef123456\", \"collection\": \"directus_users\", \"item\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\", \"comment\": \"Structure verification test comment\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/comments",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-11T23:32:54.416Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-items-response-structure"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"items\": [{\"collection\": \"directus_users\", \"item\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\", \"comment_count\": 1}], \"total_comments\": 1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/comments",
+    "QueryParams": {
+      "summarize": [
+        "items"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-11T23:32:55.416Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-items-response-structure"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/comments/e6c3a8f2-1234-4567-8901-abcdef123456",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-11T23:32:56.416Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-items-response-structure"
+  }
+]
