@@ -26,6 +26,32 @@ export class CommentsService extends ItemsService {
 		this.usersService = new UsersService({ schema: this.schema });
 	}
 
+	async getItemsSummary(): Promise<{
+		items: { collection: string; item: string; comment_count: number }[];
+		total_comments: number;
+	}> {
+		const grouped = (await this.knex('directus_comments')
+			.select('collection', 'item')
+			.count({ comment_count: '*' })
+			.groupBy('collection', 'item')
+			.orderBy('comment_count', 'desc')) as unknown as {
+			collection: string;
+			item: string;
+			comment_count: number | string;
+		}[];
+
+		const items = grouped.map((row) => ({
+			collection: row.collection,
+			item: row.item,
+			comment_count: Number(row.comment_count),
+		}));
+
+		// Total number of comments across all commented items.
+		const total_comments = items.length;
+
+		return { items, total_comments };
+	}
+
 	override async createOne(data: Partial<Comment>, opts?: MutationOptions): Promise<PrimaryKey> {
 		if (!this.accountability?.user) throw new ForbiddenError();
 
