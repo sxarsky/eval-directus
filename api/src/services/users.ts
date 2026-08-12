@@ -46,12 +46,24 @@ export class UsersService extends ItemsService {
 	/**
 	 * Seat usage across the instance's users.
 	 */
-	async getSeatUsage(): Promise<{ seats_in_use: number }> {
+	async getSeatUsage(): Promise<{
+		seats_in_use: number;
+		by_role: { role: string | null; count: number }[];
+	}> {
 		const [{ seats_in_use }] = (await this.knex('directus_users').count({
 			seats_in_use: '*',
 		})) as unknown as [{ seats_in_use: number | string }];
 
-		return { seats_in_use: Number(seats_in_use) };
+		// Per-role breakdown of the users occupying a seat.
+		const rows = (await this.knex('directus_users')
+			.where('status', 'active')
+			.select('role')
+			.count({ count: '*' })
+			.groupBy('role')) as unknown as { role: string | null; count: number | string }[];
+
+		const by_role = rows.map((row) => ({ role: row.role, count: Number(row.count) }));
+
+		return { seats_in_use: Number(seats_in_use), by_role };
 	}
 
 	/**
