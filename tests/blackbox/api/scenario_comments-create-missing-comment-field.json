@@ -1,0 +1,29 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"articles\", \"item\": \"1\"}",
+    "ResponseBody": "{\"errors\": [{\"message\": \"\\\"comment\\\" is required\"}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/comments",
+    "QueryParams": {},
+    "StatusCode": 400,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T02:28:39.618Z",
+    "Scheme": "http",
+    "scenarioName": "comments-create-missing-comment-field"
+  }
+]
