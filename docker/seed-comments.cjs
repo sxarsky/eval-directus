@@ -1,6 +1,7 @@
 // Eval seed: populate directus_comments with a realistic volume of activity so the
 // commented-items summary has meaningful data to report. Runs after `directus bootstrap`
-// (schema present) and before the server starts. SQLite, DB-level insert.
+// (schema present) and before the server starts. SQLite, via Directus's own knex.
+const fs = require('node:fs');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 
@@ -9,31 +10,35 @@ const TARGET_COLLECTION = 'articles';
 const TARGET_ITEM = '1';
 const COUNT = 121;
 
-// better-sqlite3 ships with the Directus runtime image (DB_CLIENT=sqlite3).
-const require_bsqlite = () => {
-	try {
-		return require('better-sqlite3');
-	} catch {
-		return require(path.join('/directus', 'node_modules', 'better-sqlite3'));
-	}
-};
+// Resolve knex from Directus's pnpm store (not hoisted to /directus/node_modules).
+const pnpmStore = '/directus/node_modules/.pnpm';
+const knexDir = fs.readdirSync(pnpmStore).find((d) => d.startsWith('knex@'));
+if (!knexDir) throw new Error('[seed-comments] could not locate knex in pnpm store');
+const Knex = require(path.join(pnpmStore, knexDir, 'node_modules', 'knex'));
 
-const Database = require_bsqlite();
-const db = new Database(DB_FILENAME);
-
-const insert = db.prepare(
-	"INSERT INTO directus_comments (id, collection, item, comment, date_created, date_updated) " +
-		"VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))",
-);
-
-const tx = db.transaction(() => {
-	for (let i = 0; i < COUNT; i++) {
-		insert.run(randomUUID(), TARGET_COLLECTION, TARGET_ITEM, `Seed comment #${i + 1}`);
-	}
+const db = Knex({
+	client: 'sqlite3',
+	connection: { filename: DB_FILENAME },
+	useNullAsDefault: true,
 });
 
-tx();
+(async () => {
+	const now = new Date().toISOString();
+	const rows = Array.from({ length: COUNT }, (_, i) => ({
+		id: randomUUID(),
+		collection: TARGET_COLLECTION,
+		item: TARGET_ITEM,
+		comment: `Seed comment #${i + 1}`,
+		date_created: now,
+		date_updated: now,
+	}));
 
-const total = db.prepare('SELECT COUNT(*) AS n FROM directus_comments').get().n;
-console.log(`[seed-comments] inserted ${COUNT} comments on ${TARGET_COLLECTION}/${TARGET_ITEM}; directus_comments now has ${total} rows`);
-db.close();
+	await db.batchInsert('directus_comments', rows, 50);
+
+	const [{ n }] = await db('directus_comments').count({ n: '*' });
+	console.log(`[seed-comments] inserted ${COUNT} comments on ${TARGET_COLLECTION}/${TARGET_ITEM}; directus_comments now has ${n} rows`);
+	await db.destroy();
+})().catch((e) => {
+	console.error('[seed-comments] FAILED:', e && e.message ? e.message : e);
+	process.exit(1);
+});
