@@ -1,0 +1,29 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": [{\"id\": \"some-uuid\", \"email\": \"user@example.com\"}], \"meta\": {\"total_count\": 1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T08:44:25.989Z",
+    "Scheme": "http",
+    "scenarioName": "users-no-summarize-backward-compat"
+  }
+]
