@@ -1,0 +1,117 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"email\": \"to-suspend@test.com\", \"password\": \"Pass1234!\", \"first_name\": \"To\", \"last_name\": \"Suspend\", \"status\": \"active\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"22222222-2222-4222-8222-222222222222\", \"email\": \"to-suspend@test.com\", \"status\": \"active\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/users",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T04:56:38.929Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-filter-full",
+    "UniqueFields": [
+      "email"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"directus_users\", \"item\": \"22222222-2222-4222-8222-222222222222\", \"comment\": \"Comment before suspension - should be excluded after user suspended\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"33333333-3333-4333-8333-333333333333\", \"collection\": \"directus_users\", \"item\": \"22222222-2222-4222-8222-222222222222\", \"comment\": \"Comment before suspension - should be excluded after user suspended\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/comments",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T04:56:39.929Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-filter-full"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"status\": \"suspended\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"22222222-2222-4222-8222-222222222222\", \"status\": \"suspended\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/users/22222222-2222-4222-8222-222222222222",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T04:56:40.929Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-filter-full"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"items\": [], \"total_comments\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/comments",
+    "QueryParams": {
+      "summarize": [
+        "items"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T04:56:41.929Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-filter-full"
+  }
+]

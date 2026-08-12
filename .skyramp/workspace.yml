@@ -1,33 +1,36 @@
-# Skyramp Workspace Configuration for Directus eval.
-# Uses SQLite via docker-compose.eval.yml — no external database needed.
-# Auth: Bearer token obtained via get-auth-token.sh after services start.
-# schemaPath uses the live OAS endpoint served by the running container.
+# Skyramp Workspace Configuration
 workspace:
   repoName: sxarsky/eval-directus
-  repoUrl: git@github.com:sxarsky/eval-directus.git
+  repoUrl: https://github.com/sxarsky/eval-directus
 metadata:
   schemaVersion: v1
-  mcpVersion: 0.3.2
   executorVersion: v1.3.37
+  createdAt: "2026-08-12T05:05:17.815Z"
+  updatedAt: "2026-08-12T05:05:17.818Z"
 services:
   - serviceName: directus-api-backend
     language: typescript
     framework: playwright
     testDirectory: tests/blackbox/api
     api:
-      baseUrl: http://localhost:8055
       schemaPath: http://localhost:8055/server/specs/oas
-      authHeader: Authorization
       authType: bearer
+      authHeader: Authorization
+      baseUrl: http://localhost:8055
     runtimeDetails:
       runtime: local
+      testSuites:
+        - testRunCommand: npx playwright test
+          testEnv:
+            SKYRAMP_TEST_TOKEN: >-
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdiNTRkYmRiLTcxYmMtNGFiMC1hOGU3LTk3ZjYyOWVlMTI1ZiIsInJvbGUiOiJjYjU2YzRlZi04MzMyLTQzYTgtYTg2Ny03NjM4ZjE0MmIxYTQiLCJhcHBfYWNjZXNzIjp0cnVlLCJhZG1pbl9hY2Nlc3MiOnRydWUsImlhdCI6MTc4NjUxMTEwOCwiZXhwIjoxNzg2NTEyMDA4LCJpc3MiOiJkaXJlY3R1cyJ9.XiVEzlrtkOPN2EieDnuYFb0Pbp5H_S7iJZhiO3cZO4k
   - serviceName: directus-app-frontend
     language: typescript
     framework: playwright
     testDirectory: app/tests
     api:
-      baseUrl: http://localhost:8055
       authType: none
       authHeader: ""
+      baseUrl: http://localhost:8055
     runtimeDetails:
       runtime: local
