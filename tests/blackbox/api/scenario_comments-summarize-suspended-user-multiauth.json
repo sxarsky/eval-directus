@@ -1,0 +1,117 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"email\": \"suspended-test@example.com\", \"password\": \"TestPassword123!\", \"first_name\": \"Test\", \"last_name\": \"Suspended\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"00000000-0000-0000-0000-000000000002\", \"email\": \"suspended-test@example.com\", \"status\": \"active\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/users",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T06:51:07.572Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-user-multiauth",
+    "UniqueFields": [
+      "email"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"status\": \"suspended\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"00000000-0000-0000-0000-000000000002\", \"status\": \"suspended\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/users/00000000-0000-0000-0000-000000000002",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T06:51:08.572Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-user-multiauth"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"items\": [], \"total_comments\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/comments",
+    "QueryParams": {
+      "summarize": [
+        "items"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T06:51:09.572Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-user-multiauth"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/users/00000000-0000-0000-0000-000000000002",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-12T06:51:10.572Z",
+    "Scheme": "http",
+    "scenarioName": "comments-summarize-suspended-user-multiauth"
+  }
+]
