@@ -26,7 +26,7 @@ export class CommentsService extends ItemsService {
 		this.usersService = new UsersService({ schema: this.schema });
 	}
 
-	async getActiveItemsSummary(): Promise<{
+	async getItemsSummary(): Promise<{
 		items: { collection: string; item: string; comment_count: number }[];
 		total_comments: number;
 	}> {

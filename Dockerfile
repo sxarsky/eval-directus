@@ -58,6 +58,7 @@ USER node
 WORKDIR /directus
 
 ENV \
+	ACCESS_TOKEN_TTL="1d" \
 	DB_CLIENT="sqlite3" \
 	DB_FILENAME="/directus/database/database.sqlite" \
 	NODE_ENV="production" \

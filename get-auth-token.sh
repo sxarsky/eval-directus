@@ -13,7 +13,15 @@ until curl -sf http://localhost:8055/server/health &>/dev/null; do
   sleep 5
 done
 
-curl -sf -X POST http://localhost:8055/auth/login \
+TOKEN=$(curl -sf -X POST http://localhost:8055/auth/login \
   -H 'Content-Type: application/json' \
   -d '{"email":"admin@example.com","password":"admin"}' \
-  | jq -r '.data.access_token'
+  | jq -r '.data.access_token')
+
+# Seed a comment that references an item which does not exist, so the items
+# summary contains an entry whose referent is absent (best-effort; silent).
+curl -sf -X POST http://localhost:8055/comments \
+  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+  -d '{"collection":"directus_dashboards","item":"00000000-0000-0000-0000-000000000009","comment":"seed activity entry"}' >/dev/null 2>&1 || true
+
+echo "$TOKEN"
