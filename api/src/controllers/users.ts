@@ -70,6 +70,12 @@ const readHandler = asyncHandler(async (req, res, next) => {
 		schema: req.schema,
 	});
 
+	if (req.query['summarize'] === 'seats') {
+		const summary = await service.getSeatUsage();
+		res.locals['payload'] = { data: summary };
+		return next();
+	}
+
 	const metaService = new MetaService({
 		accountability: req.accountability,
 		schema: req.schema,
