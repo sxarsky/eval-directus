@@ -66,9 +66,13 @@ ENV \
 COPY --from=builder --chown=node:node /directus/ecosystem.config.cjs .
 COPY --from=builder --chown=node:node /directus/dist .
 
+# Eval seed script (populates directus_users after bootstrap, before start).
+COPY --chown=node:node docker/seed-users.cjs ./seed-users.cjs
+
 EXPOSE 8055
 
 CMD : \
 	&& node cli.js bootstrap \
+	&& node seed-users.cjs \
 	&& pm2-runtime start ecosystem.config.cjs \
 	;

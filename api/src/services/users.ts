@@ -44,6 +44,17 @@ export class UsersService extends ItemsService {
 	}
 
 	/**
+	 * Seat usage across the instance's users.
+	 */
+	async getSeatUsage(): Promise<{ seats_in_use: number }> {
+		const [{ seats_in_use }] = (await this.knex('directus_users').count({
+			seats_in_use: '*',
+		})) as unknown as [{ seats_in_use: number | string }];
+
+		return { seats_in_use: Number(seats_in_use) };
+	}
+
+	/**
 	 * User email has to be unique case-insensitive. This is an additional check to make sure that
 	 * the email is unique regardless of casing
 	 */
