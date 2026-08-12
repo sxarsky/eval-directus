@@ -45,6 +45,7 @@ jobs:
           githubToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
           skyrampMcpVersion: 0.3.2
           skyrampExecutorVersion: v1.3.37
+          maxGenerate: '8'
           generatedTestsMode: separate-branch
 
           targetSetupCommand: 'docker compose -f docker-compose.eval.yml up directus --build -d'
