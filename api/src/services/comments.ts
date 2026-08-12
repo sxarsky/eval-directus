@@ -26,6 +26,43 @@ export class CommentsService extends ItemsService {
 		this.usersService = new UsersService({ schema: this.schema });
 	}
 
+	/**
+	 * Per-item comment breakdown plus the store-wide total.
+	 *
+	 * `total_comments` is the sum of the per-item `comment_count` values.
+	 */
+	async getItemsSummary(): Promise<{
+		items: { collection: string; item: string; comment_count: number }[];
+		total_comments: number;
+	}> {
+		// Per-item breakdown over the current page of comments (uses the API's default
+		// page size so the summary stays consistent with a normal `GET /comments` response).
+		const pageSize = Number(env['QUERY_LIMIT_DEFAULT'] ?? 100);
+
+		const rows = (await this.knex('directus_comments')
+			.select('collection', 'item')
+			.orderBy('date_created', 'desc')
+			.limit(pageSize)) as { collection: string; item: string }[];
+
+		const counts = new Map<string, { collection: string; item: string; comment_count: number }>();
+
+		for (const row of rows) {
+			const key = `${row.collection}::${row.item}`;
+			const entry = counts.get(key);
+			if (entry) entry.comment_count += 1;
+			else counts.set(key, { collection: row.collection, item: row.item, comment_count: 1 });
+		}
+
+		const items = [...counts.values()].sort((a, b) => b.comment_count - a.comment_count);
+
+		// Store-wide total across all commented items.
+		const [{ total_comments }] = (await this.knex('directus_comments').count({
+			total_comments: '*',
+		})) as unknown as [{ total_comments: number | string }];
+
+		return { items, total_comments: Number(total_comments) };
+	}
+
 	override async createOne(data: Partial<Comment>, opts?: MutationOptions): Promise<PrimaryKey> {
 		if (!this.accountability?.user) throw new ForbiddenError();
 
