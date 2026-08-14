@@ -5,6 +5,7 @@ import express from 'express';
 import collectionExists from '../middleware/collection-exists.js';
 import { respond } from '../middleware/respond.js';
 import { validateBatch } from '../middleware/validate-batch.js';
+import { CommentsService } from '../services/comments.js';
 import { ItemsService } from '../services/items.js';
 import { MetaService } from '../services/meta.js';
 import asyncHandler from '../utils/async-handler.js';
@@ -107,8 +108,24 @@ router.get(
 
 		const result = await service.readOne(req.params['pk']!, req.sanitizedQuery);
 
+		let data = result || null;
+
+		if (data && req.query['summary'] === 'activity') {
+			const commentsService = new CommentsService({
+				accountability: req.accountability,
+				schema: req.schema,
+			});
+
+			const comment_activity = await commentsService.getItemActivitySummary(
+				req.params['collection']!,
+				req.params['pk']!,
+			);
+
+			data = { ...data, comment_activity };
+		}
+
 		res.locals['payload'] = {
-			data: result || null,
+			data,
 		};
 
 		return next();

@@ -26,6 +26,35 @@ export class CommentsService extends ItemsService {
 		this.usersService = new UsersService({ schema: this.schema });
 	}
 
+	/**
+	 * Build a lightweight activity summary for a single item: how many comments it has
+	 * and the most recent one. Used to surface engagement on the item detail read.
+	 */
+	async getItemActivitySummary(
+		collection: string,
+		item: string,
+	): Promise<{
+		comment_count: number;
+		latest_comment: { comment: string; date_created: string; user_created: string } | null;
+	}> {
+		const countRow = await this.knex('directus_comments')
+			.where({ collection, item })
+			.count({ comment_count: '*' })
+			.first();
+
+		const comment_count = Number(countRow?.['comment_count'] ?? 0);
+
+		const latest = await this.knex('directus_comments')
+			.where({ collection, item })
+			.orderBy('date_created', 'desc')
+			.first('comment', 'date_created', 'user_created');
+
+		return {
+			comment_count,
+			latest_comment: latest ?? null,
+		};
+	}
+
 	override async createOne(data: Partial<Comment>, opts?: MutationOptions): Promise<PrimaryKey> {
 		if (!this.accountability?.user) throw new ForbiddenError();
 
