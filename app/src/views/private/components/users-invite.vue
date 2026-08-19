@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Role } from '@directus/types';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import api from '@/api';
 import VButton from '@/components/v-button.vue';
 import VCardActions from '@/components/v-card-actions.vue';
@@ -29,6 +29,54 @@ const roleSelected = ref<string | undefined>(props.role);
 const loading = ref(false);
 
 const uniqueValidationErrors = ref([]);
+const emailError = ref<string | null>(null);
+const roleError = ref<string | null>(null);
+
+const isFormValid = computed(() => {
+	return emails.value.length > 0 && emailError.value === null && roleError.value === null;
+});
+
+function validateEmail() {
+	const parsed = emails.value
+		.split(/,|\n/)
+		.filter((e) => e)
+		.map((email) => email.trim());
+
+	if (parsed.length === 0) {
+		emailError.value = 'required';
+		return;
+	}
+
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	for (const email of parsed) {
+		if (!emailRegex.test(email)) {
+			emailError.value = 'invalid';
+			return;
+		}
+	}
+
+	emailError.value = null;
+}
+
+function validateRole() {
+	if (props.role) {
+		roleError.value = null;
+		return;
+	}
+
+	if (!roleSelected.value) {
+		roleError.value = 'required';
+		return;
+	}
+
+	roleError.value = null;
+}
+
+function validateAll() {
+	validateEmail();
+	validateRole();
+}
 
 watch(
 	() => props.modelValue,
@@ -38,7 +86,8 @@ watch(
 );
 
 async function inviteUsers() {
-	if (emails.value.length === 0 || loading.value) return;
+	validateAll();
+	if (!isFormValid.value || loading.value) return;
 
 	loading.value = true;
 
@@ -105,11 +154,24 @@ async function loadRoles() {
 				<div class="grid">
 					<div class="field">
 						<div class="type-label">{{ $t('emails') }}</div>
-						<VTextarea v-model="emails" :nullable="false" placeholder="admin@example.com, user@example.com..." />
+						<VTextarea
+						v-model="emails"
+						:nullable="false"
+						:aria-invalid="emailError ? 'true' : undefined"
+						placeholder="admin@example.com, user@example.com..."
+						@blur="validateEmail"
+					/>
+					<span v-if="emailError" class="field-error">{{ $t('validationError.email') }}</span>
 					</div>
 					<div v-if="!role" class="field">
 						<div class="type-label">{{ $t('role') }}</div>
-						<VSelect v-model="roleSelected" :items="roles" />
+						<VSelect
+						v-model="roleSelected"
+						:items="roles"
+						:aria-invalid="roleError ? 'true' : undefined"
+						@blur="validateRole"
+					/>
+					<span v-if="roleError" class="field-error">{{ $t('validationError.required') }}</span>
 					</div>
 					<VNotice v-if="uniqueValidationErrors.length > 0" class="field" type="danger">
 						<div v-for="(err, i) in uniqueValidationErrors" :key="i">
@@ -126,7 +188,7 @@ async function loadRoles() {
 
 			<VCardActions>
 				<VButton secondary @click="$emit('update:modelValue', false)">{{ $t('cancel') }}</VButton>
-				<VButton :disabled="emails.length === 0" :loading="loading" @click="inviteUsers">
+				<VButton :disabled="!isFormValid" :loading="loading" @click="inviteUsers">
 					{{ $t('invite') }}
 				</VButton>
 			</VCardActions>
@@ -145,5 +207,11 @@ async function loadRoles() {
 
 .v-card-title {
 	font-size: 20px;
+}
+
+.field-error {
+	color: var(--theme--danger);
+	font-size: 12px;
+	margin-block-start: 4px;
 }
 </style>
