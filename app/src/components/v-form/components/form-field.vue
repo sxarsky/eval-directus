@@ -39,6 +39,7 @@ const props = withDefaults(
 		direction?: string;
 		version?: ContentVersion | null;
 		collabFieldContext?: CollabFieldContext;
+		ariaInvalid?: boolean;
 	}>(),
 	{
 		modelValue: undefined,
@@ -250,6 +251,7 @@ function useComputedValues() {
 		<div v-else-if="['full', 'fill'].includes(field.meta?.width ?? '') === false" class="label-spacer" />
 
 		<FormFieldInterface
+			:aria-invalid="ariaInvalid ? 'true' : undefined"
 			:autofocus="autofocus"
 			:model-value="internalValue"
 			:field="field"
