@@ -1,0 +1,36 @@
+# Skyramp Workspace Configuration for Directus eval.
+# Copied into the cloned repo by eval-testbot.sh before the agent runs.
+# Mirrors the real workspace.yml from directus/directus, adjusted for eval:
+#   - schemaPath uses the live OAS endpoint (no absolute local path)
+#   - serverStartCommand omitted (Docker handles the runtime)
+workspace:
+  repoName: directus/directus
+  repoUrl: git@github.com:directus/directus.git
+metadata:
+  schemaVersion: v1
+  mcpVersion: 1.0.0
+  executorVersion: v1.0.0
+  createdAt: "2026-06-04T20:14:28.395Z"
+  updatedAt: "2026-06-04T20:14:28.403Z"
+services:
+  - serviceName: directus-api-backend
+    language: typescript
+    framework: playwright
+    testDirectory: tests/blackbox/api
+    api:
+      baseUrl: http://localhost:8055
+      schemaPath: http://localhost:8055/server/specs/oas
+      authHeader: Authorization
+      authType: bearer
+    runtimeDetails:
+      runtime: local
+  - serviceName: directus-app-frontend
+    language: typescript
+    framework: playwright
+    testDirectory: app/tests
+    api:
+      baseUrl: http://localhost:8055
+      authType: none
+      authHeader: ""
+    runtimeDetails:
+      runtime: local
