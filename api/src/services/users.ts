@@ -250,7 +250,12 @@ export class UsersService extends ItemsService {
 	}
 
 	/**
-	 * Update many users by primary key
+	 * Update many users by primary key.
+	 *
+	 * @param {PrimaryKey[]} keys - User primary keys to update.
+	 * @param {Partial<Item>} data - User field values to persist.
+	 * @param {MutationOptions} opts - Mutation options for the update operation.
+	 * @returns {Promise<PrimaryKey[]>} Primary keys for the updated users.
 	 */
 	override async updateMany(
 		keys: PrimaryKey[],
@@ -333,7 +338,11 @@ export class UsersService extends ItemsService {
 	}
 
 	/**
-	 * Delete multiple users by primary key
+	 * Delete multiple users by primary key.
+	 *
+	 * @param {PrimaryKey[]} keys - User primary keys to delete.
+	 * @param {MutationOptions} opts - Mutation options for the delete operation.
+	 * @returns {Promise<PrimaryKey[]>} Primary keys for the deleted users.
 	 */
 	override async deleteMany(keys: PrimaryKey[], opts: MutationOptions = {}): Promise<PrimaryKey[]> {
 		if (opts?.onRequireUserIntegrityCheck) {

@@ -423,9 +423,11 @@ export class ItemsService<Item extends AnyItem = AnyItem, Collection extends str
 	}
 
 	/**
-	 * Create multiple new items at once. Inserts all provided records sequentially wrapped in a transaction.
+	 * Create multiple new items at once.
 	 *
-	 * Uses `this.createOne` under the hood.
+	 * @param {Partial<Item>[]} data - Records to insert sequentially in a transaction.
+	 * @param {MutationOptions} opts - Mutation options forwarded to each create call.
+	 * @returns {Promise<PrimaryKey[]>} Primary keys for the newly created items.
 	 */
 	async createMany(data: Partial<Item>[], opts: MutationOptions = {}): Promise<PrimaryKey[]> {
 		if (!opts.mutationTracker) opts.mutationTracker = this.createMutationTracker();
@@ -492,6 +494,10 @@ export class ItemsService<Item extends AnyItem = AnyItem, Collection extends str
 
 	/**
 	 * Get items by query.
+	 *
+	 * @param {Query} query - Query object used to read matching items.
+	 * @param {QueryOptions} opts - Optional query execution settings.
+	 * @returns {Promise<Item[]>} Items matching the provided query.
 	 */
 	async readByQuery(query: Query, opts?: QueryOptions): Promise<Item[]> {
 		const updatedQuery =
