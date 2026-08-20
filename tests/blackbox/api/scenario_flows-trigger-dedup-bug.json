@@ -1,0 +1,86 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\": \"Dedup Bug Test Flow\", \"trigger\": \"manual\", \"status\": \"active\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"d290f1ee-6c54-4b01-90e6-d701748f0851\", \"name\": \"Dedup Bug Test Flow\", \"status\": \"active\", \"trigger\": \"manual\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:31:52.763Z",
+    "Scheme": "http",
+    "scenarioName": "flows-trigger-dedup-bug",
+    "UniqueFields": [
+      "name"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\": \"2026-08-20T10:00:00Z\"}",
+    "ResponseBody": "{\"data\": {\"executed\": true, \"execution_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\", \"webhook_count\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/d290f1ee-6c54-4b01-90e6-d701748f0851/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:31:53.763Z",
+    "Scheme": "http",
+    "scenarioName": "flows-trigger-dedup-bug"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/flows/d290f1ee-6c54-4b01-90e6-d701748f0851",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:31:54.763Z",
+    "Scheme": "http",
+    "scenarioName": "flows-trigger-dedup-bug"
+  }
+]
