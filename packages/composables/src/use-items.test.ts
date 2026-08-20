@@ -285,4 +285,110 @@ describe('useItems', () => {
 
 		expect(unref(items.value[0]?.['$thumbnail'])).toBeOneOf([expect.any(Object)]);
 	});
+
+	describe('state computed ref (DR-UC04)', () => {
+		test('should return idle when not loading, no error, and search is empty', async () => {
+			vi.mocked(mockApiGet).mockResolvedValue({ data: { data: [{ id: 1 }] } });
+
+			const { state } = useItems(ref('test_collection'), {
+				fields: ref(['id']),
+				limit: ref(25),
+				sort: ref(null),
+				search: ref(''),
+				filter: ref(null),
+				page: ref(1),
+			});
+
+			await flushPromises();
+
+			expect(state.value).toBe('idle');
+		});
+
+		test('should return idle when search is null', async () => {
+			vi.mocked(mockApiGet).mockResolvedValue({ data: { data: [{ id: 1 }] } });
+
+			const { state } = useItems(ref('test_collection'), {
+				fields: ref(['id']),
+				limit: ref(25),
+				sort: ref(null),
+				search: ref(null),
+				filter: ref(null),
+				page: ref(1),
+			});
+
+			await flushPromises();
+
+			expect(state.value).toBe('idle');
+		});
+
+		test('should return results when search is active and items exist', async () => {
+			vi.mocked(mockApiGet).mockResolvedValue({ data: { data: [{ id: 1, name: 'match' }] } });
+
+			const { state } = useItems(ref('test_collection'), {
+				fields: ref(['id', 'name']),
+				limit: ref(25),
+				sort: ref(null),
+				search: ref('match'),
+				filter: ref(null),
+				page: ref(1),
+			});
+
+			await flushPromises();
+
+			expect(state.value).toBe('results');
+		});
+
+		test('should return empty when search is active but no items returned', async () => {
+			vi.mocked(mockApiGet).mockResolvedValue({ data: { data: [] } });
+
+			const { state } = useItems(ref('test_collection'), {
+				fields: ref(['id']),
+				limit: ref(25),
+				sort: ref(null),
+				search: ref('no-match-xyz'),
+				filter: ref(null),
+				page: ref(1),
+			});
+
+			await flushPromises();
+
+			expect(state.value).toBe('empty');
+		});
+
+		test('should return error when API fetch fails', async () => {
+			vi.mocked(mockApiGet).mockRejectedValue(new Error('Network error'));
+
+			const { state } = useItems(ref('test_collection'), {
+				fields: ref(['id']),
+				limit: ref(25),
+				sort: ref(null),
+				search: ref(''),
+				filter: ref(null),
+				page: ref(1),
+			});
+
+			await flushPromises();
+
+			expect(state.value).toBe('error');
+		});
+
+		test('should return loading while fetch is in progress', () => {
+			let resolveGet: (value: any) => void;
+
+			vi.mocked(mockApiGet).mockImplementation(
+				() => new Promise((res) => { resolveGet = res; }),
+			);
+
+			const { state } = useItems(ref('test_collection'), {
+				fields: ref(['id']),
+				limit: ref(25),
+				sort: ref(null),
+				search: ref(''),
+				filter: ref(null),
+				page: ref(1),
+			});
+
+			expect(state.value).toBe('loading');
+		});
+	});
 });
