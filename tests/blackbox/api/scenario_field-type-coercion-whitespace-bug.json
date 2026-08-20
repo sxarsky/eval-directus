@@ -1,0 +1,140 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"test_coerce\", \"meta\": {}, \"schema\": {}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"test_coerce\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:29:46.328Z",
+    "Scheme": "http",
+    "scenarioName": "field-type-coercion-whitespace-bug",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"field\": \"my_count\", \"type\": \"string\", \"meta\": null, \"schema\": {}}",
+    "ResponseBody": "{\"data\": {\"field\": \"my_count\", \"type\": \"string\", \"collection\": \"test_coerce\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/fields/test_coerce",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:29:47.328Z",
+    "Scheme": "http",
+    "scenarioName": "field-type-coercion-whitespace-bug"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"my_count\": \" 123 \"}",
+    "ResponseBody": "{\"data\": {\"id\": 1, \"my_count\": \" 123 \"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/test_coerce",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:29:48.328Z",
+    "Scheme": "http",
+    "scenarioName": "field-type-coercion-whitespace-bug"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"type\": \"integer\"}",
+    "ResponseBody": "{\"data\": {\"field\": \"my_count\", \"type\": \"integer\", \"collection\": \"test_coerce\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/fields/test_coerce/my_count/type",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:29:49.328Z",
+    "Scheme": "http",
+    "scenarioName": "field-type-coercion-whitespace-bug"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/test_coerce",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:29:50.328Z",
+    "Scheme": "http",
+    "scenarioName": "field-type-coercion-whitespace-bug"
+  }
+]
