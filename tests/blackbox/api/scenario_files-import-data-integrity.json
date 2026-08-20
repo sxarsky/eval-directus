@@ -1,0 +1,83 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"url\": \"https://directus.io/favicon.ico\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\", \"filename_download\": \"favicon.ico\", \"type\": \"image/x-icon\", \"filesize\": 1234, \"title\": \"favicon\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/files/import",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:35.300Z",
+    "Scheme": "http",
+    "scenarioName": "files-import-data-integrity"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\", \"filename_download\": \"favicon.ico\", \"type\": \"image/x-icon\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/files/f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:36.300Z",
+    "Scheme": "http",
+    "scenarioName": "files-import-data-integrity"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/files/f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:37.300Z",
+    "Scheme": "http",
+    "scenarioName": "files-import-data-integrity"
+  }
+]
