@@ -33,6 +33,9 @@ const collectionsStore = useCollectionsStore();
 const fieldsStore = useFieldsStore();
 const relationsStore = useRelationsStore();
 const { deleting, deleteActive, deleteCollection } = useDelete();
+const hideConfirmActive = ref(false);
+const archiving = ref(false);
+const hideToggleTarget = ref<boolean | null>(null);
 
 const peerDependencies = computed(() => {
 	return relationsStore.relations
@@ -74,6 +77,24 @@ function useDelete() {
 	}
 }
 
+function onHideToggleClick() {
+	hideToggleTarget.value = !props.collection.meta?.hidden;
+	hideConfirmActive.value = true;
+}
+
+async function confirmToggleHidden() {
+	if (archiving.value) return;
+
+	archiving.value = true;
+
+	try {
+		await update({ meta: { hidden: hideToggleTarget.value } });
+		hideConfirmActive.value = false;
+	} finally {
+		archiving.value = false;
+	}
+}
+
 async function update(updates: DeepPartial<Collection>) {
 	await collectionsStore.updateCollection(props.collection.collection, updates);
 }
@@ -95,7 +116,7 @@ async function update(updates: DeepPartial<Collection>) {
 					</VListItemContent>
 				</VListItem>
 
-				<VListItem clickable @click="update({ meta: { hidden: !collection.meta?.hidden } })">
+				<VListItem clickable data-testid="hide-collection-toggle" @click="onHideToggleClick">
 					<template v-if="collection.meta?.hidden === false">
 						<VListItemIcon><VIcon name="visibility_off" /></VListItemIcon>
 						<VListItemContent>
@@ -193,6 +214,32 @@ async function update(updates: DeepPartial<Collection>) {
 					</VButton>
 					<VButton :loading="deleting" kind="danger" @click="deleteCollection">
 						{{ collection.schema ? $t('delete_collection') : $t('delete_folder') }}
+					</VButton>
+				</VCardActions>
+			</VCard>
+		</VDialog>
+
+		<VDialog
+			v-model="hideConfirmActive"
+			data-testid="hide-collection-confirm-dialog"
+			@esc="hideConfirmActive = false"
+			@apply="confirmToggleHidden"
+		>
+			<VCard>
+				<VCardTitle>{{ $t('confirm') }}</VCardTitle>
+				<VCardText>
+					{{ collection.schema ? $t('make_collection_hidden') : $t('make_folder_hidden') }}: {{ collection.collection }}
+				</VCardText>
+				<VCardActions>
+					<VButton data-testid="hide-collection-cancel-button" secondary @click="hideConfirmActive = false">
+						{{ $t('cancel') }}
+					</VButton>
+					<VButton
+						data-testid="hide-collection-confirm-button"
+						:loading="archiving"
+						@click="confirmToggleHidden"
+					>
+						{{ $t('confirm') }}
 					</VButton>
 				</VCardActions>
 			</VCard>
