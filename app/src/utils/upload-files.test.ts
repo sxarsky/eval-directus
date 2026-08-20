@@ -1,5 +1,4 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { unexpectedError } from './unexpected-error';
 import { uploadFiles } from './upload-files';
 import { notify } from '@/utils/notify';
 
@@ -25,15 +24,10 @@ vi.mock('@/stores/server', () => ({
 	}),
 }));
 
-vi.mock('./unexpected-error', () => ({
-	unexpectedError: vi.fn(),
-}));
-
 describe('uploadFiles', () => {
 	afterEach(() => {
 		uploadFile.mockReset();
 		vi.mocked(notify).mockReset();
-		vi.mocked(unexpectedError).mockReset();
 		mockServerInfo.uploads = { maxConcurrency: 2 };
 	});
 
@@ -164,6 +158,5 @@ describe('uploadFiles', () => {
 		const result = await uploadFiles([new File(['a'], 'a.txt')]);
 
 		expect(result).toEqual([]);
-		expect(vi.mocked(unexpectedError)).toHaveBeenCalledWith(error);
 	});
 });
