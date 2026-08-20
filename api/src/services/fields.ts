@@ -21,7 +21,7 @@ import type {
 	SchemaOverview,
 	Type,
 } from '@directus/types';
-import { addFieldFlag, getRelations, toArray } from '@directus/utils';
+import { addFieldFlag, getRelations, normalizeFieldName, toArray } from '@directus/utils';
 import type Keyv from 'keyv';
 import type { Knex } from 'knex';
 import { isEqual, isNil, merge } from 'lodash-es';
@@ -365,6 +365,8 @@ export class FieldsService {
 		if (this.accountability && this.accountability.admin !== true) {
 			throw new ForbiddenError();
 		}
+
+		field.field = normalizeFieldName(field.field);
 
 		const runPostColumnChange = await this.helpers.schema.preColumnChange();
 		const nestedActionEvents: ActionEventParams[] = [];
