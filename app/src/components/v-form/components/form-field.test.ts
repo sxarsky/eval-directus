@@ -100,6 +100,46 @@ describe('FormField', () => {
 		expect(wrapper.findComponent({ name: 'FormFieldLabel' }).exists()).toBe(false);
 	});
 
+	describe('ariaInvalid', () => {
+		it('should pass aria-invalid="true" to FormFieldInterface when ariaInvalid is true', () => {
+			const wrapper = mount(FormField, {
+				props: {
+					field: baseField,
+					ariaInvalid: true,
+				},
+				global,
+			});
+
+			const fieldInterface = wrapper.findComponent({ name: 'FormFieldInterface' });
+			expect(fieldInterface.attributes('aria-invalid')).toBe('true');
+		});
+
+		it('should not set aria-invalid on FormFieldInterface when ariaInvalid is false', () => {
+			const wrapper = mount(FormField, {
+				props: {
+					field: baseField,
+					ariaInvalid: false,
+				},
+				global,
+			});
+
+			const fieldInterface = wrapper.findComponent({ name: 'FormFieldInterface' });
+			expect(fieldInterface.attributes('aria-invalid')).toBeUndefined();
+		});
+
+		it('should not set aria-invalid on FormFieldInterface when ariaInvalid is not provided', () => {
+			const wrapper = mount(FormField, {
+				props: {
+					field: baseField,
+				},
+				global,
+			});
+
+			const fieldInterface = wrapper.findComponent({ name: 'FormFieldInterface' });
+			expect(fieldInterface.attributes('aria-invalid')).toBeUndefined();
+		});
+	});
+
 	describe('isNonEditable', () => {
 		it('should pass non-editable=false when neither prop nor meta is set', () => {
 			const wrapper = mount(FormField, {
