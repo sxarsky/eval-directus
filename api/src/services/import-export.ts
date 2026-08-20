@@ -536,9 +536,13 @@ export class ExportService {
 	}
 
 	/**
-	 * Export the query results as a named file. Will query in batches, and keep appending a tmp file
-	 * until all the data is retrieved. Uploads the result as a new file using the regular
-	 * FilesService upload method.
+	 * Export the query results as a named file.
+	 *
+	 * @param {string} collection - Collection to export records from.
+	 * @param {Partial<Query>} query - Query that selects the records to export.
+	 * @param {ExportFormat} format - File format for the exported data.
+	 * @param {{ file?: Partial<File> }} options - Optional file metadata for the upload.
+	 * @returns {Promise<PrimaryKey>} Primary key of the uploaded export file.
 	 */
 	async exportToFile(
 		collection: string,

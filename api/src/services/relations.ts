@@ -307,9 +307,13 @@ export class RelationsService {
 	}
 
 	/**
-	 * Update an existing foreign key constraint
+	 * Update an existing foreign key constraint.
 	 *
-	 * Note: You can update anything under meta, but only the `on_delete` trigger under schema
+	 * @param {string} collection - Collection that owns the relationship field.
+	 * @param {string} field - Field whose relationship metadata should be updated.
+	 * @param {Partial<Relation>} relation - Relationship metadata and schema changes to apply.
+	 * @param {MutationOptions} opts - Optional mutation settings for event handling.
+	 * @returns {Promise<void>} Resolves when the relation update has completed.
 	 */
 	async updateOne(
 		collection: string,
