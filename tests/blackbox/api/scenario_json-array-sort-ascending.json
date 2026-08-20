@@ -1,0 +1,141 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"json_sort_asc\", \"fields\": [{\"field\": \"id\", \"type\": \"integer\", \"schema\": {\"is_primary_key\": true, \"has_auto_increment\": true}, \"meta\": {\"hidden\": true}}, {\"field\": \"tags\", \"type\": \"json\", \"schema\": {}, \"meta\": {}}], \"schema\": {}, \"meta\": {}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"json_sort_asc\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:30.585Z",
+    "Scheme": "http",
+    "scenarioName": "json-array-sort-ascending"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"tags\": [10]}",
+    "ResponseBody": "{\"data\": {\"id\": 1, \"tags\": [10]}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/json_sort_asc",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:31.585Z",
+    "Scheme": "http",
+    "scenarioName": "json-array-sort-ascending"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"tags\": [2]}",
+    "ResponseBody": "{\"data\": {\"id\": 2, \"tags\": [2]}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/json_sort_asc",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:32.585Z",
+    "Scheme": "http",
+    "scenarioName": "json-array-sort-ascending"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": [{\"id\": 2, \"tags\": [2]}, {\"id\": 1, \"tags\": [10]}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/items/json_sort_asc",
+    "QueryParams": {
+      "sort": [
+        "tags"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:33.585Z",
+    "Scheme": "http",
+    "scenarioName": "json-array-sort-ascending"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/json_sort_asc",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-20T08:32:34.585Z",
+    "Scheme": "http",
+    "scenarioName": "json-array-sort-ascending"
+  }
+]
