@@ -274,4 +274,38 @@ describe('resolveQuery', () => {
 			{ category: 'B', count: { id: 10 }, group: { category: 'B' } },
 		]);
 	});
+
+	test('inject group field with function-field groupBy', async () => {
+		mockReplaceFragments.mockReturnValue([{}]);
+		mockParseArgs.mockReturnValue({});
+
+		mockGetAggregateQuery.mockResolvedValue({
+			group: ['year(timestamp)'],
+			aggregate: { count: ['id'] },
+		});
+
+		const gql: any = {
+			scope: 'app',
+			schema: { collections: {} },
+			accountability: {},
+			read: vi.fn(() => [
+				{ year_timestamp: 2023, count: { id: 5 } },
+				{ year_timestamp: 2024, count: { id: 10 } },
+			]),
+		};
+
+		const info: any = {
+			fieldName: 'items_aggregated',
+			fieldNodes: [{ selectionSet: { selections: [{}] }, arguments: [] }],
+			fragments: {},
+			variableValues: {},
+		};
+
+		const res = await resolveQuery(gql, info);
+
+		expect(res).toEqual([
+			{ year_timestamp: 2023, count: { id: 5 }, group: { year_timestamp: 2023 } },
+			{ year_timestamp: 2024, count: { id: 10 }, group: { year_timestamp: 2024 } },
+		]);
+	});
 });
