@@ -184,6 +184,27 @@ const updateSchema = Joi.object({
 	meta: Joi.any(),
 }).unknown();
 
+
+router.patch(
+	'/:collection/:field/type',
+	validateCollection,
+	asyncHandler(async (req, res, next) => {
+		const service = new FieldsService({
+			accountability: req.accountability,
+			schema: req.schema,
+		});
+
+		const { error } = Joi.object({ type: Joi.string().valid('integer').required() }).validate(req.body);
+		if (error) throw new InvalidPayloadError({ reason: error.message });
+
+		await service.coerceFieldType(req.params['collection']!, req.params['field']!, req.body.type);
+		const updatedField = await service.readOne(req.params['collection']!, req.params['field']!);
+		res.locals['payload'] = { data: updatedField || null };
+		return next();
+	}),
+	respond,
+);
+
 router.patch(
 	'/:collection/:field',
 	validateCollection,

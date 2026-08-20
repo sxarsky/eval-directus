@@ -42,6 +42,7 @@ import getLocalType from '../utils/get-local-type.js';
 import { getSchema } from '../utils/get-schema.js';
 import { sanitizeColumn } from '../utils/sanitize-schema.js';
 import { shouldClearCache } from '../utils/should-clear-cache.js';
+import { validateIntegerCoercion } from '../utils/coercion.js';
 import { transaction } from '../utils/transaction.js';
 import { buildCollectionAndFieldRelations } from './fields/build-collection-and-field-relations.js';
 import { getCollectionMetaUpdates } from './fields/get-collection-meta-updates.js';
@@ -498,6 +499,31 @@ export class FieldsService {
 				}
 			}
 		}
+	}
+
+
+	async coerceFieldType(collection: string, field: string, type: Type): Promise<void> {
+		if (this.accountability && this.accountability.admin !== true) {
+			throw new ForbiddenError();
+		}
+
+		const primaryKey = this.schema.collections[collection]!.primary;
+		const rows = await this.knex(collection).select(primaryKey, field);
+		const invalid = type === 'integer' ? validateIntegerCoercion(rows, primaryKey, field) : [];
+
+		if (invalid.length > 0) {
+			throw new InvalidPayloadError({
+				reason: `Cannot coerce ${field} to ${type}; invalid rows: ${JSON.stringify(invalid)}`,
+			});
+		}
+
+		await transaction(this.knex, async (trx) => {
+			await trx.schema.alterTable(collection, (table) => {
+				if (type === 'integer') table.integer(field).alter();
+			});
+
+			await trx('directus_fields').where({ collection, field }).update({ type });
+		});
 	}
 
 	async updateField(collection: string, field: RawField, opts?: FieldMutationOptions): Promise<string> {
