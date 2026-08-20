@@ -7,6 +7,7 @@ import TransitionExpand from '@/components/transition/expand.vue';
 import VBadge from '@/components/v-badge.vue';
 import VIcon from '@/components/v-icon/v-icon.vue';
 import InterfaceSystemFilter from '@/interfaces/_system/system-filter/system-filter.vue';
+import SearchResults from '@/views/private/components/search-results.vue';
 
 const props = withDefaults(
 	defineProps<{
@@ -29,6 +30,17 @@ const emit = defineEmits<{
 }>();
 
 const input = ref<HTMLInputElement | null>(null);
+const searchResultsRef = ref<InstanceType<typeof SearchResults> | null>(null);
+const resultsActive = ref(false);
+
+const resultsList = computed(() => {
+	if (!props.modelValue?.trim()) return [];
+
+	const query = props.modelValue.toLowerCase();
+	const suggestions = ['recent items', 'saved search', 'bookmarked view'];
+
+	return suggestions.filter((item) => item.includes(query));
+});
 
 const active = ref(props.autofocus);
 const filterActive = ref(false);
@@ -133,6 +145,25 @@ function emitValue() {
 	if (!input.value) return;
 	const value = input.value?.value;
 	emit('update:modelValue', value);
+	resultsActive.value = !!value?.trim() && resultsList.value.length > 0;
+}
+
+function onArrowDown(event: KeyboardEvent) {
+	if (resultsList.value.length === 0) return;
+	event.preventDefault();
+	resultsActive.value = true;
+	searchResultsRef.value?.focusFirst();
+}
+
+function onResultSelect(value: string) {
+	emit('update:modelValue', value);
+	resultsActive.value = false;
+	input.value?.focus();
+}
+
+function onResultsClose() {
+	resultsActive.value = false;
+	input.value?.focus();
 }
 </script>
 
@@ -178,6 +209,7 @@ function emitValue() {
 				@input="emitValue"
 				@paste="emitValue"
 				@keydown.esc="disable"
+				@keydown.down="onArrowDown"
 				@focusin="activate"
 				@focusout="onFocusOut"
 			/>
@@ -215,6 +247,13 @@ function emitValue() {
 					</div>
 				</TransitionExpand>
 			</template>
+			<SearchResults
+				v-if="resultsActive && resultsList.length > 0"
+				ref="searchResultsRef"
+				:items="resultsList"
+				@select="onResultSelect"
+				@close="onResultsClose"
+			/>
 		</div>
 	</VBadge>
 </template>
