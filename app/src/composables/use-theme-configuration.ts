@@ -1,6 +1,6 @@
 import type { User } from '@directus/types';
 import { merge } from 'lodash';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { Info } from '@/stores/server';
 import { useServerStore } from '@/stores/server';
 import { useUserStore } from '@/stores/user';
@@ -63,6 +63,14 @@ export const useThemeConfiguration = () => {
 
 	const themeDarkOverrides = computed(() =>
 		merge({}, userSettings.value?.theme_dark_overrides, systemSettings.value?.theme_dark_overrides),
+	);
+
+	watch(
+		appearance,
+		(resolvedTheme) => {
+			document.documentElement.setAttribute('data-theme', resolvedTheme);
+		},
+		{ immediate: true },
 	);
 
 	return { darkMode, themeLight, themeDark, themeLightOverrides, themeDarkOverrides };
