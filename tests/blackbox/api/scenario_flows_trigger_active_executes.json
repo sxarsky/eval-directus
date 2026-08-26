@@ -1,0 +1,83 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\":\"task-reminder-active\",\"status\":\"active\",\"trigger\":\"schedule\",\"accountability\":\"all\",\"options\":{\"cron\":\"0 * * * *\"}}",
+    "ResponseBody": "{\"data\":{\"id\":\"3f2a9c14-8b7d-4e21-9f30-6c5d1a8e47b2\",\"name\":\"task-reminder-active\",\"status\":\"active\",\"trigger\":\"schedule\",\"accountability\":\"all\",\"operations\":[]}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:36.288Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_active_executes"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\":\"2030-01-01T06:30:00.000Z\"}",
+    "ResponseBody": "{\"data\":{\"executed\":true,\"execution_id\":\"b1d7c8a2-4e5f-4a90-9c31-7f02e6b845d3\",\"webhook_count\":0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/3f2a9c14-8b7d-4e21-9f30-6c5d1a8e47b2/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:37.288Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_active_executes"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/flows/3f2a9c14-8b7d-4e21-9f30-6c5d1a8e47b2",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:38.288Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_active_executes"
+  }
+]
