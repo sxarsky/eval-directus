@@ -1,4 +1,4 @@
-import { ForbiddenError } from '@directus/errors';
+import { ForbiddenError, InvalidPayloadError } from '@directus/errors';
 import type {
 	AbstractServiceOptions,
 	Item,
@@ -23,6 +23,20 @@ export class PermissionsService extends ItemsService {
 		super('directus_permissions', options);
 	}
 
+
+	private validatePermissionFields(data: Partial<Item>) {
+		const fields = data['fields'];
+		const collection = data['collection'];
+		if (!fields || fields === '*' || !collection || !Array.isArray(fields)) return;
+
+		const schemaFields = new Set(Object.keys(this.schema.collections[String(collection)]?.fields ?? {}));
+		const invalid = fields.filter((field) => field !== '*' && !schemaFields.has(field));
+
+		if (invalid.length > 0) {
+			throw new InvalidPayloadError({ reason: `Unknown fields: ${invalid.join(', ')}` });
+		}
+	}
+
 	private async clearCaches(opts?: MutationOptions) {
 		await clearSystemCache({ autoPurgeCache: opts?.autoPurgeCache });
 
@@ -38,6 +52,7 @@ export class PermissionsService extends ItemsService {
 	}
 
 	override async createOne(data: Partial<Item>, opts?: MutationOptions) {
+		this.validatePermissionFields(data);
 		const res = await super.createOne(data, opts);
 
 		await this.clearCaches(opts);
@@ -46,6 +61,7 @@ export class PermissionsService extends ItemsService {
 	}
 
 	override async createMany(data: Partial<Item>[], opts?: MutationOptions) {
+		for (const permission of data) this.validatePermissionFields(permission);
 		const res = await super.createMany(data, opts);
 
 		await this.clearCaches(opts);
