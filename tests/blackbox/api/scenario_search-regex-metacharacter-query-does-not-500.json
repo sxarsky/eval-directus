@@ -1,0 +1,120 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"skyramp_search_regex\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true,\"readonly\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"title\",\"type\":\"string\",\"meta\":{\"interface\":\"input\"},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"skyramp_search_regex\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:09.483Z",
+    "Scheme": "http",
+    "scenarioName": "search-regex-metacharacter-query-does-not-500",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"Learning C++ basics\"}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"title\":\"Learning C++ basics\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_regex",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:10.483Z",
+    "Scheme": "http",
+    "scenarioName": "search-regex-metacharacter-query-does-not-500"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"Advanced C++ patterns\"}",
+    "ResponseBody": "{\"data\":{\"id\":2,\"title\":\"Advanced C++ patterns\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_regex",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:11.483Z",
+    "Scheme": "http",
+    "scenarioName": "search-regex-metacharacter-query-does-not-500"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"results\":[{\"collection\":\"skyramp_search_regex\",\"id\":1,\"field\":\"title\",\"snippet\":\"Learning <mark>C++</mark> basics\",\"score\":5.2}],\"total_count\":2}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/search",
+    "QueryParams": {
+      "q": [
+        "C++"
+      ],
+      "collections": [
+        "skyramp_search_regex"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:12.483Z",
+    "Scheme": "http",
+    "scenarioName": "search-regex-metacharacter-query-does-not-500"
+  }
+]
