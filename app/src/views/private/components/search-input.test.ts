@@ -55,4 +55,66 @@ describe('Component', () => {
 
 		expect(wrapper.find('input').attributes('disabled')).toBe('');
 	});
+
+	it('should not render the search results popover when modelValue is empty', () => {
+		const wrapper = mount(SearchInput, {
+			props: {
+				modelValue: '',
+			},
+			global,
+		});
+
+		expect(wrapper.find('[data-testid="search-results"]').exists()).toBe(false);
+	});
+
+	it('should render matching suggestions in a listbox after an input event', async () => {
+		const wrapper = mount(SearchInput, {
+			props: {
+				modelValue: 'se',
+			},
+			global,
+		});
+
+		await wrapper.find('input').trigger('input');
+
+		expect(wrapper.find('[data-testid="search-results"]').exists()).toBe(true);
+
+		const options = wrapper.findAll('[data-testid="search-result-item"]');
+
+		expect(options).toHaveLength(1);
+		expect(options[0]!.text()).toBe('saved search');
+	});
+
+	it('should apply roving tabindex to the rendered options', async () => {
+		const wrapper = mount(SearchInput, {
+			props: {
+				modelValue: 'e',
+			},
+			global,
+		});
+
+		await wrapper.find('input').trigger('input');
+
+		const options = wrapper.findAll('[data-testid="search-result-item"]');
+
+		expect(options).toHaveLength(3);
+		expect(options.map((option) => option.attributes('tabindex'))).toEqual(['0', '-1', '-1']);
+	});
+
+	it('should expose the listbox and option roles', async () => {
+		const wrapper = mount(SearchInput, {
+			props: {
+				modelValue: 'e',
+			},
+			global,
+		});
+
+		await wrapper.find('input').trigger('input');
+
+		expect(wrapper.find('[data-testid="search-results"]').attributes('role')).toBe('listbox');
+
+		for (const option of wrapper.findAll('[data-testid="search-result-item"]')) {
+			expect(option.attributes('role')).toBe('option');
+		}
+	});
 });
