@@ -1,0 +1,218 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\":{\"id\":\"3f2b9c14-7d6e-4a11-9b8c-2e5f0a7d4c63\",\"email\":\"admin@example.com\",\"status\":\"active\",\"unread_notifications\":0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:02.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"recipient\":\"3f2b9c14-7d6e-4a11-9b8c-2e5f0a7d4c63\",\"subject\":\"Inbox item\",\"message\":\"Should become read\"}",
+    "ResponseBody": "{\"data\":{\"id\":101,\"status\":\"inbox\",\"recipient\":\"3f2b9c14-7d6e-4a11-9b8c-2e5f0a7d4c63\",\"subject\":\"Inbox item\",\"message\":\"Should become read\",\"sender\":null,\"collection\":null,\"item\":null}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/notifications",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:03.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"recipient\":\"3f2b9c14-7d6e-4a11-9b8c-2e5f0a7d4c63\",\"subject\":\"Archived item\",\"message\":\"Must stay archived\",\"status\":\"archived\"}",
+    "ResponseBody": "{\"data\":{\"id\":102,\"status\":\"archived\",\"recipient\":\"3f2b9c14-7d6e-4a11-9b8c-2e5f0a7d4c63\",\"subject\":\"Archived item\",\"message\":\"Must stay archived\",\"sender\":null,\"collection\":null,\"item\":null}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/notifications",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:04.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{\"data\":{\"updated\":1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/notifications/read-all",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:05.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\":{\"id\":102,\"status\":\"archived\",\"recipient\":\"3f2b9c14-7d6e-4a11-9b8c-2e5f0a7d4c63\",\"subject\":\"Archived item\",\"message\":\"Must stay archived\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/notifications/102",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:06.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\":{\"id\":101,\"status\":\"read\",\"recipient\":\"3f2b9c14-7d6e-4a11-9b8c-2e5f0a7d4c63\",\"subject\":\"Inbox item\",\"message\":\"Should become read\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/notifications/101",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:07.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/notifications/101",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:08.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/notifications/102",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:14:09.556Z",
+    "Scheme": "http",
+    "scenarioName": "notifications-read-all-preserves-archived"
+  }
+]
