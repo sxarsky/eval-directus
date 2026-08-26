@@ -1,0 +1,110 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"sk_exp_trunc\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true},\"meta\":{\"hidden\":true}},{\"field\":\"title\",\"type\":\"string\",\"schema\":{},\"meta\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"sk_exp_trunc\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:58:07.915Z",
+    "Scheme": "http",
+    "scenarioName": "exports_default_limit_silent_truncation"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "[{\"title\":\"R001\"},{\"title\":\"R002\"},{\"title\":\"R003\"},{\"title\":\"R004\"},{\"title\":\"R005\"},{\"title\":\"R006\"},{\"title\":\"R007\"},{\"title\":\"R008\"},{\"title\":\"R009\"},{\"title\":\"R010\"},{\"title\":\"R011\"},{\"title\":\"R012\"},{\"title\":\"R013\"},{\"title\":\"R014\"},{\"title\":\"R015\"},{\"title\":\"R016\"},{\"title\":\"R017\"},{\"title\":\"R018\"},{\"title\":\"R019\"},{\"title\":\"R020\"},{\"title\":\"R021\"},{\"title\":\"R022\"},{\"title\":\"R023\"},{\"title\":\"R024\"},{\"title\":\"R025\"},{\"title\":\"R026\"},{\"title\":\"R027\"},{\"title\":\"R028\"},{\"title\":\"R029\"},{\"title\":\"R030\"},{\"title\":\"R031\"},{\"title\":\"R032\"},{\"title\":\"R033\"},{\"title\":\"R034\"},{\"title\":\"R035\"},{\"title\":\"R036\"},{\"title\":\"R037\"},{\"title\":\"R038\"},{\"title\":\"R039\"},{\"title\":\"R040\"},{\"title\":\"R041\"},{\"title\":\"R042\"},{\"title\":\"R043\"},{\"title\":\"R044\"},{\"title\":\"R045\"},{\"title\":\"R046\"},{\"title\":\"R047\"},{\"title\":\"R048\"},{\"title\":\"R049\"},{\"title\":\"R050\"},{\"title\":\"R051\"},{\"title\":\"R052\"},{\"title\":\"R053\"},{\"title\":\"R054\"},{\"title\":\"R055\"},{\"title\":\"R056\"},{\"title\":\"R057\"},{\"title\":\"R058\"},{\"title\":\"R059\"},{\"title\":\"R060\"},{\"title\":\"R061\"},{\"title\":\"R062\"},{\"title\":\"R063\"},{\"title\":\"R064\"},{\"title\":\"R065\"},{\"title\":\"R066\"},{\"title\":\"R067\"},{\"title\":\"R068\"},{\"title\":\"R069\"},{\"title\":\"R070\"},{\"title\":\"R071\"},{\"title\":\"R072\"},{\"title\":\"R073\"},{\"title\":\"R074\"},{\"title\":\"R075\"},{\"title\":\"R076\"},{\"title\":\"R077\"},{\"title\":\"R078\"},{\"title\":\"R079\"},{\"title\":\"R080\"},{\"title\":\"R081\"},{\"title\":\"R082\"},{\"title\":\"R083\"},{\"title\":\"R084\"},{\"title\":\"R085\"},{\"title\":\"R086\"},{\"title\":\"R087\"},{\"title\":\"R088\"},{\"title\":\"R089\"},{\"title\":\"R090\"},{\"title\":\"R091\"},{\"title\":\"R092\"},{\"title\":\"R093\"},{\"title\":\"R094\"},{\"title\":\"R095\"},{\"title\":\"R096\"},{\"title\":\"R097\"},{\"title\":\"R098\"},{\"title\":\"R099\"},{\"title\":\"R100\"},{\"title\":\"R101\"},{\"title\":\"R102\"},{\"title\":\"R103\"},{\"title\":\"R104\"},{\"title\":\"R105\"}]",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/sk_exp_trunc",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:58:08.915Z",
+    "Scheme": "http",
+    "scenarioName": "exports_default_limit_silent_truncation"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"format\":\"json\"}",
+    "ResponseBody": "{\"data\":[{\"id\":1,\"title\":\"R001\"}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/exports/sk_exp_trunc",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:58:09.915Z",
+    "Scheme": "http",
+    "scenarioName": "exports_default_limit_silent_truncation"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/sk_exp_trunc",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:58:10.915Z",
+    "Scheme": "http",
+    "scenarioName": "exports_default_limit_silent_truncation"
+  }
+]
