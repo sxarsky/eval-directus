@@ -1,0 +1,83 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\": \"skyramp-update-bypass-policy\"}",
+    "ResponseBody": "{\"id\": \"9c1f2b7e-4a3d-4c85-b0e1-7f2a6d5c8e41\", \"name\": \"skyramp-update-bypass-policy\", \"admin_access\": false, \"app_access\": false}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/policies",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:05:18.734Z",
+    "Scheme": "http",
+    "scenarioName": "permissions-update-unknown-field-bypass"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"directus_users\", \"action\": \"read\", \"policy\": \"9c1f2b7e-4a3d-4c85-b0e1-7f2a6d5c8e41\", \"fields\": [\"email\"]}",
+    "ResponseBody": "{\"id\": 4242, \"collection\": \"directus_users\", \"action\": \"read\", \"fields\": [\"email\"], \"policy\": \"9c1f2b7e-4a3d-4c85-b0e1-7f2a6d5c8e41\", \"permissions\": null, \"validation\": null, \"presets\": null}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/permissions",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:05:19.734Z",
+    "Scheme": "http",
+    "scenarioName": "permissions-update-unknown-field-bypass"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"fields\": [\"nonexistent_field_xyz\"]}",
+    "ResponseBody": "{\"errors\": [{\"message\": \"Invalid payload. Unknown fields: nonexistent_field_xyz.\", \"extensions\": {\"reason\": \"Unknown fields: nonexistent_field_xyz\", \"code\": \"INVALID_PAYLOAD\"}}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/permissions/4242",
+    "QueryParams": {},
+    "StatusCode": 400,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T19:05:20.734Z",
+    "Scheme": "http",
+    "scenarioName": "permissions-update-unknown-field-bypass"
+  }
+]
