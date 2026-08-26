@@ -128,7 +128,7 @@ function useExpandCollapseAll() {
 
 <template>
 	<div>
-		<VNotice>
+		<VNotice type="info">
 			{{
 				$t('fields_for_policy', {
 					policy: policy ? policy.name : $t('public_label'),
