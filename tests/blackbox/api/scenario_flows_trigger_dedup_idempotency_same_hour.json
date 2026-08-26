@@ -1,0 +1,218 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"tasks\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"due_at\",\"type\":\"timestamp\",\"meta\":{},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"tasks\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:55.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"due_at\":\"2030-01-01T12:00:00.000Z\"}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"due_at\":\"2030-01-01T12:00:00.000Z\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/tasks",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:56.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\":\"task-reminder-dedup\",\"status\":\"active\",\"trigger\":\"schedule\",\"accountability\":\"all\",\"options\":{\"cron\":\"0 * * * *\"}}",
+    "ResponseBody": "{\"data\":{\"id\":\"7d41e6b8-2c95-4a03-8e17-b40f9d2c65a1\",\"name\":\"task-reminder-dedup\",\"status\":\"active\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:57.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"flow\":\"7d41e6b8-2c95-4a03-8e17-b40f9d2c65a1\",\"key\":\"notify\",\"name\":\"notify\",\"type\":\"request\",\"position_x\":19,\"position_y\":1,\"options\":{\"url\":\"http://localhost:8055/server/ping\",\"method\":\"POST\"}}",
+    "ResponseBody": "{\"data\":{\"id\":\"5c8b3e70-19d4-4f62-a8c3-2e716b90df45\",\"key\":\"notify\",\"type\":\"request\",\"flow\":\"7d41e6b8-2c95-4a03-8e17-b40f9d2c65a1\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/operations",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:58.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\":\"2030-01-01T06:00:00.000Z\"}",
+    "ResponseBody": "{\"data\":{\"executed\":true,\"execution_id\":\"9a2f4c61-7b83-4d05-8e19-3c60a7fd2b14\",\"webhook_count\":1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/7d41e6b8-2c95-4a03-8e17-b40f9d2c65a1/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:53:59.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\":\"2030-01-01T06:59:59.000Z\"}",
+    "ResponseBody": "{\"data\":{\"executed\":true,\"execution_id\":\"c47e0b93-5d18-4f26-a730-8b91e5c4026f\",\"webhook_count\":0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/7d41e6b8-2c95-4a03-8e17-b40f9d2c65a1/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:54:00.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/flows/7d41e6b8-2c95-4a03-8e17-b40f9d2c65a1",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:54:01.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/tasks",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:54:02.180Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_dedup_idempotency_same_hour"
+  }
+]
