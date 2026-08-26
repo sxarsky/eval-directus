@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { isNil, orderBy } from 'lodash';
-import { computed, ref, toRefs } from 'vue';
+import { computed, onBeforeMount, ref, toRefs } from 'vue';
 import { useNavigation } from '../composables/use-navigation';
 import NavigationItem from './NavigationItem.vue';
 import VButton from '@/components/v-button.vue';
+import VError from '@/components/v-error.vue';
 import VIcon from '@/components/v-icon/v-icon.vue';
 import VInput from '@/components/v-input.vue';
 import VListItemContent from '@/components/v-list-item-content.vue';
@@ -40,6 +41,25 @@ const rootItems = computed(() => {
 const dense = computed(() => collectionsStore.visibleCollections.length > 5);
 const showSearch = computed(() => collectionsStore.visibleCollections.length > 20);
 
+
+const loading = ref(true);
+const error = ref<Record<string, any> | null>(null);
+
+onBeforeMount(() => fetchCollections());
+
+async function fetchCollections() {
+	loading.value = true;
+	error.value = null;
+
+	try {
+		await collectionsStore.hydrate();
+	} catch (err) {
+		error.value = err as Record<string, any>;
+	} finally {
+		loading.value = false;
+	}
+}
+
 const hasHiddenCollections = computed(
 	() => collectionsStore.allCollections.length > collectionsStore.visibleCollections.length,
 );
@@ -51,7 +71,13 @@ const hasHiddenCollections = computed(
 			<VInput v-model="search" type="search" :placeholder="$t('search_collection')" />
 		</div>
 
+		<div v-if="error" class="collections-error">
+			<VError :error="error" />
+			<VButton @click="fetchCollections">Retry</VButton>
+		</div>
+
 		<VList
+			v-else
 			v-model="activeGroups"
 			v-context-menu="'contextMenu'"
 			scope="content-navigation"
