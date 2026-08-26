@@ -12,7 +12,6 @@ concurrency:
 
 jobs:
   testbot:
-    # Only run for pull_request events or issue_comment on PRs mentioning @skyramp-testbot
     if: >-
       github.event_name == 'pull_request' ||
       (github.event_name == 'issue_comment' && github.event.issue.pull_request && contains(github.event.comment.body, '@skyramp-testbot') && github.event.comment.user.login != 'skyramp-testbot[bot]')
@@ -21,37 +20,22 @@ jobs:
       contents: write
       pull-requests: write
       checks: write
-
     steps:
-      # Generate a GitHub App installation token to retrigger CI workflows on push
-      # https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/making-authenticated-api-requests-with-a-github-app-in-a-github-actions-workflow
-      - name: Generate GitHub App Token
-        id: skyramp-testbot-app-token
-        uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1
-        with:
-          app-id: ${{ secrets.SKYRAMP_TESTBOT_APP_ID }}
-          private-key: ${{ secrets.SKYRAMP_TESTBOT_APP_PRIVATE_KEY }}
-          repositories: eval-directus
-
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
-          token: ${{ steps.skyramp-testbot-app-token.outputs.token }}
-
-      - uses: skyramp/testbot@87752cf8ab396b6aa73c47069e79834bd1c75eda # v0.11.5
+          submodules: recursive
+      - uses: skyramp/testbot@15b35b4f7fc705aa12e96bb0aa65e238738ccdb7 # v0.11.7
         with:
+          skyrampMcpVersion: "0.3.3"
+          skyrampExecutorVersion: "v1.3.39"
           skyrampLicenseFile: ${{ secrets.SKYRAMP_LICENSE_FILE }}
           anthropicApiKey: ${{ secrets.SKYRAMP_TESTBOT_API_KEY }}
-          githubToken: ${{ steps.skyramp-testbot-app-token.outputs.token }}
-          skyrampMcpVersion: 0.3.2
-          skyrampExecutorVersion: v1.3.37
-          generatedTestsMode: separate-branch
-
-          targetSetupCommand: 'docker compose -f docker-compose.eval.yml up directus --build -d'
-          targetReadyCheckCommand: 'curl -sf http://localhost:8055/server/health'
-          targetReadyCheckTimeout: 900
-          authTokenCommand: 'bash get-auth-token.sh'
-
-          autoCommit: true
-          postPrComment: true
-          enableDebug: true
+          model: sonnet
+          githubAppId: ${{ secrets.SKYRAMP_TESTBOT_APP_ID }}
+          githubAppPrivateKey: ${{ secrets.SKYRAMP_TESTBOT_APP_PRIVATE_KEY }}
+          targetSetupCommand: >-
+            docker compose -f $GITHUB_WORKSPACE/docker-compose.eval.yml -p directus-eval up -d --wait --wait-timeout 400
+          targetTeardownCommand: 'docker compose -f $GITHUB_WORKSPACE/docker-compose.eval.yml -p directus-eval down -v'
+          authTokenCommand: 'bash $GITHUB_WORKSPACE/get-auth-token.sh'
+          uiCredentials: 'admin@example.com:admin'
