@@ -1,0 +1,120 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"skyramp_search_articles\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true,\"readonly\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"title\",\"type\":\"string\",\"meta\":{\"interface\":\"input\"},\"schema\":{}},{\"field\":\"body\",\"type\":\"text\",\"meta\":{\"interface\":\"input-multiline\"},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"skyramp_search_articles\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:52:56.675Z",
+    "Scheme": "http",
+    "scenarioName": "search-finds-seeded-collection-item",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"Quarterly relevance report\",\"body\":\"relevance matters for ranking\"}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"title\":\"Quarterly relevance report\",\"body\":\"relevance matters for ranking\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_articles",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:52:57.675Z",
+    "Scheme": "http",
+    "scenarioName": "search-finds-seeded-collection-item"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"Annual relevance summary\",\"body\":\"another document about relevance\"}",
+    "ResponseBody": "{\"data\":{\"id\":2,\"title\":\"Annual relevance summary\",\"body\":\"another document about relevance\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_articles",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:52:58.675Z",
+    "Scheme": "http",
+    "scenarioName": "search-finds-seeded-collection-item"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"results\":[{\"collection\":\"skyramp_search_articles\",\"id\":1,\"field\":\"title\",\"snippet\":\"Quarterly <mark>relevance</mark> report\",\"score\":3.7}],\"total_count\":2}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/search",
+    "QueryParams": {
+      "q": [
+        "relevance"
+      ],
+      "collections": [
+        "skyramp_search_articles"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-26T18:52:59.675Z",
+    "Scheme": "http",
+    "scenarioName": "search-finds-seeded-collection-item"
+  }
+]
