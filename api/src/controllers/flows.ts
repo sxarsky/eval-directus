@@ -104,6 +104,21 @@ const readHandler = asyncHandler(async (req, res, next) => {
 router.get('/', validateBatch('read'), readHandler, respond);
 router.search('/', validateBatch('read'), readHandler, respond);
 
+
+router.post(
+	'/:pk/trigger',
+	asyncHandler(async (req, res, next) => {
+		const service = new FlowsService({
+			accountability: req.accountability,
+			schema: req.schema,
+		});
+
+		res.locals['payload'] = { data: await service.triggerOne(req.params['pk']!, req.body?.trigger_time ? new Date(req.body.trigger_time) : new Date()) };
+		return next();
+	}),
+	respond,
+);
+
 router.get(
 	'/:pk',
 	asyncHandler(async (req, res, next) => {
