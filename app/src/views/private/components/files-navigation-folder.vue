@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getDateTimeFormatted } from '@directus/utils';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/api';
 import VButton from '@/components/v-button.vue';
@@ -32,6 +32,7 @@ const props = withDefaults(
 		currentFolder?: string;
 		actionsDisabled?: boolean;
 		clickHandler?: (target: FolderTarget) => void;
+		searchQuery?: string;
 	}>(),
 	{
 		clickHandler: () => () => undefined,
@@ -39,6 +40,11 @@ const props = withDefaults(
 );
 
 const router = useRouter();
+
+const matchesQuery = computed(() => {
+	if (!props.searchQuery) return true;
+	return props.folder.name.toLowerCase().includes(props.searchQuery.toLowerCase());
+});
 
 const { renameActive, renameValue, renameSave, renameSaving } = useRenameFolder();
 const { moveActive, moveValue, moveSave, moveSaving } = useMoveFolder();
@@ -198,7 +204,7 @@ async function downloadFolder() {
 </script>
 
 <template>
-	<div>
+	<div v-show="matchesQuery">
 		<VListItem
 			v-if="folder.children === undefined"
 			v-context-menu="!actionsDisabled ? 'contextMenu' : null"
@@ -238,6 +244,7 @@ async function downloadFolder() {
 				:current-folder="currentFolder"
 				:click-handler="clickHandler"
 				:actions-disabled="actionsDisabled"
+				:search-query="searchQuery"
 			/>
 		</VListGroup>
 
