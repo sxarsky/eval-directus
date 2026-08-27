@@ -40,6 +40,8 @@ const rootItems = computed(() => {
 const dense = computed(() => collectionsStore.visibleCollections.length > 5);
 const showSearch = computed(() => collectionsStore.visibleCollections.length > 20);
 
+const loading = ref(false);
+
 const hasHiddenCollections = computed(
 	() => collectionsStore.allCollections.length > collectionsStore.visibleCollections.length,
 );
@@ -61,15 +63,24 @@ const hasHiddenCollections = computed(
 			:mandatory="false"
 			:dense="dense"
 		>
-			<VButton
-				v-if="userStore.isAdmin && collectionsStore.allCollections.length === 0"
-				full-width
-				outlined
-				dashed
-				to="/settings/data-model/+"
+			<div
+				v-if="collectionsStore.allCollections.length === 0 && !loading"
+				data-testid="empty-collections"
+				class="empty-collections"
 			>
-				{{ $t('create_collection') }}
-			</VButton>
+				<h2 class="empty-collections-heading">No collections yet</h2>
+				<p v-if="userStore.isAdmin">{{ $t('no_collections_copy_admin') }}</p>
+				<p v-else>{{ $t('no_collections_copy') }}</p>
+				<VButton
+					v-if="userStore.isAdmin"
+					full-width
+					outlined
+					dashed
+					to="/settings/data-model/+"
+				>
+					{{ $t('create_collection') }}
+				</VButton>
+			</div>
 
 			<NavigationItem
 				v-for="collection in rootItems"
