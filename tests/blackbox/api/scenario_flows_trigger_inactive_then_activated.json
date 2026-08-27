@@ -1,0 +1,137 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\": \"reactivated-reminders\", \"status\": \"inactive\", \"trigger\": \"schedule\", \"accountability\": \"all\", \"options\": {\"cron\": \"0 * * * *\"}}",
+    "ResponseBody": "{\"data\": {\"id\": \"3d5b7f19-2c46-4a80-b1e9-7f0a6c3d8e52\", \"name\": \"reactivated-reminders\", \"status\": \"inactive\", \"trigger\": \"schedule\", \"accountability\": \"all\", \"options\": {\"cron\": \"0 * * * *\"}, \"operations\": []}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:25:42.957Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_inactive_then_activated"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\": \"2026-08-27T10:23:00.000Z\"}",
+    "ResponseBody": "{\"data\": {\"executed\": false, \"reason\": \"flow_inactive\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/3d5b7f19-2c46-4a80-b1e9-7f0a6c3d8e52/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:25:43.957Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_inactive_then_activated"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"status\": \"active\"}",
+    "ResponseBody": "{\"data\": {\"id\": \"3d5b7f19-2c46-4a80-b1e9-7f0a6c3d8e52\", \"name\": \"reactivated-reminders\", \"status\": \"active\", \"trigger\": \"schedule\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/flows/3d5b7f19-2c46-4a80-b1e9-7f0a6c3d8e52",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:25:44.957Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_inactive_then_activated"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\": \"2026-08-27T10:23:00.000Z\"}",
+    "ResponseBody": "{\"data\": {\"executed\": true, \"execution_id\": \"8e2a41d7-5b03-49fc-a6d8-3c907b1e2f45\", \"webhook_count\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/3d5b7f19-2c46-4a80-b1e9-7f0a6c3d8e52/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:25:45.957Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_inactive_then_activated"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/flows/3d5b7f19-2c46-4a80-b1e9-7f0a6c3d8e52",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:25:46.957Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_inactive_then_activated"
+  }
+]
