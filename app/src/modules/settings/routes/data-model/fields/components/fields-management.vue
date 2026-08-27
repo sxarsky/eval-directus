@@ -15,6 +15,7 @@ import VList from '@/components/v-list.vue';
 import VMenu from '@/components/v-menu.vue';
 import { useFieldsStore } from '@/stores/fields';
 import { hideDragImage } from '@/utils/hide-drag-image';
+import { notify } from '@/utils/notify';
 
 const props = defineProps<{
 	collection: string;
@@ -115,6 +116,8 @@ async function setSort(fields: Field[]) {
 	}));
 
 	await fieldsStore.updateFields(collection.value, updates);
+
+	notify({ title: t('field_order_saved'), type: 'success' });
 }
 
 async function setNestedSort(updates?: Field[]) {
