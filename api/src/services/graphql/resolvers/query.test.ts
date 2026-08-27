@@ -274,4 +274,37 @@ describe('resolveQuery', () => {
 			{ category: 'B', count: { id: 10 }, group: { category: 'B' } },
 		]);
 	});
+
+	test('inject group field for function field groupBy', async () => {
+		mockReplaceFragments.mockReturnValue([{}]);
+		mockParseArgs.mockReturnValue({});
+
+		mockGetAggregateQuery.mockResolvedValue({
+			group: ['year(timestamp)'],
+			aggregate: { count: ['id'] },
+		});
+
+		const gql: any = {
+			scope: 'app',
+			schema: { collections: {} },
+			accountability: {},
+			read: vi.fn(() => [{ year_timestamp: 2023, count: { id: 42 } }]),
+		};
+
+		const info: any = {
+			fieldName: 'items_aggregated',
+			fieldNodes: [{ selectionSet: { selections: [{}] }, arguments: [] }],
+			fragments: {},
+			variableValues: {},
+		};
+
+		const res = await resolveQuery(gql, info);
+
+		// The old code iterated over query.group keys ('year(timestamp)') which don't match
+		// the normalized payload key ('year_timestamp'), so group would be incorrectly empty.
+		// The new code uses omit(payload, aggregateKeys) to correctly capture all group fields.
+		expect(res).toHaveLength(1);
+		expect(res).toEqual([{ year_timestamp: 2023, count: { id: 42 }, group: { year_timestamp: 2023 } }]);
+		expect((res as any[])[1]).toBeUndefined();
+	});
 });
