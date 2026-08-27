@@ -1,0 +1,228 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"sort_bulk_reorder\",\"schema\":{},\"meta\":{\"sort_field\":\"sort\"},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"name\",\"type\":\"string\",\"meta\":{},\"schema\":{}},{\"field\":\"sort\",\"type\":\"integer\",\"meta\":{\"hidden\":true},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"sort_bulk_reorder\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:51.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\":\"alpha\",\"sort\":10}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"name\":\"alpha\",\"sort\":10}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/sort_bulk_reorder",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:52.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\":\"bravo\",\"sort\":20}",
+    "ResponseBody": "{\"data\":{\"id\":2,\"name\":\"bravo\",\"sort\":20}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/sort_bulk_reorder",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:53.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\":\"charlie\",\"sort\":30}",
+    "ResponseBody": "{\"data\":{\"id\":3,\"name\":\"charlie\",\"sort\":30}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/sort_bulk_reorder",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:54.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\":\"delta\",\"sort\":40}",
+    "ResponseBody": "{\"data\":{\"id\":4,\"name\":\"delta\",\"sort\":40}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/sort_bulk_reorder",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:55.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "[{\"item\":4,\"to\":1},{\"item\":1,\"to\":3}]",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/utils/sort/sort_bulk_reorder",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:56.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\":[{\"id\":4},{\"id\":2},{\"id\":3},{\"id\":1}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/items/sort_bulk_reorder",
+    "QueryParams": {
+      "sort": [
+        "sort"
+      ],
+      "fields": [
+        "id"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:57.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/sort_bulk_reorder",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:58.396Z",
+    "Scheme": "http",
+    "scenarioName": "utils_sort_bulk_multi_move_reorder"
+  }
+]
