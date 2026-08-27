@@ -1,0 +1,153 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"skyramp_search_docs\",\"schema\":{},\"meta\":{\"icon\":\"article\"},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"title\",\"type\":\"string\",\"meta\":{},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"skyramp_search_docs\",\"meta\":{\"collection\":\"skyramp_search_docs\",\"icon\":\"article\",\"hidden\":false,\"singleton\":false},\"schema\":{\"name\":\"skyramp_search_docs\"}}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:20:58.029Z",
+    "Scheme": "http",
+    "scenarioName": "unknown_list_query",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"Directus relevance ranking guide\"}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"title\":\"Directus relevance ranking guide\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_docs",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:20:59.029Z",
+    "Scheme": "http",
+    "scenarioName": "unknown_list_query"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"An extended walkthrough of relevance scoring behaviour across collections\"}",
+    "ResponseBody": "{\"data\":{\"id\":2,\"title\":\"An extended walkthrough of relevance scoring behaviour across collections\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_docs",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:21:00.029Z",
+    "Scheme": "http",
+    "scenarioName": "unknown_list_query"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"results\":[{\"collection\":\"skyramp_search_docs\",\"id\":1,\"field\":\"title\",\"snippet\":\"Directus <mark>relevance</mark> ranking guide\",\"score\":3.2258064516129035},{\"collection\":\"skyramp_search_docs\",\"id\":2,\"field\":\"title\",\"snippet\":\"An extended walkthrough of <mark>relevance</mark> scoring behaviour across collections\",\"score\":1.3888888888888888}],\"total_count\":2}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/search",
+    "QueryParams": {
+      "q": [
+        "relevance"
+      ],
+      "collections": [
+        "skyramp_search_docs"
+      ],
+      "limit": [
+        "20"
+      ],
+      "offset": [
+        "0"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:21:01.029Z",
+    "Scheme": "http",
+    "scenarioName": "unknown_list_query"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/skyramp_search_docs",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:21:02.029Z",
+    "Scheme": "http",
+    "scenarioName": "unknown_list_query"
+  }
+]
