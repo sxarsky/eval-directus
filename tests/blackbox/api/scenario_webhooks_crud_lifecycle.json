@@ -1,0 +1,110 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"url\": \"https://example.com/hooks/articles\", \"method\": \"POST\", \"collections\": [\"articles\"]}",
+    "ResponseBody": "{\"data\": \"2cd713d3-b822-454b-b1c8-c991d4e879a0\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/webhooks",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:23:59.334Z",
+    "Scheme": "http",
+    "scenarioName": "webhooks_crud_lifecycle"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"2cd713d3-b822-454b-b1c8-c991d4e879a0\", \"url\": \"https://example.com/hooks/articles\", \"method\": \"POST\", \"collections\": [\"articles\"]}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/webhooks/2cd713d3-b822-454b-b1c8-c991d4e879a0",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:00.334Z",
+    "Scheme": "http",
+    "scenarioName": "webhooks_crud_lifecycle"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"method\": \"PUT\"}",
+    "ResponseBody": "{\"data\": \"2cd713d3-b822-454b-b1c8-c991d4e879a0\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/webhooks/2cd713d3-b822-454b-b1c8-c991d4e879a0",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:01.334Z",
+    "Scheme": "http",
+    "scenarioName": "webhooks_crud_lifecycle"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/webhooks/2cd713d3-b822-454b-b1c8-c991d4e879a0",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:02.334Z",
+    "Scheme": "http",
+    "scenarioName": "webhooks_crud_lifecycle"
+  }
+]
