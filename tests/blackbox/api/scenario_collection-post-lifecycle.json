@@ -1,0 +1,170 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"sky_export_lifecycle\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"name\",\"type\":\"string\",\"meta\":{},\"schema\":{}},{\"field\":\"qty\",\"type\":\"integer\",\"meta\":{},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"sky_export_lifecycle\",\"meta\":{\"collection\":\"sky_export_lifecycle\"},\"schema\":{\"name\":\"sky_export_lifecycle\"}}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:06:59.320Z",
+    "Scheme": "http",
+    "scenarioName": ":collection-post-lifecycle",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "[{\"name\":\"Alpha, Inc\",\"qty\":3},{\"name\":\"Beta\",\"qty\":7}]",
+    "ResponseBody": "{\"data\":[{\"id\":1,\"name\":\"Alpha, Inc\",\"qty\":3},{\"id\":2,\"name\":\"Beta\",\"qty\":7}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/sky_export_lifecycle",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:00.320Z",
+    "Scheme": "http",
+    "scenarioName": ":collection-post-lifecycle"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"query\":{\"sort\":[\"id\"]}}",
+    "ResponseBody": "{\"data\":[{\"id\":1,\"name\":\"Alpha, Inc\",\"qty\":3},{\"id\":2,\"name\":\"Beta\",\"qty\":7}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/exports/sky_export_lifecycle",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:01.320Z",
+    "Scheme": "http",
+    "scenarioName": ":collection-post-lifecycle"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"format\":\"csv\",\"query\":{\"sort\":[\"id\"]}}",
+    "ResponseBody": "",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "text/csv; charset=utf-8"
+      ],
+      "Content-Disposition": [
+        "attachment; filename=\"sky_export_lifecycle.csv\""
+      ]
+    },
+    "Method": "POST",
+    "Path": "/exports/sky_export_lifecycle",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:02.320Z",
+    "Scheme": "http",
+    "scenarioName": ":collection-post-lifecycle"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"format\":\"xml\"}",
+    "ResponseBody": "{\"errors\":[{\"message\":\"Invalid payload. format must be 'json' or 'csv'.\",\"extensions\":{\"reason\":\"format must be 'json' or 'csv'\",\"code\":\"INVALID_PAYLOAD\"}}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/exports/sky_export_lifecycle",
+    "QueryParams": {},
+    "StatusCode": 400,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:03.320Z",
+    "Scheme": "http",
+    "scenarioName": ":collection-post-lifecycle"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/sky_export_lifecycle",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:04.320Z",
+    "Scheme": "http",
+    "scenarioName": ":collection-post-lifecycle"
+  }
+]
