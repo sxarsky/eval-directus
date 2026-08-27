@@ -29,6 +29,8 @@ import emitter from '../emitter.js';
 import { processAst } from '../permissions/modules/process-ast/process-ast.js';
 import { processPayload } from '../permissions/modules/process-payload/process-payload.js';
 import { validateAccess } from '../permissions/modules/validate-access/validate-access.js';
+import { fetchPermissions } from '../permissions/lib/fetch-permissions.js';
+import { fetchPolicies } from '../permissions/lib/fetch-policies.js';
 import { shouldClearCache } from '../utils/should-clear-cache.js';
 import { transaction } from '../utils/transaction.js';
 import { validateKeys } from '../utils/validate-keys.js';
@@ -961,6 +963,30 @@ export class ItemsService<Item extends AnyItem = AnyItem, Collection extends str
 		}
 
 		return keys;
+	}
+
+
+	async assertReadableAggregateFields(aggregate: Record<string, string[]>): Promise<void> {
+		if (!this.accountability?.role) return;
+
+		const requestedFields = Object.values(aggregate).flat().filter((field) => field !== '*');
+		if (requestedFields.length === 0) return;
+
+		const permissions = await fetchPermissions(
+			{
+				policies: await fetchPolicies(this.accountability, { schema: this.schema, knex: this.knex }),
+				accountability: this.accountability,
+				action: 'read',
+				collections: [this.collection],
+			},
+			{ schema: this.schema, knex: this.knex },
+		);
+
+		const allowed = new Set(permissions.flatMap((permission: { fields?: string[] | null }) => permission.fields ?? []));
+		if (allowed.has('*')) return;
+
+		const forbidden = requestedFields.filter((field) => !allowed.has(field));
+		if (forbidden.length > 0) throw new ForbiddenError();
 	}
 
 	/**
