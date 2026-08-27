@@ -11,6 +11,7 @@ import ImportErrorDialog from './import-error-dialog.vue';
 import SidebarDetail from './sidebar-detail.vue';
 import api from '@/api';
 import VButton from '@/components/v-button.vue';
+import VDetail from '@/components/v-detail.vue';
 import VDivider from '@/components/v-divider.vue';
 import VDrawer from '@/components/v-drawer.vue';
 import VIcon from '@/components/v-icon/v-icon.vue';
@@ -578,6 +579,7 @@ async function exportDataFiles() {
 
 				<VDivider />
 
+				<VDetail :label="$t('advanced_options')" :start-open="false" class="full">
 				<div class="field half-left">
 					<p class="type-label">{{ $t('sort_field') }}</p>
 					<InterfaceSystemField
@@ -619,6 +621,7 @@ async function exportDataFiles() {
 						@input="exportSettings.fields = $event"
 					/>
 				</div>
+				</VDetail>
 			</div>
 		</VDrawer>
 
