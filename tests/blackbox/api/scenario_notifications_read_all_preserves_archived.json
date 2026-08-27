@@ -1,0 +1,168 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"3f2a9c14-7b6e-4d51-9a08-2e5c1d84f7b3\", \"unread_notifications\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {
+      "fields": [
+        "id"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:20.619Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"recipient\": \"3f2a9c14-7b6e-4d51-9a08-2e5c1d84f7b3\", \"subject\": \"Archived probe\", \"message\": \"should stay archived\", \"status\": \"archived\"}",
+    "ResponseBody": "{\"data\": {\"id\": 9001, \"status\": \"archived\", \"recipient\": \"3f2a9c14-7b6e-4d51-9a08-2e5c1d84f7b3\", \"subject\": \"Archived probe\", \"message\": \"should stay archived\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/notifications",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:21.619Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"recipient\": \"3f2a9c14-7b6e-4d51-9a08-2e5c1d84f7b3\", \"subject\": \"Inbox probe\", \"message\": \"should become read\", \"status\": \"inbox\"}",
+    "ResponseBody": "{\"data\": {\"id\": 9002, \"status\": \"inbox\", \"recipient\": \"3f2a9c14-7b6e-4d51-9a08-2e5c1d84f7b3\", \"subject\": \"Inbox probe\", \"message\": \"should become read\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/notifications",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:22.619Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{\"data\": {\"updated\": 1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/notifications/read-all",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:23.619Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": 9001, \"status\": \"archived\", \"subject\": \"Archived probe\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/notifications/9001",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:24.619Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": 9002, \"status\": \"read\", \"subject\": \"Inbox probe\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/notifications/9002",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T00:24:25.619Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  }
+]
