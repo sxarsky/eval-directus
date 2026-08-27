@@ -1,0 +1,113 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"sky_export_bulk\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"qty\",\"type\":\"integer\",\"meta\":{},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"sky_export_bulk\",\"meta\":{\"collection\":\"sky_export_bulk\"},\"schema\":{\"name\":\"sky_export_bulk\"}}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:36.021Z",
+    "Scheme": "http",
+    "scenarioName": "exports-bulk-export-truncates-at-default-limit",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "[{\"qty\":1},{\"qty\":2},{\"qty\":3},{\"qty\":4},{\"qty\":5},{\"qty\":6},{\"qty\":7},{\"qty\":8},{\"qty\":9},{\"qty\":10},{\"qty\":11},{\"qty\":12},{\"qty\":13},{\"qty\":14},{\"qty\":15},{\"qty\":16},{\"qty\":17},{\"qty\":18},{\"qty\":19},{\"qty\":20},{\"qty\":21},{\"qty\":22},{\"qty\":23},{\"qty\":24},{\"qty\":25},{\"qty\":26},{\"qty\":27},{\"qty\":28},{\"qty\":29},{\"qty\":30},{\"qty\":31},{\"qty\":32},{\"qty\":33},{\"qty\":34},{\"qty\":35},{\"qty\":36},{\"qty\":37},{\"qty\":38},{\"qty\":39},{\"qty\":40},{\"qty\":41},{\"qty\":42},{\"qty\":43},{\"qty\":44},{\"qty\":45},{\"qty\":46},{\"qty\":47},{\"qty\":48},{\"qty\":49},{\"qty\":50},{\"qty\":51},{\"qty\":52},{\"qty\":53},{\"qty\":54},{\"qty\":55},{\"qty\":56},{\"qty\":57},{\"qty\":58},{\"qty\":59},{\"qty\":60},{\"qty\":61},{\"qty\":62},{\"qty\":63},{\"qty\":64},{\"qty\":65},{\"qty\":66},{\"qty\":67},{\"qty\":68},{\"qty\":69},{\"qty\":70},{\"qty\":71},{\"qty\":72},{\"qty\":73},{\"qty\":74},{\"qty\":75},{\"qty\":76},{\"qty\":77},{\"qty\":78},{\"qty\":79},{\"qty\":80},{\"qty\":81},{\"qty\":82},{\"qty\":83},{\"qty\":84},{\"qty\":85},{\"qty\":86},{\"qty\":87},{\"qty\":88},{\"qty\":89},{\"qty\":90},{\"qty\":91},{\"qty\":92},{\"qty\":93},{\"qty\":94},{\"qty\":95},{\"qty\":96},{\"qty\":97},{\"qty\":98},{\"qty\":99},{\"qty\":100},{\"qty\":101},{\"qty\":102},{\"qty\":103},{\"qty\":104},{\"qty\":105}]",
+    "ResponseBody": "{\"data\":[{\"id\":1,\"qty\":1},{\"id\":105,\"qty\":105}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/sky_export_bulk",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:37.021Z",
+    "Scheme": "http",
+    "scenarioName": "exports-bulk-export-truncates-at-default-limit"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"format\":\"json\"}",
+    "ResponseBody": "{\"data\":[{\"id\":1,\"qty\":1},{\"id\":105,\"qty\":105}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/exports/sky_export_bulk",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:38.021Z",
+    "Scheme": "http",
+    "scenarioName": "exports-bulk-export-truncates-at-default-limit"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/sky_export_bulk",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-27T01:07:39.021Z",
+    "Scheme": "http",
+    "scenarioName": "exports-bulk-export-truncates-at-default-limit"
+  }
+]
