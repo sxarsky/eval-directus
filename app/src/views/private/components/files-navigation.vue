@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { isEqual } from 'lodash';
-import { computed, toRefs, watch } from 'vue';
+import { debounce, isEqual } from 'lodash';
+import { computed, ref, toRefs, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import NavigationFolder from './files-navigation-folder.vue';
 import VDivider from '@/components/v-divider.vue';
+import VInput from '@/components/v-input.vue';
 import VIcon from '@/components/v-icon/v-icon.vue';
 import VItemGroup from '@/components/v-item-group.vue';
 import VListGroup from '@/components/v-list-group.vue';
@@ -30,6 +31,33 @@ const props = defineProps<{
 const { rootFolder, localOpenFolders } = toRefs(props);
 
 const { nestedFolders, folders, loading, openFolders } = useFolders(rootFolder, localOpenFolders);
+
+const searchQuery = ref('');
+const debouncedSearchQuery = ref('');
+
+const updateDebouncedSearch = debounce((value: string) => {
+	debouncedSearchQuery.value = value;
+}, 250);
+
+watch(searchQuery, (value) => updateDebouncedSearch(value));
+
+const filteredNestedFolders = computed(() => {
+	if (!debouncedSearchQuery.value) return nestedFolders.value ?? [];
+	const query = debouncedSearchQuery.value.toLowerCase();
+
+	function filterFolder(folder) {
+		const nameMatch = folder.name.toLowerCase().includes(query);
+		const children = folder.children?.map(filterFolder).filter(Boolean) ?? [];
+		if (nameMatch || children.length > 0) {
+			return { ...folder, children: children.length > 0 ? children : folder.children };
+		}
+		return null;
+	}
+
+	return (nestedFolders.value ?? []).map(filterFolder).filter(Boolean);
+});
+
+const hasVisibleFolders = computed(() => filteredNestedFolders.value.length > 0);
 
 watch([() => props.currentFolder, loading], setOpenFolders, { immediate: true });
 
@@ -89,6 +117,10 @@ function setOpenFolders() {
 </script>
 
 <template>
+	<div class="files-navigation">
+		<div class="search-input">
+			<VInput v-model="searchQuery" type="search" :placeholder="$t('search')" />
+		</div>
 	<VList nav>
 		<template v-if="loading && (nestedFolders === null || nestedFolders.length === 0)">
 			<VListItem v-for="n in 4" :key="n">
@@ -105,7 +137,7 @@ function setOpenFolders() {
 					scope="files-navigation"
 					exact
 					disable-groupable-parent
-					:arrow-placement="nestedFolders && nestedFolders.length > 0 ? 'after' : false"
+					:arrow-placement="filteredNestedFolders && filteredNestedFolders.length > 0 ? 'after' : false"
 					@click="onClick(rootFolder ? { folder: rootFolder } : {})"
 				>
 					<template #activator>
@@ -153,11 +185,27 @@ function setOpenFolders() {
 			</VListItemContent>
 		</VListItem>
 	</VList>
+	</div>
 </template>
 
 <style lang="scss" scoped>
 .v-skeleton-loader {
 	--v-skeleton-loader-background-color: var(--theme--background-accent);
+}
+
+.files-navigation {
+	display: flex;
+	flex-direction: column;
+}
+
+.search-input {
+	padding: 12px;
+	padding-block-end: 0;
+}
+
+.no-folders-found {
+	padding: 8px 16px;
+	color: var(--theme--foreground-subdued);
 }
 
 .folders {
