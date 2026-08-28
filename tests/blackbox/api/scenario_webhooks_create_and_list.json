@@ -1,0 +1,56 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"url\":\"https://example.com/hooks/created\",\"method\":\"POST\",\"collections\":[\"articles\"]}",
+    "ResponseBody": "{\"data\":\"3f2a9c14-5b7e-4d81-9e60-2a8c7f1d4b93\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/webhooks",
+    "QueryParams": {},
+    "StatusCode": 201,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:38:48.943Z",
+    "Scheme": "http",
+    "scenarioName": "webhooks_create_and_list"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\":[{\"id\":\"3f2a9c14-5b7e-4d81-9e60-2a8c7f1d4b93\",\"url\":\"https://example.com/hooks/created\",\"method\":\"POST\",\"collections\":[\"articles\"]}]}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/webhooks",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:38:49.943Z",
+    "Scheme": "http",
+    "scenarioName": "webhooks_create_and_list"
+  }
+]
