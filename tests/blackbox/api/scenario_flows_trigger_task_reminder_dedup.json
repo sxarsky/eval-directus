@@ -1,0 +1,191 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"tasks\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true},\"meta\":{\"hidden\":true}},{\"field\":\"title\",\"type\":\"string\",\"schema\":{},\"meta\":{}},{\"field\":\"due_at\",\"type\":\"timestamp\",\"schema\":{},\"meta\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"tasks\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:40:51.426Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_task_reminder_dedup"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"Reminder task\",\"due_at\":\"2026-08-29T00:30:00Z\"}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"title\":\"Reminder task\",\"due_at\":\"2026-08-29T00:30:00.000Z\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/tasks",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:40:52.426Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_task_reminder_dedup"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"name\":\"Hourly task reminders\",\"status\":\"active\",\"trigger\":\"schedule\",\"options\":{\"cron\":\"0 * * * *\"},\"operations\":[{\"name\":\"Send reminder\",\"key\":\"send_reminder\",\"type\":\"request\",\"position_x\":19,\"position_y\":1,\"options\":{\"url\":\"http://localhost:8055/server/ping\",\"method\":\"POST\"}}]}",
+    "ResponseBody": "{\"data\":{\"id\":\"3f6c1b2a-9d47-4e58-8a11-6b2c7d0e4f91\",\"name\":\"Hourly task reminders\",\"status\":\"active\",\"trigger\":\"schedule\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:40:53.426Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_task_reminder_dedup"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\":\"2026-08-28T22:15:00Z\"}",
+    "ResponseBody": "{\"data\":{\"executed\":true,\"webhook_count\":1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/3f6c1b2a-9d47-4e58-8a11-6b2c7d0e4f91/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:40:54.426Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_task_reminder_dedup"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"trigger_time\":\"2026-08-28T22:45:00Z\"}",
+    "ResponseBody": "{\"data\":{\"executed\":true,\"webhook_count\":0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/flows/3f6c1b2a-9d47-4e58-8a11-6b2c7d0e4f91/trigger",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:40:55.426Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_task_reminder_dedup"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/flows/3f6c1b2a-9d47-4e58-8a11-6b2c7d0e4f91",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:40:56.426Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_task_reminder_dedup"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/tasks",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:40:57.426Z",
+    "Scheme": "http",
+    "scenarioName": "flows_trigger_task_reminder_dedup"
+  }
+]
