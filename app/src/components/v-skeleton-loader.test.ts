@@ -35,6 +35,7 @@ test('type prop', () => {
 		'text',
 		'list-item-icon',
 		'pagination',
+		'table-row',
 	] as const;
 
 	const pinia = createPinia();
