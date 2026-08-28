@@ -1,0 +1,56 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"string\":\"Directus\"}",
+    "ResponseBody": "{\"data\":\"$argon2id$v=19$m=65536,t=3,p=4$bfVLKMQTvNnncc28hGTurg$WraomnUCmXU9c8/bZy1kKqy+M0fFnn8egVrQLk+XNmM\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/utils/hash/generate",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:36:38.348Z",
+    "Scheme": "http",
+    "scenarioName": "hash_verify_matching_string_returns_true"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"string\":\"Directus\",\"hash\":\"$argon2id$v=19$m=65536,t=3,p=4$bfVLKMQTvNnncc28hGTurg$WraomnUCmXU9c8/bZy1kKqy+M0fFnn8egVrQLk+XNmM\"}",
+    "ResponseBody": "{\"data\":true}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/utils/hash/verify",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:36:39.348Z",
+    "Scheme": "http",
+    "scenarioName": "hash_verify_matching_string_returns_true"
+  }
+]
