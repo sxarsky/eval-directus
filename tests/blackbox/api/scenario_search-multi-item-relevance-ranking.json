@@ -1,0 +1,144 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\":\"skyramp_search_probe\",\"schema\":{},\"meta\":{},\"fields\":[{\"field\":\"id\",\"type\":\"integer\",\"meta\":{\"hidden\":true},\"schema\":{\"is_primary_key\":true,\"has_auto_increment\":true}},{\"field\":\"title\",\"type\":\"string\",\"meta\":{},\"schema\":{}}]}",
+    "ResponseBody": "{\"data\":{\"collection\":\"skyramp_search_probe\",\"meta\":{\"collection\":\"skyramp_search_probe\"},\"schema\":{\"name\":\"skyramp_search_probe\"}}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:39:02.360Z",
+    "Scheme": "http",
+    "scenarioName": "search-multi-item-relevance-ranking",
+    "UniqueFields": [
+      "collection"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"Quantum Quantum Widget\"}",
+    "ResponseBody": "{\"data\":{\"id\":1,\"title\":\"Quantum Quantum Widget\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_probe",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:39:03.360Z",
+    "Scheme": "http",
+    "scenarioName": "search-multi-item-relevance-ranking"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"title\":\"A single Quantum item here\"}",
+    "ResponseBody": "{\"data\":{\"id\":2,\"title\":\"A single Quantum item here\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/skyramp_search_probe",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:39:04.360Z",
+    "Scheme": "http",
+    "scenarioName": "search-multi-item-relevance-ranking"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"results\":[{\"collection\":\"skyramp_search_probe\",\"id\":1,\"field\":\"title\",\"snippet\":\"<mark>Quantum</mark> <mark>Quantum</mark> Widget\",\"score\":9.090909090909092},{\"collection\":\"skyramp_search_probe\",\"id\":2,\"field\":\"title\",\"snippet\":\"A single <mark>Quantum</mark> item here\",\"score\":3.8461538461538463}],\"total_count\":2}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/search",
+    "QueryParams": {
+      "q": [
+        "Quantum"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:39:05.360Z",
+    "Scheme": "http",
+    "scenarioName": "search-multi-item-relevance-ranking"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/skyramp_search_probe",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:39:06.360Z",
+    "Scheme": "http",
+    "scenarioName": "search-multi-item-relevance-ranking"
+  }
+]
