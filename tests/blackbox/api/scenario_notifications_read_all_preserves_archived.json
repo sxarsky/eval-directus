@@ -1,0 +1,230 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"id\": \"ec6e3eaa-dde7-41b8-a954-2edfa454f9e7\", \"unread_notifications\": 0}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {
+      "fields": [
+        "id,unread_notifications"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:38.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"recipient\": \"ec6e3eaa-dde7-41b8-a954-2edfa454f9e7\", \"subject\": \"Archived quarterly report\", \"message\": \"Filed away last quarter\", \"status\": \"archived\"}",
+    "ResponseBody": "{\"id\": 101, \"status\": \"archived\", \"subject\": \"Archived quarterly report\", \"message\": \"Filed away last quarter\", \"recipient\": \"ec6e3eaa-dde7-41b8-a954-2edfa454f9e7\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/notifications",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:39.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"recipient\": \"ec6e3eaa-dde7-41b8-a954-2edfa454f9e7\", \"subject\": \"Deployment finished\", \"message\": \"Build 4821 deployed to production\", \"status\": \"inbox\"}",
+    "ResponseBody": "{\"id\": 102, \"status\": \"inbox\", \"subject\": \"Deployment finished\", \"message\": \"Build 4821 deployed to production\", \"recipient\": \"ec6e3eaa-dde7-41b8-a954-2edfa454f9e7\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/notifications",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:40.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{\"updated\": 1}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/notifications/read-all",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:41.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"id\": 101, \"status\": \"archived\", \"subject\": \"Archived quarterly report\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/notifications/101",
+    "QueryParams": {
+      "fields": [
+        "id,status,subject"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:42.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"id\": 102, \"status\": \"read\", \"subject\": \"Deployment finished\"}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/notifications/102",
+    "QueryParams": {
+      "fields": [
+        "id,status,subject"
+      ]
+    },
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:43.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/notifications/101",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:44.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ],
+      "Authorization": [
+        "Bearer SKYRAMP_PLACEHOLDER_TOKEN"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/notifications/102",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-08-28T22:37:45.268Z",
+    "Scheme": "http",
+    "scenarioName": "notifications_read_all_preserves_archived"
+  }
+]
