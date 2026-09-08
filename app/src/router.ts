@@ -134,6 +134,11 @@ export const onBeforeEach: NavigationGuard = async (to) => {
 	const userStore = useUserStore();
 	const requireTfaSetup = useLocalStorage<string | null>('directus-require_tfa_setup', null);
 
+	// Redirect old data-model path to new schema path
+	if (to.path === '/settings/data-model') {
+		return '/settings/schema';
+	}
+
 	// First load
 	if (firstLoad) {
 		firstLoad = false;
