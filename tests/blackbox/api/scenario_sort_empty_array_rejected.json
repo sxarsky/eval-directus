@@ -1,0 +1,98 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"collection\": \"test_sort_empty_arr\", \"fields\": [{\"field\": \"id\", \"type\": \"integer\", \"schema\": {\"is_primary_key\": true, \"has_auto_increment\": true}, \"meta\": {}}, {\"field\": \"sort\", \"type\": \"integer\", \"schema\": {}, \"meta\": {}}], \"meta\": {\"sort_field\": \"sort\"}}",
+    "ResponseBody": "{\"data\": {\"collection\": \"test_sort_empty_arr\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/collections",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-09-08T21:06:52.487Z",
+    "Scheme": "http",
+    "scenarioName": "sort_empty_array_rejected"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"sort\": 1}",
+    "ResponseBody": "{\"data\": {\"id\": 1, \"sort\": 1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/items/test_sort_empty_arr",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-09-08T21:06:53.487Z",
+    "Scheme": "http",
+    "scenarioName": "sort_empty_array_rejected"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "[]",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/utils/sort/test_sort_empty_arr",
+    "QueryParams": {},
+    "StatusCode": 400,
+    "Port": 8055,
+    "Timestamp": "2026-09-08T21:06:54.487Z",
+    "Scheme": "http",
+    "scenarioName": "sort_empty_array_rejected"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/collections/test_sort_empty_arr",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-09-08T21:06:55.487Z",
+    "Scheme": "http",
+    "scenarioName": "sort_empty_array_rejected"
+  }
+]
