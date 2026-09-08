@@ -110,6 +110,21 @@ describe('onBeforeEach', () => {
 
 		expect(authRefresh).not.toHaveBeenCalled();
 	});
+
+	test('should redirect /settings/data-model to /settings/schema', async () => {
+		const schemaRoute = {
+			name: 'settings-schema',
+			path: '/settings/schema',
+			component: testComponent,
+			meta: {},
+		};
+
+		router.addRoute(schemaRoute);
+
+		await router.push('/settings/data-model');
+
+		expect(router.currentRoute.value.path).toBe('/settings/schema');
+	});
 });
 
 describe('onAfterEach', () => {
