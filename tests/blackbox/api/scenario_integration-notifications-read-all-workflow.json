@@ -1,0 +1,149 @@
+[
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"df5de9ea-cdab-43a4-8768-831ae90f7f29\", \"unread_notifications\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-09-11T21:28:43.002Z",
+    "Scheme": "http",
+    "scenarioName": "integration-notifications-read-all-workflow"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{\"recipient\": \"df5de9ea-cdab-43a4-8768-831ae90f7f29\", \"subject\": \"Test Read-All Notification\", \"status\": \"inbox\"}",
+    "ResponseBody": "{\"data\": {\"id\": 1, \"recipient\": \"df5de9ea-cdab-43a4-8768-831ae90f7f29\", \"subject\": \"Test Read-All Notification\", \"status\": \"inbox\"}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "POST",
+    "Path": "/notifications",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-09-11T21:28:44.002Z",
+    "Scheme": "http",
+    "scenarioName": "integration-notifications-read-all-workflow",
+    "UniqueFields": [
+      "subject"
+    ]
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"df5de9ea-cdab-43a4-8768-831ae90f7f29\", \"unread_notifications\": 1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-09-11T21:28:45.002Z",
+    "Scheme": "http",
+    "scenarioName": "integration-notifications-read-all-workflow"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "{}",
+    "ResponseBody": "{\"data\": {\"updated\": 1}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "PATCH",
+    "Path": "/notifications/read-all",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-09-11T21:28:46.002Z",
+    "Scheme": "http",
+    "scenarioName": "integration-notifications-read-all-workflow"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{\"data\": {\"id\": \"df5de9ea-cdab-43a4-8768-831ae90f7f29\", \"unread_notifications\": 0}}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "GET",
+    "Path": "/users/me",
+    "QueryParams": {},
+    "StatusCode": 200,
+    "Port": 8055,
+    "Timestamp": "2026-09-11T21:28:47.002Z",
+    "Scheme": "http",
+    "scenarioName": "integration-notifications-read-all-workflow"
+  },
+  {
+    "Source": "192.168.65.1:39998",
+    "Destination": "localhost",
+    "RequestBody": "",
+    "ResponseBody": "{}",
+    "RequestHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "ResponseHeaders": {
+      "Content-Type": [
+        "application/json"
+      ]
+    },
+    "Method": "DELETE",
+    "Path": "/notifications/1",
+    "QueryParams": {},
+    "StatusCode": 204,
+    "Port": 8055,
+    "Timestamp": "2026-09-11T21:28:48.002Z",
+    "Scheme": "http",
+    "scenarioName": "integration-notifications-read-all-workflow"
+  }
+]
