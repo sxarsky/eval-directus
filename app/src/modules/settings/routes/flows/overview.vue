@@ -38,6 +38,26 @@ const confirmDelete = ref<FlowRaw | null>(null);
 const deletingFlow = ref(false);
 const editFlow = ref<string | undefined>();
 
+// DR-U07: multi-select + bulk-delete toolbar
+const selection = ref<string[]>([]);
+const confirmBatchDelete = ref(false);
+const batchDeleting = ref(false);
+
+async function batchDeleteFlows() {
+	if (batchDeleting.value || selection.value.length === 0) return;
+	batchDeleting.value = true;
+	try {
+		await api.delete('/flows', { data: selection.value });
+		await flowsStore.hydrate();
+		selection.value = [];
+		confirmBatchDelete.value = false;
+	} catch (error) {
+		unexpectedError(error);
+	} finally {
+		batchDeleting.value = false;
+	}
+}
+
 const conditionalFormatting = ref([
 	{
 		operator: 'eq',
@@ -161,12 +181,55 @@ function onFlowDrawerCompletion(id: string) {
 		</template>
 
 		<template #actions>
+			<div
+				v-if="selection.length > 0"
+				class="bulk-action-toolbar"
+				role="toolbar"
+				data-testid="flows-bulk-toolbar"
+			>
+				<span class="selection-count" data-testid="flows-selection-count">
+					{{ $t('item_count', selection.length) }}
+				</span>
+				<PrivateViewHeaderBarActionButton
+					v-tooltip.bottom="$t('delete_label')"
+					class="action-delete"
+					data-testid="flows-bulk-delete-trigger"
+					icon="delete"
+					secondary
+					@click="confirmBatchDelete = true"
+				/>
+			</div>
+
 			<PrivateViewHeaderBarActionButton
 				v-tooltip.bottom="createAllowed ? $t('create_flow') : $t('not_allowed')"
 				:disabled="createAllowed === false"
 				icon="add"
 				@click="editFlow = '+'"
 			/>
+
+			<VDialog
+				v-model="confirmBatchDelete"
+				data-testid="flows-bulk-delete-dialog"
+				@esc="confirmBatchDelete = false"
+				@apply="batchDeleteFlows"
+			>
+				<VCard>
+					<VCardTitle>{{ $t('batch_delete_confirm', selection.length) }}</VCardTitle>
+					<VCardActions>
+						<VButton secondary :disabled="batchDeleting" @click="confirmBatchDelete = false">
+							{{ $t('cancel') }}
+						</VButton>
+						<VButton
+							kind="danger"
+							data-testid="flows-bulk-delete-confirm"
+							:loading="batchDeleting"
+							@click="batchDeleteFlows"
+						>
+							{{ $t('delete_label') }}
+						</VButton>
+					</VCardActions>
+				</VCard>
+			</VDialog>
 		</template>
 
 		<VInfo v-if="flows.length === 0" icon="bolt" :title="$t('no_flows')" center>
@@ -180,10 +243,14 @@ function onFlowDrawerCompletion(id: string) {
 		<VTable
 			v-else
 			v-model:headers="tableHeaders"
+			v-model="selection"
 			:items="flows"
 			:sort="internalSort"
+			show-select="multiple"
+			selection-use-keys
 			show-resize
 			fixed-header
+			item-key="id"
 			@click:row="navigateToFlow"
 			@update:sort="updateSort($event)"
 		>
