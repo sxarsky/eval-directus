@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DeepPartial, Field, Relation } from '@directus/types';
 import { cloneDeep } from 'lodash';
-import { reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import api from '@/api';
@@ -103,6 +103,59 @@ function setOptionsForSingleton() {
 	systemFields.sort.inputDisabled = singleton.value;
 }
 
+const DRAFT_KEY = 'directus_new_collection_draft';
+
+function saveDraft() {
+	try {
+		const draft = {
+			collectionName: collectionName.value,
+			singleton: singleton.value,
+			primaryKeyFieldName: primaryKeyFieldName.value,
+			primaryKeyFieldType: primaryKeyFieldType.value,
+			systemFields: JSON.parse(JSON.stringify(systemFields)),
+		};
+		localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+	} catch {
+		// Ignore localStorage quota / serialization errors
+	}
+}
+
+function loadDraft() {
+	try {
+		const raw = localStorage.getItem(DRAFT_KEY);
+		if (!raw) return;
+		const draft = JSON.parse(raw);
+		if (draft.collectionName) collectionName.value = draft.collectionName;
+		if (typeof draft.singleton === 'boolean') singleton.value = draft.singleton;
+		if (draft.primaryKeyFieldName) primaryKeyFieldName.value = draft.primaryKeyFieldName;
+		if (draft.primaryKeyFieldType) primaryKeyFieldType.value = draft.primaryKeyFieldType;
+		if (draft.systemFields) {
+			Object.assign(systemFields, draft.systemFields);
+		}
+	} catch {
+		// Ignore parse errors
+	}
+}
+
+function clearDraft() {
+	try {
+		localStorage.removeItem(DRAFT_KEY);
+	} catch {
+		// noop
+	}
+}
+
+onMounted(() => {
+	loadDraft();
+});
+
+watch(
+	[collectionName, singleton, primaryKeyFieldName, primaryKeyFieldType, () => JSON.stringify(systemFields)],
+	() => {
+		saveDraft();
+	},
+);
+
 async function save() {
 	saving.value = true;
 
@@ -138,6 +191,8 @@ async function save() {
 		notify({
 			title: t('collection_created'),
 		});
+
+		clearDraft();
 
 		router.replace({ name: 'settings-fields', params: { collection: createdCollectionName } });
 	} catch (error) {
@@ -407,16 +462,29 @@ function onApply() {
 		@apply="onApply"
 	>
 		<template #sidebar>
-			<VTabs v-model="currentTab" vertical>
-				<VTab value="collection_setup">{{ $t('collection_setup') }}</VTab>
-				<VTab value="optional_system_fields" :disabled="!collectionName">
-					{{ $t('optional_system_fields') }}
-				</VTab>
-			</VTabs>
+			<div data-testid="wizard-step-indicator">
+				<VTabs v-model="currentTab" vertical>
+					<VTab
+						value="collection_setup"
+						:data-active="currentTab[0] === 'collection_setup' ? 'true' : null"
+						data-step="1"
+					>
+						{{ $t('collection_setup') }}
+					</VTab>
+					<VTab
+						value="optional_system_fields"
+						:disabled="!collectionName"
+						:data-active="currentTab[0] === 'optional_system_fields' ? 'true' : null"
+						data-step="2"
+					>
+						{{ $t('optional_system_fields') }}
+					</VTab>
+				</VTabs>
+			</div>
 		</template>
 
 		<VTabsItems v-model="currentTab" class="content">
-			<VTabItem value="collection_setup">
+			<VTabItem value="collection_setup" data-testid="wizard-step-1">
 				<VNotice>{{ $t('creating_collection_info') }}</VNotice>
 
 				<div class="grid">
@@ -469,7 +537,7 @@ function onApply() {
 					</div>
 				</div>
 			</VTabItem>
-			<VTabItem value="optional_system_fields">
+			<VTabItem value="optional_system_fields" data-testid="wizard-step-2">
 				<VNotice>{{ $t('creating_collection_system') }}</VNotice>
 
 				<div class="grid system">
@@ -503,10 +571,19 @@ function onApply() {
 
 		<template #actions>
 			<PrivateViewHeaderBarActionButton
+				v-if="currentTab[0] === 'optional_system_fields'"
+				v-tooltip.bottom="$t('back')"
+				icon="arrow_back"
+				data-testid="wizard-back-btn"
+				@click="currentTab = ['collection_setup']"
+			/>
+
+			<PrivateViewHeaderBarActionButton
 				v-if="currentTab[0] === 'collection_setup'"
 				v-tooltip.bottom="$t('next')"
 				:disabled="!collectionName || collectionName.length === 0"
 				icon="arrow_forward"
+				data-testid="wizard-next-btn"
 				@click="currentTab = ['optional_system_fields']"
 			/>
 
@@ -515,6 +592,7 @@ function onApply() {
 				v-tooltip.bottom="$t('finish_setup')"
 				:loading="saving"
 				icon="check"
+				data-testid="wizard-submit-btn"
 				@click="save"
 			/>
 		</template>
