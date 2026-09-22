@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Role } from '@directus/types';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import api from '@/api';
 import VButton from '@/components/v-button.vue';
 import VCardActions from '@/components/v-card-actions.vue';
@@ -12,6 +12,7 @@ import VNotice from '@/components/v-notice.vue';
 import VSelect from '@/components/v-select/v-select.vue';
 import VTextarea from '@/components/v-textarea.vue';
 import { APIError } from '@/types/error';
+import { useUserInvitesStore } from '@/stores/user-invites';
 import { unexpectedError } from '@/utils/unexpected-error';
 
 const props = defineProps<{
@@ -23,12 +24,35 @@ const emit = defineEmits<{
 	(e: 'update:modelValue', value: boolean): void;
 }>();
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const emails = ref<string>('');
 const roles = ref<Record<string, any>[]>([]);
 const roleSelected = ref<string | undefined>(props.role);
 const loading = ref(false);
+const validationVisible = ref(false);
 
-const uniqueValidationErrors = ref([]);
+const uniqueValidationErrors = ref<APIError[]>([]);
+
+const userInvitesStore = useUserInvitesStore();
+
+const parsedEmails = computed(() =>
+	emails.value
+		.split(/,|\n/)
+		.map((e) => e.trim())
+		.filter((e) => e.length > 0),
+);
+
+const emailEntries = computed(() =>
+	parsedEmails.value.map((email) => ({ email, valid: EMAIL_REGEX.test(email) })),
+);
+
+const invalidEmails = computed(() => emailEntries.value.filter((e) => !e.valid).map((e) => e.email));
+const validEmails = computed(() => emailEntries.value.filter((e) => e.valid).map((e) => e.email));
+
+const hasValidEmails = computed(() => validEmails.value.length > 0);
+const inlineErrorVisible = computed(() => validationVisible.value && invalidEmails.value.length > 0);
+const submitDisabled = computed(() => !hasValidEmails.value || !roleSelected.value || loading.value);
 
 watch(
 	() => props.modelValue,
@@ -37,32 +61,50 @@ watch(
 	},
 );
 
+watch(emails, () => {
+	if (validationVisible.value && invalidEmails.value.length === 0) {
+		validationVisible.value = false;
+	}
+});
+
+function onEmailsBlur() {
+	if (parsedEmails.value.length > 0) {
+		validationVisible.value = true;
+	}
+}
+
 async function inviteUsers() {
-	if (emails.value.length === 0 || loading.value) return;
+	if (!hasValidEmails.value || !roleSelected.value || loading.value) return;
 
 	loading.value = true;
+	const emailsToInvite = validEmails.value;
+	const role = roleSelected.value;
+
+	const pendingIds = userInvitesStore.add(emailsToInvite, role);
 
 	try {
-		const emailsParsed = emails.value
-			.split(/,|\n/)
-			.filter((e) => e)
-			.map((email) => email.trim());
-
 		await api.post('/users/invite', {
-			email: emailsParsed,
-			role: roleSelected.value,
+			email: emailsToInvite,
+			role,
 		});
 
+		userInvitesStore.reconcile(pendingIds);
 		emails.value = '';
+		validationVisible.value = false;
+		uniqueValidationErrors.value = [];
 		emit('update:modelValue', false);
 	} catch (error: any) {
-		uniqueValidationErrors.value = error?.response?.data?.errors?.filter((e: APIError) => {
-			return e.extensions?.code === 'RECORD_NOT_UNIQUE';
-		});
+		userInvitesStore.revert(pendingIds);
 
-		const otherErrors = error?.response?.data?.errors?.filter(
-			(e: APIError) => e?.extensions?.code !== 'RECORD_NOT_UNIQUE',
-		);
+		uniqueValidationErrors.value =
+			error?.response?.data?.errors?.filter(
+				(e: APIError) => e.extensions?.code === 'RECORD_NOT_UNIQUE',
+			) ?? [];
+
+		const otherErrors =
+			error?.response?.data?.errors?.filter(
+				(e: APIError) => e?.extensions?.code !== 'RECORD_NOT_UNIQUE',
+			) ?? [];
 
 		if (otherErrors.length > 0) {
 			otherErrors.forEach((e: APIError) => unexpectedError(e));
@@ -105,13 +147,32 @@ async function loadRoles() {
 				<div class="grid">
 					<div class="field">
 						<div class="type-label">{{ $t('emails') }}</div>
-						<VTextarea v-model="emails" :nullable="false" placeholder="admin@example.com, user@example.com..." />
+						<VTextarea
+							v-model="emails"
+							:nullable="false"
+							placeholder="admin@example.com, user@example.com..."
+							data-testid="invite-emails-field"
+							@blur="onEmailsBlur"
+						/>
 					</div>
 					<div v-if="!role" class="field">
 						<div class="type-label">{{ $t('role') }}</div>
-						<VSelect v-model="roleSelected" :items="roles" />
+						<VSelect v-model="roleSelected" :items="roles" data-testid="invite-role-field" />
 					</div>
-					<VNotice v-if="uniqueValidationErrors.length > 0" class="field" type="danger">
+					<VNotice
+						v-if="inlineErrorVisible"
+						class="field"
+						type="warning"
+						data-testid="invite-validation-error"
+					>
+						<div>Invalid email addresses: {{ invalidEmails.join(', ') }}</div>
+					</VNotice>
+					<VNotice
+						v-if="uniqueValidationErrors.length > 0"
+						class="field"
+						type="danger"
+						data-testid="invite-server-error"
+					>
 						<div v-for="(err, i) in uniqueValidationErrors" :key="i">
 							<template v-if="(err as any).extensions.invalid">
 								{{ $t('email_already_invited', { email: (err as any).extensions.invalid }) }}
@@ -126,7 +187,12 @@ async function loadRoles() {
 
 			<VCardActions>
 				<VButton secondary @click="$emit('update:modelValue', false)">{{ $t('cancel') }}</VButton>
-				<VButton :disabled="emails.length === 0" :loading="loading" @click="inviteUsers">
+				<VButton
+					:disabled="submitDisabled"
+					:loading="loading"
+					data-testid="invite-send-btn"
+					@click="inviteUsers"
+				>
 					{{ $t('invite') }}
 				</VButton>
 			</VCardActions>
