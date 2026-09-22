@@ -193,6 +193,10 @@ export class VercelDriver extends DeploymentDriver<VercelCredentials, VercelOpti
 			result.framework = project.framework;
 		}
 
+		if (project.link?.productionBranch) {
+			result.production_branch = project.link.productionBranch;
+		}
+
 		return result;
 	}
 
