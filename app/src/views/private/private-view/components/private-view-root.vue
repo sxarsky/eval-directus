@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { SplitPanel } from '@directus/vue-split-panel';
-import { useBreakpoints } from '@vueuse/core';
+import { useBreakpoints, useWindowSize } from '@vueuse/core';
 import { computed, watch } from 'vue';
 import ModuleBar from '../../components/module-bar.vue';
 import SkipMenu from '../../components/skip-menu.vue';
@@ -41,6 +41,20 @@ const splitterCollapsed = computed({
 		navBarStore.collapsed = val;
 	},
 });
+
+// DR-U16: percentage of viewport width occupied by the nav sidebar; updated as the user drags
+// the split-panel divider. Exposed as `data-panel-size` on the <aside> for deterministic testing.
+const NAV_MIN_SIZE = 198;
+const { width: viewportWidth } = useWindowSize();
+
+const navPanelSize = computed(() => {
+	if (!inlineNav.value || splitterCollapsed.value) return 0;
+	const width = viewportWidth.value || 1;
+	// Effective width is already clamped by SplitPanel (min-size=198, max-size=306);
+	// guard against config drift so the attribute never reports below the documented minimum.
+	const effective = Math.max(navBarStore.size, NAV_MIN_SIZE);
+	return Math.round((effective / width) * 100);
+});
 </script>
 
 <template>
@@ -70,7 +84,7 @@ const splitterCollapsed = computed({
 			<template #start>
 				<template v-if="inlineNav">
 					<SkipMenu section="module-navigation" />
-					<PrivateViewNav id="module-navigation">
+					<PrivateViewNav id="module-navigation" :panel-size="navPanelSize">
 						<template #navigation><slot name="navigation" /></template>
 					</PrivateViewNav>
 				</template>
