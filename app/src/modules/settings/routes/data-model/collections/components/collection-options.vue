@@ -2,6 +2,7 @@
 import { isSystemCollection } from '@directus/system-data';
 import type { DeepPartial } from '@directus/types';
 import { computed, ref } from 'vue';
+import CollectionTagRenameModal from './collection-tag-rename-modal.vue';
 import VButton from '@/components/v-button.vue';
 import VCardActions from '@/components/v-card-actions.vue';
 import VCardText from '@/components/v-card-text.vue';
@@ -76,6 +77,14 @@ function useDelete() {
 
 async function update(updates: DeepPartial<Collection>) {
 	await collectionsStore.updateCollection(props.collection.collection, updates);
+}
+
+const tagRenameActive = ref(false);
+
+async function applyTagRename(newTag: string) {
+	await collectionsStore.updateCollection(props.collection.collection, {
+		meta: { tag: newTag } as Partial<Collection['meta']>,
+	});
 }
 </script>
 
@@ -155,6 +164,13 @@ async function update(updates: DeepPartial<Collection>) {
 					<VDivider />
 				</template>
 
+				<VListItem clickable data-test="tag-rename-menu-item" @click="tagRenameActive = true">
+					<VListItemIcon>
+						<VIcon name="label" />
+					</VListItemIcon>
+					<VListItemContent>Rename tag</VListItemContent>
+				</VListItem>
+
 				<VListItem clickable class="danger" @click="deleteActive = true">
 					<VListItemIcon>
 						<VIcon name="delete" />
@@ -165,6 +181,8 @@ async function update(updates: DeepPartial<Collection>) {
 				</VListItem>
 			</VList>
 		</VMenu>
+
+		<CollectionTagRenameModal v-model="tagRenameActive" :collection="collection" @rename="applyTagRename" />
 
 		<VDialog v-model="deleteActive" @esc="deleteActive = false" @apply="deleteCollection">
 			<VCard>
