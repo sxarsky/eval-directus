@@ -58,7 +58,7 @@ const { info } = useServerStore();
 
 let uploadController: Upload | null = null;
 
-const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles } = useUpload();
+const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles, fileNames, filePercents, fileStates, cancelAll } = useUpload();
 const { onDragEnter, onDragLeave, onDrop, dragging } = useDragging();
 const { url, isValidURL, loading: urlLoading, importFromURL } = useURLImport();
 const { setSelection } = useSelection();
@@ -140,6 +140,20 @@ function useUpload() {
 	const filesStore = useFilesStore();
 	const newUpload = filesStore.upload();
 
+	const fileNames = ref<string[]>([]);
+	const filePercents = ref<number[]>([]);
+	const fileStates = ref<Array<'queued' | 'uploading' | 'done' | 'error' | 'cancelled'>>([]);
+	let perFileControllers: (UploadController | null)[] = [];
+
+	function cancelAll() {
+		for (let i = 0; i < perFileControllers.length; i++) {
+			const state = fileStates.value[i];
+			if (state === 'done' || state === 'cancelled') continue;
+			perFileControllers[i]?.abort();
+			fileStates.value[i] = 'cancelled';
+		}
+	}
+
 	return {
 		uploading: newUpload.uploading,
 		progress: newUpload.progress,
@@ -147,6 +161,10 @@ function useUpload() {
 		onBrowseSelect,
 		numberOfFiles: newUpload.numberOfFiles,
 		done: newUpload.done,
+		fileNames,
+		filePercents,
+		fileStates,
+		cancelAll,
 	};
 
 	async function upload(files: FileList) {
@@ -160,10 +178,15 @@ function useUpload() {
 		try {
 			if (!validFiles(files)) return;
 
+			fileNames.value = Array.from(files).map((f) => f.name);
+			filePercents.value = new Array(files.length).fill(0);
+			fileStates.value = new Array(files.length).fill('queued');
+			perFileControllers = new Array(files.length).fill(null);
+
 			if (props.multiple === true) {
 				const fileSizes = Array.from(files).map((file) => file.size);
 				const totalBytes = sum(fileSizes);
-				const fileControllers: (UploadController | null)[] = new Array(files.length).fill(null);
+				const fileControllers: (UploadController | null)[] = perFileControllers;
 
 				const controller = {
 					start() {
@@ -187,6 +210,16 @@ function useUpload() {
 							.map(([, i]) => i!);
 
 						newUpload.done.value = doneIndices.length;
+
+						// Update per-file UI state (do not override cancelled)
+						for (let i = 0; i < percentages.length; i++) {
+							const p = percentages[i]!;
+							filePercents.value[i] = p;
+							if (fileStates.value[i] === 'cancelled') continue;
+							if (p >= 100) fileStates.value[i] = 'done';
+							else if (p > 0) fileStates.value[i] = 'uploading';
+							else fileStates.value[i] = 'queued';
+						}
 
 						// Nullify controller for done uploads, to prevent resuming after pausing
 						for (const idx of doneIndices) {
@@ -406,7 +439,40 @@ defineExpose({ abort });
 						: $t('upload_file_indeterminate')
 				}}
 			</p>
-			<VProgressLinear :value="progress" rounded />
+			<VProgressLinear :value="progress" rounded data-testid="upload-aggregate-progress" />
+
+			<div v-if="multiple && fileNames.length > 1" class="upload-file-list">
+				<div class="upload-file-list-header">
+					<span class="upload-file-list-count">{{ fileNames.length }} files</span>
+					<button
+						type="button"
+						class="upload-cancel-all"
+						data-testid="upload-cancel-all"
+						@click="cancelAll"
+					>
+						Cancel all
+					</button>
+				</div>
+				<div
+					v-for="(name, index) in fileNames"
+					:key="index"
+					class="upload-file-row"
+					data-testid="upload-file-row"
+					:data-file-name="name"
+					:data-state="fileStates[index]"
+				>
+					<span class="upload-file-name">{{ name }}</span>
+					<span class="upload-file-state">{{ fileStates[index] }}</span>
+					<VProgressLinear
+						v-if="fileStates[index] === 'uploading' || fileStates[index] === 'queued'"
+						class="upload-file-progress"
+						data-testid="upload-file-progress"
+						:value="filePercents[index]"
+						:aria-valuenow="filePercents[index]"
+						rounded
+					/>
+				</div>
+			</div>
 		</template>
 
 		<template v-else>
@@ -580,5 +646,56 @@ defineExpose({ abort });
 		inset-inline-start: 1.8125rem;
 		inline-size: calc(100% - 3.625rem);
 	}
+}
+
+.upload-file-list {
+	margin-block-start: 1rem;
+	max-block-size: 16rem;
+	overflow-y: auto;
+	border: 1px solid var(--theme--form--field--input--border-color);
+	border-radius: var(--theme--border-radius);
+	background-color: var(--theme--background);
+}
+
+.upload-file-list-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 0.75rem;
+	border-block-end: 1px solid var(--theme--form--field--input--border-color);
+	font-size: 0.8125rem;
+}
+
+.upload-cancel-all {
+	color: var(--theme--danger);
+	cursor: pointer;
+}
+
+.upload-file-row {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 0.25rem 0.75rem;
+	padding: 0.5rem 0.75rem;
+	border-block-end: 1px solid var(--theme--form--field--input--border-color);
+	font-size: 0.8125rem;
+
+	&:last-child {
+		border-block-end: none;
+	}
+}
+
+.upload-file-name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.upload-file-state {
+	color: var(--theme--foreground-subdued);
+	text-transform: capitalize;
+}
+
+.upload-file-progress {
+	grid-column: 1 / -1;
 }
 </style>
