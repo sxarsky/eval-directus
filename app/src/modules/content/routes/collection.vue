@@ -4,7 +4,7 @@ import { isSystemCollection } from '@directus/system-data';
 import { Filter } from '@directus/types';
 import { mergeFilters } from '@directus/utils';
 import { computed, ref, toRefs, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import ContentNavigation from '../components/navigation.vue';
 import ContentNotFound from './not-found.vue';
 import api from '@/api';
@@ -21,6 +21,7 @@ import VInfo from '@/components/v-info.vue';
 import { useFlows } from '@/composables/use-flows';
 import { useCollectionPermissions } from '@/composables/use-permissions';
 import { usePreset } from '@/composables/use-preset';
+import { useUrlState } from '@/composables/use-url-state';
 import { usePermissionsStore } from '@/stores/permissions';
 import { getCollectionRoute, getItemRoute } from '@/utils/get-route';
 import { unexpectedError } from '@/utils/unexpected-error';
@@ -47,6 +48,7 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+const route = useRoute();
 
 const layoutRef = ref();
 
@@ -75,6 +77,18 @@ const {
 	busy: bookmarkSaving,
 	clearLocalSave,
 } = usePreset(collection, bookmarkID);
+
+const urlStateDisabled = computed(() => bookmarkID.value !== null);
+
+useUrlState({
+	route,
+	router,
+	filter,
+	search,
+	layoutQuery,
+	layout,
+	disabled: urlStateDisabled,
+});
 
 const { layoutWrapper } = useLayout(layout);
 
