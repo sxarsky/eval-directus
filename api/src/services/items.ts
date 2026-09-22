@@ -63,7 +63,12 @@ export class ItemsService<Item extends AnyItem = AnyItem, Collection extends str
 	}
 
 	/**
-	 * Create a fork of the current service, allowing instantiation with different options.
+	 * Create a fork of the current service, allowing instantiation with a different set of options.
+	 *
+	 * @param options - Partial overrides applied on top of the current service's options.
+	 *                  Any field not supplied is inherited from the parent service (knex, accountability,
+	 *                  schema, nested).
+	 * @returns A new ItemsService instance bound to the same collection but configured with the merged options.
 	 */
 	private fork(options?: Partial<AbstractServiceOptions>): ItemsService<AnyItem> {
 		const Service = this.constructor;
@@ -122,7 +127,13 @@ export class ItemsService<Item extends AnyItem = AnyItem, Collection extends str
 	}
 
 	/**
-	 * Create a single new item.
+	 * Create a single new item in the current collection.
+	 *
+	 * @param data - The item payload, keyed by collection field names. Aliases (relational pseudo-fields)
+	 *               are tolerated but stripped from the persisted row.
+	 * @param opts - Mutation options. When `mutationTracker` is omitted a fresh one is allocated; when
+	 *               `bypassLimits` is true the per-request mutation count is not incremented.
+	 * @returns The primary key of the newly-created item.
 	 */
 	async createOne(data: Partial<Item>, opts: MutationOptions = {}): Promise<PrimaryKey> {
 		if (!opts.mutationTracker) opts.mutationTracker = this.createMutationTracker();
