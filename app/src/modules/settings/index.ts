@@ -16,8 +16,8 @@ import NotFound from './routes/not-found.vue';
 import NewPolicy from './routes/policies/add-new.vue';
 import PoliciesCollection from './routes/policies/collection.vue';
 import PoliciesItem from './routes/policies/item.vue';
-import PresetsCollection from './routes/presets/collection/collection.vue';
-import PresetsItem from './routes/presets/item.vue';
+import SavedViewsCollection from './routes/saved-views/collection/collection.vue';
+import SavedViewsItem from './routes/saved-views/item.vue';
 import Project from './routes/project/project.vue';
 import NewRole from './routes/roles/add-new.vue';
 import RolesCollection from './routes/roles/collection.vue';
@@ -183,21 +183,29 @@ export default defineModule({
 			],
 		},
 		{
-			path: 'presets',
+			path: 'saved-views',
 			component: RouterPass,
 			children: [
 				{
-					name: 'settings-presets-collection',
+					name: 'settings-saved-views-collection',
 					path: '',
-					component: PresetsCollection,
+					component: SavedViewsCollection,
 				},
 				{
-					name: 'settings-presets-item',
+					name: 'settings-saved-views-item',
 					path: ':id',
-					component: PresetsItem,
+					component: SavedViewsItem,
 					props: true,
 				},
 			],
+		},
+		// Backwards-compatibility redirect for bookmarks / external links
+		// pointing at the prior /settings/presets path. Removed in a
+		// follow-up release once admin docs and dashboards have caught up.
+		{
+			name: 'settings-presets-redirect',
+			path: 'presets/:_(.*)*',
+			redirect: (to) => `/settings/saved-views/${to.params._ ?? ''}`,
 		},
 		{
 			name: 'settings-ai',

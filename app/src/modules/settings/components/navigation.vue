@@ -65,7 +65,7 @@ const links = computed<Link[][]>(() => [
 		{
 			icon: 'bookmark',
 			name: t('settings_presets'),
-			to: `/settings/presets`,
+			to: `/settings/saved-views`,
 		},
 		{
 			icon: 'translate',
