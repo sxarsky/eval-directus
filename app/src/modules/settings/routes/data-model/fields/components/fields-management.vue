@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Field, LocalType } from '@directus/types';
 import { isNil, orderBy } from 'lodash';
-import { computed, onBeforeMount, onBeforeUnmount, toRefs } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, ref, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Draggable from 'vuedraggable';
 import FieldSelect from './FieldSelect.vue';
@@ -15,6 +15,7 @@ import VList from '@/components/v-list.vue';
 import VMenu from '@/components/v-menu.vue';
 import { useFieldsStore } from '@/stores/fields';
 import { hideDragImage } from '@/utils/hide-drag-image';
+import { unexpectedError } from '@/utils/unexpected-error';
 
 const props = defineProps<{
 	collection: string;
@@ -42,6 +43,20 @@ const lockedFields = computed(() => {
 const usableFields = computed(() => {
 	return parsedFields.value.filter((field) => field.meta?.system !== true);
 });
+
+const draggableFields = computed(() => usableFields.value.filter((field) => isNil(field?.meta?.group)));
+
+const draggingFieldKey = ref<string | null>(null);
+const savingFieldKey = ref<string | null>(null);
+
+function onDragStart(evt: { oldIndex?: number }) {
+	if (evt.oldIndex === undefined) return;
+	draggingFieldKey.value = draggableFields.value[evt.oldIndex]?.field ?? null;
+}
+
+function onDragEnd() {
+	draggingFieldKey.value = null;
+}
 
 const addOptions = computed<Array<{ type: LocalType; icon: string; text: any } | { divider: boolean }>>(() => [
 	{
@@ -106,6 +121,9 @@ const addOptions = computed<Array<{ type: LocalType; icon: string; text: any } |
 ]);
 
 async function setSort(fields: Field[]) {
+	const movedField = draggingFieldKey.value;
+	if (movedField) savingFieldKey.value = movedField;
+
 	const updates = fields.map((field, index) => ({
 		field: field.field,
 		meta: {
@@ -114,7 +132,13 @@ async function setSort(fields: Field[]) {
 		},
 	}));
 
-	await fieldsStore.updateFields(collection.value, updates);
+	try {
+		await fieldsStore.updateFields(collection.value, updates);
+	} catch (err) {
+		unexpectedError(err);
+	} finally {
+		savingFieldKey.value = null;
+	}
 }
 
 async function setNestedSort(updates?: Field[]) {
@@ -134,17 +158,26 @@ async function setNestedSort(updates?: Field[]) {
 
 		<Draggable
 			class="field-grid"
-			:model-value="usableFields.filter((field) => isNil(field?.meta?.group))"
+			:model-value="draggableFields"
 			handle=".drag-handle"
 			:group="{ name: 'fields' }"
 			:set-data="hideDragImage"
 			item-key="field"
 			:animation="150"
 			v-bind="{ 'force-fallback': true, 'fallback-on-body': true, 'invert-swap': true }"
+			@start="onDragStart"
+			@end="onDragEnd"
 			@update:model-value="setSort"
 		>
 			<template #item="{ element }">
-				<FieldSelect :field="element" :fields="usableFields" @set-nested-sort="setNestedSort" />
+				<div
+					class="field-row"
+					:data-field-key="element.field"
+					:data-dragging="draggingFieldKey === element.field ? 'true' : null"
+					:data-saving="savingFieldKey === element.field ? 'true' : null"
+				>
+					<FieldSelect :field="element" :fields="usableFields" @set-nested-sort="setNestedSort" />
+				</div>
 			</template>
 		</Draggable>
 
