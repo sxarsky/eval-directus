@@ -10,7 +10,8 @@ interface Props {
 		| 'block-list-item-dense'
 		| 'list-item-icon'
 		| 'text'
-		| 'pagination';
+		| 'pagination'
+		| 'table-row';
 }
 
 withDefaults(defineProps<Props>(), {
@@ -153,6 +154,18 @@ withDefaults(defineProps<Props>(), {
 		border-radius: 0.3125rem;
 
 		@include loader;
+	}
+}
+
+.table-row {
+	inline-size: 100%;
+	block-size: 3rem;
+	border-radius: 0;
+
+	@include loader;
+
+	& + & {
+		margin-block-start: 0.125rem;
 	}
 }
 
